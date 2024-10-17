@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.btn {
+    @apply px-4 py-2 text-white bg-blue-gray-500 rounded-md hover:bg-white hover:text-blue-gray-500 duration-200 border-2 border-blue-gray-500 font-bold text-lg;
+}
+
+.btn-sm {
+    @apply px-2 py-1 text-white bg-blue-gray-500 rounded-md hover:bg-white hover:text-blue-gray-500 duration-200 border-2 border-blue-gray-500;
+}
+
+.nav-btn{
+    @apply text-xl font-bold border-2 border-white rounded-lg mx-12 py-2 hover:bg-white hover:text-black duration-300
+}
+
+.active {
+    @apply bg-blue-gray-700 text-white font-bold
+}
+
+/* In your custom styles */
+@responsive {
+    @media print {
+      button {
+        display: none;
+      }
+      #layout {
+        display: none;
+      }
+    }
+  }
+  
