@@ -6,9 +6,9 @@ const PatientData = (props) => {
   const { name, age, contact, referredBy, gender } = props.data
   return (
     <div className=" flex flex-col gap-4 mt-4 justify-start items-start w-full ">
-      <h2 className="text-left text-md">Patient's Info</h2>
+      <h2 className="text-left text-md">রোগীর তথ্য</h2>
       <div className="flex gap-2 justify-between">
-        <Input label="Name" required value={name} name="name" onChange={props.onChange} />
+        <Input label="নাম" required value={name} name="name" onChange={props.onChange} />
         <Select
           label="Gender"
           name="gender"
@@ -19,14 +19,14 @@ const PatientData = (props) => {
             props.onChange(e)
           }}
         >
-          <Option value="male">Male</Option>
-          <Option value="female">Female</Option>
+          <Option value="male">পুরুষ</Option>
+          <Option value="female">মহিলা</Option>
         </Select>
-        <Input label="Age" required value={age} name="age" onChange={props.onChange} />
+        <Input label="বয়স" required value={age} name="age" onChange={props.onChange} />
       </div>
       <div className="flex gap-2 justify-between">
-        <Input label="Contact" required type="number" value={contact} name="contact" onChange={props.onChange} />
-        <Input label="Referred By" required value={referredBy} name="referredBy" onChange={props.onChange} />
+        <Input label="যোগাযোগের নাম্বার" required type="number" value={contact} name="contact" onChange={props.onChange} />
+        <Input label="রেফারেন্সকারী" required value={referredBy} name="referredBy" onChange={props.onChange} />
       </div>
     </div>
   )

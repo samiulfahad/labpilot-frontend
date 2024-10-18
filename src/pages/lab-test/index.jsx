@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useState } from "react";
 
 import Test from "./Test";
@@ -21,19 +23,14 @@ const index = () => {
 
   return (
     <section>
-        <div className="flex flex-col ml-40">
-          <div className="text-md mt-6">Price List of Tests</div>
-          <div className="flex flex-col">
-            {testList.map((item) => (
-              <Test
-                key={item.testName}
-                testName={item.testName}
-                price={item.price}
-                onPriceChange={handlePriceChange}
-              />
-            ))}
-          </div>
+      <div className="flex flex-col ml-40">
+        <div className="text-md mt-6">Price List of Tests</div>
+        <div className="flex flex-col">
+          {testList.map((item) => (
+            <Test key={item.testName} testName={item.testName} price={item.price} onPriceChange={handlePriceChange} />
+          ))}
         </div>
+      </div>
     </section>
   );
 };

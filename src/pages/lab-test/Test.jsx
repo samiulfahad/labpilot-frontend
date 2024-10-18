@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useState } from "react";
 
 const Test = ({ testName, price, onPriceChange }) => {
@@ -37,10 +39,7 @@ const Test = ({ testName, price, onPriceChange }) => {
         {action}
       </button>
       {!disabled && (
-        <button
-          onClick={handleCancel}
-          className="btn-sm !bg-red-500 !border-red-500 hover:text-white"
-        >
+        <button onClick={handleCancel} className="btn-sm !bg-red-500 !border-red-500 hover:text-white">
           Cancel
         </button>
       )}
