@@ -1,37 +1,31 @@
 /** @format */
 
-import { Children, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import TestList from "./TestList";
 import InvoiceData from "./InvoiceData";
 import PatientData from "./PatientData";
 import ErrorModal from "../../../components/errorModal";
 import { useNavigate } from "react-router-dom";
-
-const testList = [
-  { name: "CBC", code: "t1", price: 300 },
-  { name: "RBS", code: "t2", price: 400 },
-  { name: "ECG", code: "t3", price: 500 },
-  { name: "Ultra", code: "t4", price: 200 },
-  { name: "X-ray", code: "t5", price: 600 },
-  { name: "Echo", code: "t6", price: 100 },
-];
+import { testList, referrerList } from "../../../data";
 
 const CreateInvoice = () => {
   const [checkedTest, setCheckedTest] = useState([]);
   const [invoiceData, setInvoiceData] = useState({
     total: 0,
+    hasDiscount: false,
+    discountType: null,
+    maximumDiscount: null,
     discount: 0,
     afterDiscount: 0,
     adjustment: 0,
     netAmount: 0,
     paid: 0,
-    hasDiscount: false,
-    discounter: 'Doctor / Referrer'
   });
-  const [patientData, setPatientData] = useState({ name: "", age: "", contact: "", referredBy: "" });
+  const [patientData, setPatientData] = useState({ name: "", age: "", contact: "", referrer: {}, doctorName: "" });
 
-  const { total, discount, adjustment } = invoiceData;
+  const { total, discountType, discount, adjustment } = invoiceData;
+
   const [loadingState, setLoadingState] = useState(null);
   const navigate = useNavigate();
 
@@ -45,15 +39,30 @@ const CreateInvoice = () => {
   }, [checkedTest]);
 
   useEffect(() => {
-    const afterDiscount = total - (discount * total) / 100;
+    let afterDiscount;
+    if (discountType === "fixed") {
+      afterDiscount = total - discount;
+    } else {
+      afterDiscount = total - (discount * total) / 100;
+    }
     const netAmount = afterDiscount - adjustment;
     setInvoiceData({ ...invoiceData, afterDiscount, netAmount });
-  }, [total, discount, adjustment]);
+  }, [total, discount, discountType, adjustment]);
 
-  const discountHandler = val => {
-    console.log(invoiceData);
-    setInvoiceData({...invoiceData, ...val})
-  }
+  const handleHasDiscount = (val) => {
+    if (val) {
+      setInvoiceData({ ...invoiceData, hasDiscount: true });
+    } else {
+      setInvoiceData({ ...invoiceData, discount: 0, hasDiscount: false });
+    }
+  };
+
+  const handleReferrer = (val) => {
+    console.log(JSON.parse(val));
+    const referrer = JSON.parse(val);
+    setInvoiceData({ ...invoiceData, discountType: referrer.type, maximumDiscount: referrer.amount });
+    setPatientData({...patientData, referrer})
+  };
 
   const handleCheckedTest = (test) => {
     if (!checkedTest.some((item) => item.name === test.name)) {
@@ -79,13 +88,15 @@ const CreateInvoice = () => {
         name: patientData.name,
         age: patientData.age,
         contact: patientData.contact,
-        referredBy: patientData.referredBy,
+        referrerId: patientData.referrer.id,
+        referrerName: patientData.referrer.name,
+        doctorName: patientData.doctorName,
         testList: checkedTest,
         total: invoiceData.total,
         netAmount: invoiceData.netAmount,
         paid: invoiceData.paid,
       };
-      console.log(data.testList);
+      console.log(data);
       //   const response = await axios.post("http://localhost:3000/api/v1/invoice/create", data)
       //   if (response.data.success) {
       //     console.log("data added")
@@ -110,7 +121,12 @@ const CreateInvoice = () => {
       {loadingState == "error" && <ErrorModal title="Please select test" onClose={closeModal} />}
       <form onSubmit={handleSubmit}>
         <div className="w-full mx-20">
-          <PatientData data={patientData} onChange={handlePatientData} />
+          <PatientData
+            data={patientData}
+            referrerList={referrerList}
+            onChange={handlePatientData}
+            onReferrer={handleReferrer}
+          />
         </div>
 
         <div className="w-full mx-20 py-4">
@@ -121,8 +137,10 @@ const CreateInvoice = () => {
           <InvoiceData
             data={invoiceData}
             onPay={(value) => setInvoiceData({ ...invoiceData, paid: value })}
-            onDiscount={discountHandler}
+            hasDiscount={handleHasDiscount}
+            onDiscount={(value) => setInvoiceData({ ...invoiceData, discount: value })}
             onAdjustment={(value) => setInvoiceData({ ...invoiceData, adjustment: parseFloat(value) })}
+            referrer
           />
         </div>
         <div className="w-2/3 mx-auto py-4 flex justify-center items-center gap-10">

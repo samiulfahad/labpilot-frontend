@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 const InvoiceData = (props) => {
-  const { total, discount, afterDiscount, adjustment, netAmount, paid, hasDiscount, discounter } = props.data;
+  const { total, discount, afterDiscount, adjustment, netAmount, paid, hasDiscount, discountType } = props.data;
   const due = netAmount - paid;
 
   return (
@@ -11,19 +11,19 @@ const InvoiceData = (props) => {
       <h2 className="text-2xl text-center font-semibold mb-4">Invoice Summary</h2>
       <div className="flex justify-between mb-2">
         <p className="text-gray-700">মোট:</p>
-        <p className="font-semibold">{total} টাকা</p>
+        <p className="">{total} টাকা</p>
       </div>
 
-      <div className="flex justify-start space-x-4 items-center">
-        <p className="text-sm">ডাক্তার বা রেফারেন্সকারী ডিস্কাউন্ট দিয়েছে কি?</p>
+      <div className="flex justify-start space-x-4 py-1 items-center">
+        <p className="text-sm">কমিশনভোগী ব্যক্তি বা প্রতিষ্ঠান কোনো ডিস্কাউন্ট দিয়েছে কি?</p>
         <button
-          onClick={() => props.onDiscount({ hasDiscount: false })}
+          onClick={() => props.hasDiscount(false)}
           className={`${!hasDiscount ? "px-2 py-1 bg-blue-gray-500 text-white" : "text-gray-500"}`}
         >
           না
         </button>
         <button
-          onClick={() => props.onDiscount({ hasDiscount: true })}
+          onClick={() => props.hasDiscount(true)}
           className={`${hasDiscount ? "px-2 py-1 bg-blue-gray-500 text-white" : "text-gray-500"}`}
         >
           হ্যাঁ
@@ -42,15 +42,15 @@ const InvoiceData = (props) => {
                 id="discount"
                 className="p-1 w-20 text-right border border-gray-300 rounded-md mr-2"
                 value={discount}
-                onChange={(e) => props.onDiscount({ discount: parseFloat(e.target.value) })}
+                onChange={(e) => props.onDiscount((e.target.value))}
               />
-              <span>%</span>
+              <span>{discountType === "fixed" ? "টাকা" : "%"}</span>
             </div>
           </div>
 
           <div className="flex justify-between text-sm mb-2">
             <p className="text-gray-700">ডিস্কাউন্ট পরবর্তী মূল্য:</p>
-            <p className="font-semibold">{afterDiscount} টাকা</p>
+            <p className="">{afterDiscount} টাকা</p>
           </div>
         </>
       )}
