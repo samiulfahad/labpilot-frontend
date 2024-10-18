@@ -9,7 +9,7 @@ const PatientData = (props) => {
     <div className=" flex flex-col gap-4 mt-4 justify-start items-start w-full ">
       <h2 className="text-left text-md">রোগীর তথ্য</h2>
       <div className="flex gap-2 justify-between">
-        <Input label="নাম" required value={name} name="name" onChange={props.onChange} />
+        <Input label="নাম"  value={name} name="name" onChange={props.onChange} />
         <Select
           label="Gender"
           name="gender"
@@ -23,19 +23,17 @@ const PatientData = (props) => {
           <Option value="male">পুরুষ</Option>
           <Option value="female">মহিলা</Option>
         </Select>
-        <Input label="বয়স" required value={age} name="age" onChange={props.onChange} />
+        <Input label="বয়স" value={age} name="age" onChange={props.onChange} />
       </div>
       <div className="flex gap-2 justify-between">
         <Input
           label="যোগাযোগের নাম্বার"
-          required
+          
           type="number"
           value={contact}
           name="contact"
           onChange={props.onChange}
         />
-        {/* <Input label="কমিশনভোগী" required value={referrer} name="referrer" onChange={props.onChange} /> */}
-
         <Select onChange={props.onReferrer}
           label="কমিশনভোগী"
           name="referrer"

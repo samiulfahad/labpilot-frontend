@@ -1,9 +1,8 @@
 /** @format */
 
-import { useState } from "react";
-
 const InvoiceData = (props) => {
-  const { total, discount, afterDiscount, adjustment, netAmount, paid, hasDiscount, discountType } = props.data;
+  const { total, discount, afterDiscount, adjustment, netAmount, paid, hasDiscount, discountType, referrer } =
+    props.data;
   const due = netAmount - paid;
 
   return (
@@ -14,23 +13,25 @@ const InvoiceData = (props) => {
         <p className="">{total} টাকা</p>
       </div>
 
-      <div className="flex justify-start space-x-4 py-1 items-center">
-        <p className="text-sm">কমিশনভোগী ব্যক্তি বা প্রতিষ্ঠান কোনো ডিস্কাউন্ট দিয়েছে কি?</p>
-        <button
-          onClick={() => props.hasDiscount(false)}
-          className={`${!hasDiscount ? "px-2 py-1 bg-blue-gray-500 text-white" : "text-gray-500"}`}
-        >
-          না
-        </button>
-        <button
-          onClick={() => props.hasDiscount(true)}
-          className={`${hasDiscount ? "px-2 py-1 bg-blue-gray-500 text-white" : "text-gray-500"}`}
-        >
-          হ্যাঁ
-        </button>
-      </div>
+      {referrer && referrer.amount !== 0 && (
+        <div className="flex justify-start space-x-4 py-1 items-center">
+          <p className="text-sm">কমিশনভোগী ব্যক্তি বা প্রতিষ্ঠান কোনো ডিস্কাউন্ট দিয়েছে কি?</p>
+          <button
+            onClick={() => props.hasDiscount(false)}
+            className={`${!hasDiscount ? "px-2 py-1 bg-blue-gray-500 text-white" : "text-gray-500"}`}
+          >
+            না
+          </button>
+          <button
+            onClick={() => props.hasDiscount(true)}
+            className={`${hasDiscount ? "px-2 py-1 bg-blue-gray-500 text-white" : "text-gray-500"}`}
+          >
+            হ্যাঁ
+          </button>
+        </div>
+      )}
 
-      {hasDiscount && (
+      {hasDiscount && referrer && (
         <>
           <div className="flex justify-between text-sm mb-2 items-center">
             <label htmlFor="discount" className="text-gray-700">
@@ -42,7 +43,7 @@ const InvoiceData = (props) => {
                 id="discount"
                 className="p-1 w-20 text-right border border-gray-300 rounded-md mr-2"
                 value={discount}
-                onChange={(e) => props.onDiscount((e.target.value))}
+                onChange={(e) => props.onDiscount(e.target.value, referrer)}
               />
               <span>{discountType === "fixed" ? "টাকা" : "%"}</span>
             </div>

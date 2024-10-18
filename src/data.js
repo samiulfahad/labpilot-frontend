@@ -2,20 +2,20 @@
 
 export const referrerList = [
   {
-    name: "DR. XYZ",
+    name: "Dr. Percentage",
     type: "percentage",
     amount: 20,
     id: 123,
   },
   {
-    name: "DR. ABC",
+    name: "Dr. Fix",
     type: "fixed",
     amount: 30,
     id: 234,
   },
   {
     name: "Medical Unit, NIT Durgapur",
-    type: "",
+    type: "fixed",
     amount: 0,
     id: 789,
   },

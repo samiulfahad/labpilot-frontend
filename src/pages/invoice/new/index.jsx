@@ -6,7 +6,6 @@ import TestList from "./TestList";
 import InvoiceData from "./InvoiceData";
 import PatientData from "./PatientData";
 import ErrorModal from "../../../components/errorModal";
-import { useNavigate } from "react-router-dom";
 import { testList, referrerList } from "../../../data";
 
 const CreateInvoice = () => {
@@ -15,19 +14,18 @@ const CreateInvoice = () => {
     total: 0,
     hasDiscount: false,
     discountType: null,
-    maximumDiscount: null,
+    referrer: null,
     discount: 0,
     afterDiscount: 0,
     adjustment: 0,
     netAmount: 0,
     paid: 0,
   });
-  const [patientData, setPatientData] = useState({ name: "", age: "", contact: "", referrer: {}, doctorName: "" });
-
+  const [patientData, setPatientData] = useState({ name: "", age: "", contact: "", doctorName: "" });
   const { total, discountType, discount, adjustment } = invoiceData;
-
   const [loadingState, setLoadingState] = useState(null);
-  const navigate = useNavigate();
+  // The following lone logs null
+  console.log(invoiceData.referrer);
 
   useEffect(() => {
     let totalAmount = 0;
@@ -35,7 +33,6 @@ const CreateInvoice = () => {
       totalAmount = totalAmount + item.price;
     });
     setInvoiceData({ ...invoiceData, total: totalAmount });
-    console.log(invoiceData);
   }, [checkedTest]);
 
   useEffect(() => {
@@ -57,11 +54,17 @@ const CreateInvoice = () => {
     }
   };
 
+  const handleDiscount = (value, referrer) => {
+    if (value > referrer.amount) {
+      setInvoiceData({ ...invoiceData, discount: referrer.amount });
+    } else {
+      setInvoiceData({ ...invoiceData, discount: value });
+    }
+  };
+
   const handleReferrer = (val) => {
-    console.log(JSON.parse(val));
     const referrer = JSON.parse(val);
-    setInvoiceData({ ...invoiceData, discountType: referrer.type, maximumDiscount: referrer.amount });
-    setPatientData({...patientData, referrer})
+    setInvoiceData({ ...invoiceData, discountType: referrer.type, referrer, discount: referrer.amount });
   };
 
   const handleCheckedTest = (test) => {
@@ -88,8 +91,8 @@ const CreateInvoice = () => {
         name: patientData.name,
         age: patientData.age,
         contact: patientData.contact,
-        referrerId: patientData.referrer.id,
-        referrerName: patientData.referrer.name,
+        referrerId: invoiceData.referrer.id,
+        referrerName: invoiceData.referrer.name,
         doctorName: patientData.doctorName,
         testList: checkedTest,
         total: invoiceData.total,
@@ -138,9 +141,8 @@ const CreateInvoice = () => {
             data={invoiceData}
             onPay={(value) => setInvoiceData({ ...invoiceData, paid: value })}
             hasDiscount={handleHasDiscount}
-            onDiscount={(value) => setInvoiceData({ ...invoiceData, discount: value })}
+            onDiscount={handleDiscount}
             onAdjustment={(value) => setInvoiceData({ ...invoiceData, adjustment: parseFloat(value) })}
-            referrer
           />
         </div>
         <div className="w-2/3 mx-auto py-4 flex justify-center items-center gap-10">
