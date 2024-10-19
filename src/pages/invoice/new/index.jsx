@@ -1,6 +1,7 @@
 /** @format */
 
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 import TestList from "./TestList";
 import InvoiceData from "./InvoiceData";
@@ -22,11 +23,9 @@ const CreateInvoice = () => {
     paid: 0,
   });
   const [patientData, setPatientData] = useState({ name: "", age: "", contact: "", doctorName: "" });
-  const { total, discountType, discount, adjustment } = invoiceData;
+  const { total, hasDiscount, discountType, discount, adjustment } = invoiceData;
   const [loadingState, setLoadingState] = useState(null);
-  // The following lone logs null
-  console.log(invoiceData.referrer);
-
+  const [errMsg, setErrMsg] = useState("");
   useEffect(() => {
     let totalAmount = 0;
     checkedTest.forEach((item) => {
@@ -37,14 +36,21 @@ const CreateInvoice = () => {
 
   useEffect(() => {
     let afterDiscount;
-    if (discountType === "fixed") {
-      afterDiscount = total - discount;
+    let netAmount;
+    if (hasDiscount) {
+      if (discountType === "fixed") {
+        afterDiscount = total - discount;
+      } else {
+        afterDiscount = total - (discount * total) / 100;
+      }
+      netAmount = afterDiscount - adjustment;
+      setInvoiceData({ ...invoiceData, afterDiscount, netAmount });
     } else {
-      afterDiscount = total - (discount * total) / 100;
+      netAmount = total - adjustment;
+      afterDiscount = total;
+      setInvoiceData({ ...invoiceData, afterDiscount, netAmount });
     }
-    const netAmount = afterDiscount - adjustment;
-    setInvoiceData({ ...invoiceData, afterDiscount, netAmount });
-  }, [total, discount, discountType, adjustment]);
+  }, [total, hasDiscount, discount, discountType, adjustment]);
 
   const handleHasDiscount = (val) => {
     if (val) {
@@ -65,6 +71,9 @@ const CreateInvoice = () => {
   const handleReferrer = (val) => {
     const referrer = JSON.parse(val);
     setInvoiceData({ ...invoiceData, discountType: referrer.type, referrer, discount: referrer.amount });
+    if (referrer.isDoctor) {
+      setPatientData({ ...patientData, doctorName: referrer.name });
+    }
   };
 
   const handleCheckedTest = (test) => {
@@ -84,29 +93,45 @@ const CreateInvoice = () => {
     e.preventDefault();
     if (checkedTest.length === 0) {
       setLoadingState("error");
+      setErrMsg("ল্যাব টেস্ট সিলেক্ট করুন");
       return;
     }
+    if (!invoiceData.referrer) {
+      setLoadingState("error");
+      setErrMsg("রেফারেন্সকারী সিলেক্ট করুন");
+      return;
+    }
+    if (!patientData.gender) {
+      setLoadingState("error");
+      setErrMsg("রোগীর Gender সিলেক্ট করুন");
+      return;
+    }
+    console.log("handleSubmit called");
     try {
-      const data = {
+      const pData = {
         name: patientData.name,
         age: patientData.age,
+        gender: patientData.gender,
         contact: patientData.contact,
-        referrerId: invoiceData.referrer.id,
-        referrerName: invoiceData.referrer.name,
         doctorName: patientData.doctorName,
-        testList: checkedTest,
-        total: invoiceData.total,
-        netAmount: invoiceData.netAmount,
-        paid: invoiceData.paid,
       };
-      console.log(data);
-      //   const response = await axios.post("http://localhost:3000/api/v1/invoice/create", data)
-      //   if (response.data.success) {
-      //     console.log("data added")
-      //     console.log(response.data)
-      //     navigate("/invoice/print")
-
-      //   }
+      const iData = {
+        referrerId: invoiceData.referrer.id,
+        total: invoiceData.total,
+        discount: invoiceData.discount,
+        paid: invoiceData.paid,
+        testList: checkedTest,
+      };
+      console.log(iData);
+      const response = await axios.post("http://localhost:3000/api/v1/invoice/new", {
+        patientData: pData,
+        invoiceData: iData,
+      });
+      if (response.data.success) {
+        console.log("data added");
+        console.log(response.data);
+        navigate("/invoice/print");
+      }
     } catch (e) {
       if (e.response) {
         console.log(e.response.data);
@@ -117,11 +142,12 @@ const CreateInvoice = () => {
   };
   const closeModal = () => {
     setLoadingState(null);
+    setErrMsg("");
   };
 
   return (
     <section className="flex mx-auto w-full">
-      {loadingState == "error" && <ErrorModal title="Please select test" onClose={closeModal} />}
+      {loadingState == "error" && <ErrorModal title={errMsg} onClose={closeModal} />}
       <form onSubmit={handleSubmit}>
         <div className="w-full mx-20">
           <PatientData
@@ -140,7 +166,7 @@ const CreateInvoice = () => {
           <InvoiceData
             data={invoiceData}
             onPay={(value) => setInvoiceData({ ...invoiceData, paid: value })}
-            hasDiscount={handleHasDiscount}
+            handleHasDiscount={handleHasDiscount}
             onDiscount={handleDiscount}
             onAdjustment={(value) => setInvoiceData({ ...invoiceData, adjustment: parseFloat(value) })}
           />

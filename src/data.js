@@ -2,19 +2,29 @@
 
 export const referrerList = [
   {
+    name: "Self",
+    isDoctor: true,
+    type: "percentage",
+    amount: 0,
+    id: "self",
+  },
+  {
     name: "Dr. Percentage",
+    isDoctor: true,
     type: "percentage",
     amount: 20,
-    id: 123,
+    id: "6713cfd0c99821db8ccc3570",
   },
   {
     name: "Dr. Fix",
+    isDoctor: true,
     type: "fixed",
     amount: 30,
     id: 234,
   },
   {
     name: "Medical Unit, NIT Durgapur",
+    isDoctor: false,
     type: "fixed",
     amount: 0,
     id: 789,

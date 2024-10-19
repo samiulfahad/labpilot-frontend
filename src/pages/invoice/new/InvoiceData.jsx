@@ -16,18 +16,18 @@ const InvoiceData = (props) => {
       {referrer && referrer.amount !== 0 && (
         <div className="flex justify-start space-x-4 py-1 items-center">
           <p className="text-sm">কমিশনভোগী ব্যক্তি বা প্রতিষ্ঠান কোনো ডিস্কাউন্ট দিয়েছে কি?</p>
-          <button
-            onClick={() => props.hasDiscount(false)}
+          <p
+            onClick={() => props.handleHasDiscount(false)}
             className={`${!hasDiscount ? "px-2 py-1 bg-blue-gray-500 text-white" : "text-gray-500"}`}
           >
             না
-          </button>
-          <button
-            onClick={() => props.hasDiscount(true)}
+          </p>
+          <p
+            onClick={() => props.handleHasDiscount(true)}
             className={`${hasDiscount ? "px-2 py-1 bg-blue-gray-500 text-white" : "text-gray-500"}`}
           >
             হ্যাঁ
-          </button>
+          </p>
         </div>
       )}
 
