@@ -18,14 +18,15 @@ const CreateInvoice = () => {
     referrer: null,
     discount: 0,
     afterDiscount: 0,
-    adjustment: 0,
+    labAdjustment: 0,
     netAmount: 0,
     paid: 0,
   });
   const [patientData, setPatientData] = useState({ name: "", age: "", contact: "", doctorName: "" });
-  const { total, hasDiscount, discountType, discount, adjustment } = invoiceData;
+  const { total, hasDiscount, discountType, discount, labAdjustment } = invoiceData;
   const [loadingState, setLoadingState] = useState(null);
   const [errMsg, setErrMsg] = useState("");
+
   useEffect(() => {
     let totalAmount = 0;
     checkedTest.forEach((item) => {
@@ -43,14 +44,14 @@ const CreateInvoice = () => {
       } else {
         afterDiscount = total - (discount * total) / 100;
       }
-      netAmount = afterDiscount - adjustment;
+      netAmount = afterDiscount - labAdjustment;
       setInvoiceData({ ...invoiceData, afterDiscount, netAmount });
     } else {
-      netAmount = total - adjustment;
+      netAmount = total - labAdjustment;
       afterDiscount = total;
       setInvoiceData({ ...invoiceData, afterDiscount, netAmount });
     }
-  }, [total, hasDiscount, discount, discountType, adjustment]);
+  }, [total, hasDiscount, discount, discountType, labAdjustment]);
 
   const handleHasDiscount = (val) => {
     if (val) {
@@ -116,10 +117,12 @@ const CreateInvoice = () => {
         doctorName: patientData.doctorName,
       };
       const iData = {
-        referrerId: invoiceData.referrer.id,
         total: invoiceData.total,
+        referrerId: invoiceData.referrer.id,
+        hasDiscount: invoiceData.hasDiscount,
         discount: invoiceData.discount,
         paid: invoiceData.paid,
+        ladAdjustment: invoiceData.labAdjustment,
         testList: checkedTest,
       };
       console.log(iData);
@@ -168,7 +171,7 @@ const CreateInvoice = () => {
             onPay={(value) => setInvoiceData({ ...invoiceData, paid: value })}
             handleHasDiscount={handleHasDiscount}
             onDiscount={handleDiscount}
-            onAdjustment={(value) => setInvoiceData({ ...invoiceData, adjustment: parseFloat(value) })}
+            onLabAdjustment={(value) => setInvoiceData({ ...invoiceData, labAdjustment: parseFloat(value) })}
           />
         </div>
         <div className="w-2/3 mx-auto py-4 flex justify-center items-center gap-10">

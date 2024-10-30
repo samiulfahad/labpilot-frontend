@@ -42,7 +42,7 @@ const Home = () => {
             <p className="font-bold">নির্দিষ্ট মাসের হিসাব</p>
             <Select label="হিসাবের মাস">
               {months.map((item) => (
-                <Option value={item.value}>{item.name}</Option>
+                <Option key={item.name} value={item.value}>{item.name}</Option>
               ))}
             </Select>
             <Select label="সাল">

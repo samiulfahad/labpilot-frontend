@@ -1,7 +1,7 @@
 /** @format */
 
 const InvoiceData = (props) => {
-  const { total, discount, afterDiscount, adjustment, netAmount, paid, hasDiscount, discountType, referrer } =
+  const { total, discount, afterDiscount, labAdjustment, netAmount, paid, hasDiscount, discountType, referrer } =
     props.data;
   const due = netAmount - paid;
 
@@ -57,15 +57,15 @@ const InvoiceData = (props) => {
       )}
 
       <div className="flex justify-between mb-2 text-sm items-center">
-        <label htmlFor="adjustment" className="text-gray-700">
+        <label htmlFor="labAdjustment" className="text-gray-700">
           ল্যাব প্রদত্ত ছাড়:
         </label>
         <div className="flex items-center">
           <input
             type="number"
             className="p-1 border w-20 text-right border-gray-300 rounded-md mr-2"
-            value={adjustment}
-            onChange={(e) => props.onAdjustment(parseFloat(e.target.value) || 0)}
+            value={labAdjustment}
+            onChange={(e) => props.onLabAdjustment(parseFloat(e.target.value) || 0)}
           />
           <span>টাকা</span>
         </div>
