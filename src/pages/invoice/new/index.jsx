@@ -71,9 +71,6 @@ const CreateInvoice = () => {
 
   const handleReferrer = (val) => {
     const referrer = JSON.parse(val);
-    if (hasDiscount) {
-      setInvoiceData({ ...invoiceData, discount: referrer.discountAmount });  
-    }
     setInvoiceData({ ...invoiceData, discountType: referrer.type, referrer });
     if (referrer.isDoctor) {
       setPatientData({ ...patientData, doctorName: referrer.name });
@@ -128,8 +125,6 @@ const CreateInvoice = () => {
         ladAdjustment: invoiceData.labAdjustment,
         testList: checkedTest,
       };
-      console.log(iData);
-      console.log(pData)
       const response = await axios.post("http://localhost:3000/api/v1/invoice/new", {
         patientData: pData,
         invoiceData: iData,

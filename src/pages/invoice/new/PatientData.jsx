@@ -4,7 +4,7 @@ import React from "react";
 import { Input, Select, Option } from "@material-tailwind/react";
 
 const PatientData = (props) => {
-  const { name, age, contact, doctorName, gender } = props.data;
+  const { name, age, contact, doctorName } = props.data;
   return (
     <div className=" flex flex-col gap-4 mt-4 justify-start items-start w-full ">
       <h2 className="text-left text-md">রোগীর তথ্য</h2>
