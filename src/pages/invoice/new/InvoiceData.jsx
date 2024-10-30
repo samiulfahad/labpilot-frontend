@@ -13,7 +13,7 @@ const InvoiceData = (props) => {
         <p className="">{total} টাকা</p>
       </div>
 
-      {referrer && referrer.amount !== 0 && (
+      {referrer && referrer.discountAmount !== 0 && (
         <div className="flex justify-start space-x-4 py-1 items-center">
           <p className="text-sm">কমিশনভোগী ব্যক্তি বা প্রতিষ্ঠান কোনো ডিস্কাউন্ট দিয়েছে কি?</p>
           <p

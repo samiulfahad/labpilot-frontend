@@ -55,15 +55,15 @@ const CreateInvoice = () => {
 
   const handleHasDiscount = (val) => {
     if (val) {
-      setInvoiceData({ ...invoiceData, hasDiscount: true });
+      setInvoiceData({ ...invoiceData, hasDiscount: true, discount: invoiceData.referrer.discountAmount });
     } else {
-      setInvoiceData({ ...invoiceData, discount: 0, hasDiscount: false });
+      setInvoiceData({ ...invoiceData, hasDiscount: false, discount: 0 });
     }
   };
 
   const handleDiscount = (value, referrer) => {
-    if (value > referrer.amount) {
-      setInvoiceData({ ...invoiceData, discount: referrer.amount });
+    if (value > referrer.discountAmount) {
+      setInvoiceData({ ...invoiceData, discount: referrer.discountAmount });
     } else {
       setInvoiceData({ ...invoiceData, discount: value });
     }
@@ -71,7 +71,10 @@ const CreateInvoice = () => {
 
   const handleReferrer = (val) => {
     const referrer = JSON.parse(val);
-    setInvoiceData({ ...invoiceData, discountType: referrer.type, referrer, discount: referrer.amount });
+    if (hasDiscount) {
+      setInvoiceData({ ...invoiceData, discount: referrer.discountAmount });  
+    }
+    setInvoiceData({ ...invoiceData, discountType: referrer.type, referrer });
     if (referrer.isDoctor) {
       setPatientData({ ...patientData, doctorName: referrer.name });
     }
@@ -126,6 +129,7 @@ const CreateInvoice = () => {
         testList: checkedTest,
       };
       console.log(iData);
+      console.log(pData)
       const response = await axios.post("http://localhost:3000/api/v1/invoice/new", {
         patientData: pData,
         invoiceData: iData,
@@ -157,7 +161,7 @@ const CreateInvoice = () => {
             data={patientData}
             referrerList={referrerList}
             onChange={handlePatientData}
-            onReferrer={handleReferrer}
+            onAddingReferrer={handleReferrer}
           />
         </div>
 

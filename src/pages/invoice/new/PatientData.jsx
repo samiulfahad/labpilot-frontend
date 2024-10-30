@@ -53,7 +53,7 @@ const PatientData = (props) => {
             }
           }}
         />
-        <Select onChange={props.onReferrer} label="রেফারেন্সকারী" name="referrer">
+        <Select onChange={props.onAddingReferrer} label="রেফারেন্সকারী" name="referrer">
           {props.referrerList.map((item, index) => (
             <Option key={index} value={JSON.stringify(item)}>
               {item.name}
