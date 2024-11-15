@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import TestList from "./TestList";
 import InvoiceData from "./InvoiceData";
 import PatientData from "./PatientData";
-import ErrorModal from "../../../components/errorModal";
+import Modal from "../../../components/modal";
 import { testList, referrerList } from "../../../data";
 
 const CreateInvoice = () => {
@@ -25,7 +26,8 @@ const CreateInvoice = () => {
   const [patientData, setPatientData] = useState({ name: "", age: "", contact: "", doctorName: "" });
   const { total, hasDiscount, discountType, discount, labAdjustment } = invoiceData;
   const [loadingState, setLoadingState] = useState(null);
-  const [errMsg, setErrMsg] = useState("");
+  const [msg, setMsg] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     let totalAmount = 0;
@@ -94,20 +96,19 @@ const CreateInvoice = () => {
     e.preventDefault();
     if (checkedTest.length === 0) {
       setLoadingState("error");
-      setErrMsg("ল্যাব টেস্ট সিলেক্ট করুন");
+      setMsg("ল্যাব টেস্ট সিলেক্ট করুন");
       return;
     }
     if (!invoiceData.referrer) {
       setLoadingState("error");
-      setErrMsg("রেফারেন্সকারী সিলেক্ট করুন");
+      setMsg("রেফারেন্সকারী সিলেক্ট করুন");
       return;
     }
     if (!patientData.gender) {
       setLoadingState("error");
-      setErrMsg("রোগীর Gender সিলেক্ট করুন");
+      setMsg("রোগীর Gender সিলেক্ট করুন");
       return;
     }
-    console.log("handleSubmit called");
     try {
       const pData = {
         name: patientData.name,
@@ -125,14 +126,18 @@ const CreateInvoice = () => {
         ladAdjustment: invoiceData.labAdjustment,
         testList: checkedTest,
       };
+      setLoadingState("sendingData")
+      setMsg("Invoice তৈরি হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন....")
       const response = await axios.post("http://localhost:3000/api/v1/invoice/new", {
         patientData: pData,
         invoiceData: iData,
       });
       if (response.data.success) {
+        setLoadingState(null)
+        setMsg(null)
         console.log("data added");
         console.log(response.data);
-        navigate("/invoice/print");
+        navigate("/invoice/print", {state: pData });
       }
     } catch (e) {
       if (e.response) {
@@ -144,12 +149,13 @@ const CreateInvoice = () => {
   };
   const closeModal = () => {
     setLoadingState(null);
-    setErrMsg("");
+    setMsg("");
   };
 
   return (
     <section className="flex mx-auto w-full">
-      {loadingState == "error" && <ErrorModal title={errMsg} onClose={closeModal} />}
+      {loadingState == "error" && <Modal type="error" title={msg} onClose={closeModal} />}
+      {loadingState == "sendingData" && <Modal type="processing" title={msg} />}
       <form onSubmit={handleSubmit}>
         <div className="w-full mx-20">
           <PatientData

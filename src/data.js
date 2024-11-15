@@ -39,3 +39,56 @@ export const testList = [
   { name: "X-ray", code: "t5", price: 600 },
   { name: "Echo", code: "t6", price: 100 },
 ];
+
+export const invoices = [
+  {
+    id: 1234567,
+    due: 200,
+    adjustment: 50,
+  },
+  {
+    id: 7774567,
+    due: 200,
+    adjustment: 50,
+  },
+  {
+    id: 5784567,
+    due: 200,
+    adjustment: 50,
+  },
+  {
+    id: 1804567,
+    due: 200,
+    adjustment: 50,
+  },
+  {
+    id: 7994567,
+    due: 200,
+    adjustment: 50,
+  },
+];
+
+export const InvoiceTableHead = ["ID", "ACTION", "Total", "Due", "Edit Data"];
+
+export const InvoiceTableRow = [
+  {
+    id: 787878,
+    total: 890,
+    due: 500,
+  },
+  {
+    id: 1223878,
+    total: 1000,
+    due: 700,
+  },
+  {
+    id: 999911,
+    total: 2000,
+    due: 100,
+  },
+  {
+    id: 767890,
+    total: 3000,
+    due: 100,
+  }
+];
