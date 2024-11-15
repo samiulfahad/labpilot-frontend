@@ -70,10 +70,10 @@ const PrintReceipt = () => {
       </button>
 
       <LabData />
-      <hr className="border-1 py-1 border-blue-gray-600" />
+      <hr className="border-1 py-1 border-black" />
       <PatientData />
       <TestTable tests={tests} />
-      <div className="flex items-center justify-between border-b-[1px] border-t-[1px] border-blue-gray-600"></div>
+      <div className="flex items-center justify-between border-b-[1px] border-t-[1px] border-black"></div>
       <div className="flex items-start justify-end">
         {/* <QRCode /> */}
         <AmountTable />

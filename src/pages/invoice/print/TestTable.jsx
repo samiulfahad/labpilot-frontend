@@ -4,10 +4,10 @@ const TestTable = ({tests}) => {
   return (
     <table className="w-full">
       <thead>
-        <tr className="bg-blue-gray-600">
+        <tr className="">
           <th className="p-1 font-semibold text-base text-left text-black">#</th>
           <th className="p-1 pl-0 font-semibold text-base text-left text-black">টেস্টের নাম</th>
-          <th className="p-1 pr-2 font-bold text-base  text-black text-right">মূল্য তালিকা</th>
+          <th className="p-1 pr-2 font-bold text-base  text-black text-right">মূল্য</th>
         </tr>
       </thead>
       <tbody>
