@@ -20,14 +20,14 @@ export const referrerList = [
     isDoctor: true,
     type: "fixed",
     discountAmount: 30,
-    id: 234,
+    id: "234",
   },
   {
     name: "Medical Unit, NIT Durgapur",
     isDoctor: false,
     type: "fixed",
     discountAmount: 0,
-    id: 789,
+    id: "738039",
   },
 ];
 
@@ -38,6 +38,60 @@ export const testList = [
   { name: "Ultra", code: "t4", price: 200 },
   { name: "X-ray", code: "t5", price: 600 },
   { name: "Echo", code: "t6", price: 100 },
+];
+
+
+export const checkedTest = [
+  {
+    name: "Test One",
+    code: "t1",
+    price: 300,
+  },
+  {
+    name: "Test Two",
+    code: "t2",
+    price: 400,
+  },
+  {
+    name: "Test Three",
+    code: "t3",
+    price: 600,
+  },
+  {
+    name: "Test Four",
+    code: "t4",
+    price: 350,
+  },
+  {
+    name: "Test Five",
+    code: "t5",
+    price: 350,
+  },
+  {
+    name: "Test Six",
+    code: "t6",
+    price: 800,
+  },
+  {
+    name: "Test Seven",
+    code: "t7",
+    price: 300,
+  },
+  {
+    name: "Test Eight",
+    code: "t8",
+    price: 1200,
+  },
+  {
+    name: "Test Nine",
+    code: "t9",
+    price: 1300,
+  },
+  {
+    name: "Test Ten",
+    code: "t10",
+    price: 100,
+  },
 ];
 
 export const invoices = [

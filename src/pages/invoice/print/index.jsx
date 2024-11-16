@@ -6,79 +6,35 @@ import LabData from "./LabData";
 import QRCode from "./QRCode";
 import TestTable from "./TestTable";
 import AmountTable from "./AmountTable";
+import { useLocation } from "react-router-dom";
 
 const PrintReceipt = () => {
-  const tests = [
-    {
-      name: "Test One",
-      code: "t1",
-      price: 300,
-    },
-    {
-      name: "Test Two",
-      code: "t2",
-      price: 400,
-    },
-    {
-      name: "Test Three",
-      code: "t3",
-      price: 600,
-    },
-    {
-      name: "Test Four",
-      code: "t4",
-      price: 350,
-    },
-    {
-      name: "Test Five",
-      code: "t5",
-      price: 350,
-    },
-    {
-      name: "Test Six",
-      code: "t6",
-      price: 800,
-    },
-    {
-      name: "Test Seven",
-      code: "t7",
-      price: 300,
-    },
-    {
-      name: "Test Eight",
-      code: "t8",
-      price: 1200,
-    },
-    {
-      name: "Test Nine",
-      code: "t9",
-      price: 1300,
-    },
-    {
-      name: "Test Ten",
-      code: "t10",
-      price: 100,
-    },
-  ];
+  const location = useLocation();
+  const { patientData, invoiceData, invoiceId, date } = location.state;
+  console.log(invoiceData);
+
   return (
-    <section className="print max-w-xl px-10 mx-auto pt-3 min-h-screen">
-      <button
-        onClick={() => window.print()}
-        className="btn mx-auto w-40 flex justify-center items-center my-4"
-      >
+    <section className="print relative max-w-xl px-10 mx-auto pt-3 min-h-screen">
+      <button onClick={() => window.print()} className="btn mx-auto w-40 flex justify-center items-center my-4">
         Print Invoice
       </button>
 
       <LabData />
       <hr className="border-1 py-1 border-black" />
-      <PatientData />
-      <TestTable tests={tests} />
+      <PatientData data={patientData} invoiceId={invoiceId} date={date} />
+      <TestTable tests={invoiceData.testList} />
       <div className="flex items-center justify-between border-b-[1px] border-t-[1px] border-black"></div>
       <div className="flex items-start justify-end">
         {/* <QRCode /> */}
-        <AmountTable />
+        <AmountTable
+          total={invoiceData.total}
+          discount={invoiceData.discount}
+          discountType={invoiceData.discountType}
+          labAdjustment={invoiceData.labAdjustment}
+          paid={invoiceData.paid}
+        />
       </div>
-      <div className="w-full flex justify-between items-center mt-[80px]">
+      <div className="absolute bottom-3 left-0 right-0 w-full flex justify-between items-center mt-[80px]">
         <p className="font-bold text-sm text-left text-gray-400">
           Managed by <a href="">Lab-Pilot.com</a>
         </p>

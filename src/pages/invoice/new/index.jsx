@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import TestList from "./TestList";
 import InvoiceData from "./InvoiceData";
@@ -73,7 +73,10 @@ const CreateInvoice = () => {
 
   const handleReferrer = (val) => {
     const referrer = JSON.parse(val);
-    setInvoiceData({ ...invoiceData, discountType: referrer.type, referrer });
+    setInvoiceData(state => {
+      return { ...state, discountType: referrer.type, referrer }
+    });
+    console.log(invoiceData);
     if (referrer.isDoctor) {
       setPatientData({ ...patientData, doctorName: referrer.name });
     }
@@ -122,22 +125,29 @@ const CreateInvoice = () => {
         referrerId: invoiceData.referrer.id,
         hasDiscount: invoiceData.hasDiscount,
         discount: invoiceData.discount,
+        discountType:invoiceData.discountType,
         paid: invoiceData.paid,
-        ladAdjustment: invoiceData.labAdjustment,
+        labAdjustment: invoiceData.labAdjustment,
         testList: checkedTest,
       };
-      setLoadingState("sendingData")
-      setMsg("Invoice তৈরি হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন....")
+      setLoadingState("sendingData");
+      setMsg("Invoice তৈরি হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন....");
       const response = await axios.post("http://localhost:3000/api/v1/invoice/new", {
         patientData: pData,
         invoiceData: iData,
       });
       if (response.data.success) {
-        setLoadingState(null)
-        setMsg(null)
-        console.log("data added");
+        setLoadingState(null);
+        setMsg(null);
         console.log(response.data);
-        navigate("/invoice/print", {state: pData });
+        navigate("/invoice/print", {
+          state: {
+            patientData: pData,
+            invoiceData: iData,
+            invoiceId: response.data.invoiceId,
+            date: response.data.date,
+          },
+        });
       }
     } catch (e) {
       if (e.response) {
@@ -157,7 +167,7 @@ const CreateInvoice = () => {
       {loadingState == "error" && <Modal type="error" title={msg} onClose={closeModal} />}
       {loadingState == "sendingData" && <Modal type="processing" title={msg} />}
       <form onSubmit={handleSubmit}>
-        <div className="w-full mx-20">
+        <div className="w-full pl-20">
           <PatientData
             data={patientData}
             referrerList={referrerList}
@@ -166,7 +176,7 @@ const CreateInvoice = () => {
           />
         </div>
 
-        <div className="w-full mx-20 py-4">
+        <div className="w-full pl-20 py-4">
           <TestList list={testList} onChange={handleCheckedTest} />
         </div>
 
@@ -183,7 +193,9 @@ const CreateInvoice = () => {
           <button type="submit" className="btn">
             Create Invoice
           </button>
-          <button className="btn">Cancel</button>
+          <Link className="btn" to="/">
+            Cancel
+          </Link>
         </div>
       </form>
     </section>

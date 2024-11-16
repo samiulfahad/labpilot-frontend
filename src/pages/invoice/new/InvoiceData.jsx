@@ -6,11 +6,11 @@ const InvoiceData = (props) => {
   const due = netAmount - paid;
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
+    <div className="bg-blue-gray-500 w-auto text-white rounded-lg shadow-lg p-6">
       <h2 className="text-2xl text-center font-semibold mb-4">Invoice Summary</h2>
       <div className="flex justify-between mb-2">
-        <p className="text-gray-700">মোট:</p>
-        <p className="">{total} টাকা</p>
+        <p>মোট:</p>
+        <p>{total} টাকা</p>
       </div>
 
       {referrer && referrer.discountAmount !== 0 && (
@@ -34,14 +34,14 @@ const InvoiceData = (props) => {
       {hasDiscount && referrer && (
         <>
           <div className="flex justify-between text-sm mb-2 items-center">
-            <label htmlFor="discount" className="text-gray-700">
+            <label htmlFor="discount">
               ডিস্কাউন্ট:
             </label>
             <div className="flex items-center">
               <input
                 type="number"
                 id="discount"
-                className="p-1 w-20 text-right border border-gray-300 rounded-md mr-2"
+                className="p-1 w-20 text-right text-black outline-none border border-gray-300 rounded-md mr-2"
                 value={discount}
                 onChange={(e) => props.onDiscount(e.target.value, referrer)}
               />
@@ -50,20 +50,20 @@ const InvoiceData = (props) => {
           </div>
 
           <div className="flex justify-between text-sm mb-2">
-            <p className="text-gray-700">ডিস্কাউন্ট পরবর্তী মূল্য:</p>
+            <p>ডিস্কাউন্ট পরবর্তী মূল্য:</p>
             <p className="">{afterDiscount} টাকা</p>
           </div>
         </>
       )}
 
       <div className="flex justify-between mb-2 text-sm items-center">
-        <label htmlFor="labAdjustment" className="text-gray-700">
+        <label htmlFor="labAdjustment">
           ল্যাব প্রদত্ত ছাড়:
         </label>
         <div className="flex items-center">
           <input
             type="number"
-            className="p-1 border w-20 text-right border-gray-300 rounded-md mr-2"
+            className="p-1 border w-20 outline-none text-black text-right border-gray-300 rounded-md mr-2"
             value={labAdjustment}
             onChange={(e) => props.onLabAdjustment(parseFloat(e.target.value) || 0)}
           />
@@ -71,18 +71,18 @@ const InvoiceData = (props) => {
         </div>
       </div>
       <div className="flex justify-between mb-2">
-        <p className="text-gray-700 text-md font-semibold">Net Amount:</p>
+        <p className="text-md font-semibold">Net Amount:</p>
         <p className="font-semibold text-md">{netAmount} টাকা</p>
       </div>
       <hr className="my-2 border-t border-gray-300" />
       <div className="flex justify-between mb-2 items-center">
-        <label htmlFor="paid" className="text-gray-700">
+        <label htmlFor="paid">
           নগদ:
         </label>
         <div className="flex items-center">
           <input
             type="number"
-            className="p-1 border w-20 text-right border-gray-300 rounded-md mr-2"
+            className="p-1 border w-20 outline-none text-black text-right border-gray-300 rounded-md mr-2"
             value={paid}
             onChange={(e) => props.onPay(parseFloat(e.target.value) || 0)}
           />
@@ -90,7 +90,7 @@ const InvoiceData = (props) => {
         </div>
       </div>
 
-      <div className="flex justify-between text-red-700 mb-2">
+      <div className="flex justify-between text-white mb-2">
         <p className="font-semibold">বাকি:</p>
         <p className="font-semibold">{due} টাকা</p>
       </div>

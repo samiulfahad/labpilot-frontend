@@ -1,20 +1,23 @@
-import React from "react"
+/** @format */
 
-const PatidentData = () => {
+import React from "react";
+
+const PatidentData = (props) => {
+  const { name, age, contact, doctorName } = props.data;
   return (
     <div className="flex items-center justify-between mb-2">
       <div>
-        <p className="text-[14px] text-black">রোগীর নামঃ</p>
-        <p className="text-[14px] text-black">বয়সঃ</p>
-        <p className="text-[14px] text-black">মোবাইলঃ</p>
+        <p className="text-[14px] text-black">নামঃ {name}</p>
+        <p className="text-[14px] text-black">বয়সঃ {age}</p>
+        <p className="text-[14px] text-black">মোবাইলঃ {contact}</p>
       </div>
       <div>
-        <p className="text-[12px] text-black">Invoice ID: xxxx</p>
-        <p className="text-[12px] text-black">তারিখঃ 13th April 2024</p>
-        <p className="text-[12px] text-black">ডাক্তার: Br. XXXh dfgs sdhfksd</p>
+        <p className="text-[12px] text-black">Invoice ID: {props.invoiceId}</p>
+        <p className="text-[12px] text-black">তারিখঃ {props.date}</p>
+        <p className="text-[12px] text-black">ডাক্তার: {doctorName}</p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PatidentData
+export default PatidentData;
