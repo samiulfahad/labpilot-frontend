@@ -15,13 +15,21 @@ const PrintReceipt = () => {
 
   return (
     <section className="print relative max-w-xl px-10 mx-auto pt-3 min-h-screen">
+      {location.state.successMsg && <p className="hide py-2 text-center flex justify-center items-center">{ location.state.successMsg}</p>}
       <button onClick={() => window.print()} className="btn mx-auto w-40 flex justify-center items-center my-4">
         Print Invoice
       </button>
 
       <LabData />
       <hr className="border-1 py-1 border-black" />
-      <PatientData data={patientData} invoiceId={invoiceId} date={date} />
+      <PatientData
+        name={patientData.name}
+        age={patientData.age}
+        contact={patientData.contact}
+        doctorName={patientData.doctorName}
+        invoiceId={invoiceId}
+        date={date}
+      />
       <TestTable tests={invoiceData.testList} />
       <div className="flex items-center justify-between border-b-[1px] border-t-[1px] border-black"></div>
       <div className="flex items-start justify-end">

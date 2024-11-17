@@ -19,36 +19,32 @@ function Table(props) {
           </tr>
         </thead>
         <tbody>
-          {props.rows.map(({ id, total, due }, index) => {
+          {props.rows.map(({ invoiceId, name, netAmount, paid, notified }, index) => {
             const isLast = index === props.rows.length - 1;
             const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
 
             return (
-              <tr key={id}>
+              <tr key={invoiceId}>
+                <td className={classes}>{invoiceId}</td>
+                <td className={classes}>{name}</td>
+                {netAmount === paid ? (
+                  <td className={classes}>পরিশোধিত </td>
+                ) : (
+                  <td className={classes}>
+                    <p>জমা- {paid}</p>
+                    <p className="text-red-500">বাকি- {netAmount - paid}</p>
+                  </td>
+                )}
+
+                <td className={classes}>{notified ? "হ্যাঁ" : "না"}</td>
+
                 <td className={classes}>
-                  <Typography variant="small" color="blue-gray" className="font-normal">
-                    {id}
-                  </Typography>
-                </td>
-                <td className={classes}>
-                  <Typography as="a" href="#" variant="small" color="blue-gray" className="tableBtn">
-                    <Link to="/invoice/print">View/Print</Link>
-                  </Typography>
-                </td>
-                <td className={classes}>
-                  <Typography variant="small" color="blue-gray" className="font-normal">
-                    {total}
-                  </Typography>
-                </td>
-                <td className={classes}>
-                  <Typography variant="small" color="blue-gray" className="font-medium text-red-400">
-                    {due}
-                  </Typography>
-                </td>
-                <td className={classes}>
-                  <Typography as="a" href="#" variant="small" color="blue-gray" className="tableBtn">
+                  <Link to="/invoice/print" className="tableBtn mr-2 text-sm py-1 px-2">
+                    View
+                  </Link>
+                  <Link to="/invoice/edit" className="tableBtn text-sm py-1 px-2">
                     Edit
-                  </Typography>
+                  </Link>
                 </td>
               </tr>
             );

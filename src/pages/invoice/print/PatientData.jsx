@@ -2,8 +2,7 @@
 
 import React from "react";
 
-const PatidentData = (props) => {
-  const { name, age, contact, doctorName } = props.data;
+const PatidentData = ({ name, age, contact, doctorName, date, invoiceId }) => {
   return (
     <div className="flex items-center justify-between mb-2">
       <div>
@@ -12,8 +11,8 @@ const PatidentData = (props) => {
         <p className="text-[14px] text-black">মোবাইলঃ {contact}</p>
       </div>
       <div>
-        <p className="text-[12px] text-black">Invoice ID: {props.invoiceId}</p>
-        <p className="text-[12px] text-black">তারিখঃ {props.date}</p>
+        <p className="text-[12px] text-black">Invoice ID: {invoiceId}</p>
+        <p className="text-[12px] text-black">তারিখঃ {date}</p>
         <p className="text-[12px] text-black">ডাক্তার: {doctorName}</p>
       </div>
     </div>

@@ -73,8 +73,8 @@ const CreateInvoice = () => {
 
   const handleReferrer = (val) => {
     const referrer = JSON.parse(val);
-    setInvoiceData(state => {
-      return { ...state, discountType: referrer.type, referrer }
+    setInvoiceData((state) => {
+      return { ...state, discountType: referrer.type, referrer };
     });
     console.log(invoiceData);
     if (referrer.isDoctor) {
@@ -122,10 +122,11 @@ const CreateInvoice = () => {
       };
       const iData = {
         total: invoiceData.total,
+        netAmount: invoiceData.netAmount,
         referrerId: invoiceData.referrer.id,
         hasDiscount: invoiceData.hasDiscount,
         discount: invoiceData.discount,
-        discountType:invoiceData.discountType,
+        discountType: invoiceData.discountType,
         paid: invoiceData.paid,
         labAdjustment: invoiceData.labAdjustment,
         testList: checkedTest,
@@ -146,10 +147,15 @@ const CreateInvoice = () => {
             invoiceData: iData,
             invoiceId: response.data.invoiceId,
             date: response.data.date,
+            successMsg: "ইনভয়েসটি তৈরি হয়েছে। ইনভয়েসটি প্রিন্ট করতে নিচের বাটনে ক্লিক করুন"
           },
         });
       }
     } catch (e) {
+      setLoadingState("error");
+      setMsg(
+        "ইনভয়েস তৈরি করা সম্ভব হয়নি। অনুগ্রহ করে পেইজটি রিফ্রেশ করে পুনরায় চেষ্টা করুন। বারবার একই সমস্যা দেখা দিলে আমাদের সাথে যোগাযোগ করুন 01910121929 এই নাম্বারে"
+      );
       if (e.response) {
         console.log(e.response.data);
       } else {

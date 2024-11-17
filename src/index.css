@@ -8,6 +8,13 @@
   @apply px-4 py-2 text-white bg-blue-gray-500 rounded-md hover:bg-white hover:text-blue-gray-500 duration-200 border-2 border-blue-gray-500 font-bold text-lg;
 }
 
+.bgColor {
+  @apply bg-blue-gray-500
+}
+.textColor {
+  @apply text-gray-300
+}
+
 .btn-sm {
   @apply px-2 py-1 text-white bg-blue-gray-500 rounded-md hover:bg-white hover:text-blue-gray-500 duration-200 border-2 border-blue-gray-500;
 }
@@ -39,6 +46,9 @@
     top: 0;
   }
   .btn {
+    display: none;
+  }
+  .hide {
     display: none;
   }
 }

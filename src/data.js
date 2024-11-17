@@ -122,7 +122,7 @@ export const invoices = [
   },
 ];
 
-export const InvoiceTableHead = ["ID", "ACTION", "Total", "Due", "Edit Data"];
+export const InvoiceTableHead = ["Invoice ID", "Amount", "Delivery", "View", "Edit"];
 
 export const InvoiceTableRow = [
   {
