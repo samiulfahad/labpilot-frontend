@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Table from "./Table";
 import axios from "axios";
 import Modal from "../../../components/modal";
+import { API_URL } from "../../../../config";
 
 const AllInvoices = () => {
   const [invoices, setInvoices] = useState([]);
@@ -14,20 +15,20 @@ const AllInvoices = () => {
 
   const fetchInvoices = async (forceFetch = false) => {
     try {
-      if (!forceFetch) {
-        // Avoid refetching if data already exists
-        const cachedInvoices = localStorage.getItem("invoices");
-        if (cachedInvoices) {
-          setInvoices(JSON.parse(cachedInvoices));
-          setLoadingState(null);
-          setMsg(null);
-          return;
-        }
-      }
+      // if (!forceFetch) {
+      //   // Avoid refetching if data already exists
+      //   const cachedInvoices = localStorage.getItem("invoices");
+      //   if (cachedInvoices) {
+      //     setInvoices(JSON.parse(cachedInvoices));
+      //     setLoadingState(null);
+      //     setMsg(null);
+      //     return;
+      //   }
+      // }
 
       // Fetch new data if no cache or forced
-      setLoadingState("fetchingData")
-      const response = await axios.get("http://localhost:3000/api/v1/invoice/all");
+      setLoadingState("fetchingData");
+      const response = await axios.get(API_URL + "/v1/invoice/all");
       if (response.data.success) {
         setInvoices(response.data.invoices);
         localStorage.setItem("invoices", JSON.stringify(response.data.invoices)); // Cache data
@@ -53,21 +54,21 @@ const AllInvoices = () => {
   }, []); // Runs once when the component mounts
 
   const refreshData = () => {
-    fetchInvoices(true)
-  }
+    fetchInvoices(true);
+  };
   const closeModal = () => {
     setLoadingState(null);
     setMsg(null);
   };
 
   return (
-    <div className="w-4/5 mx-auto mt-4">
-      <button className="btn" onClick={refreshData}>
+    <div className="w-full pl-4 mx-auto mt-4">
+      {/* <button className="btn" onClick={refreshData}>
         রিফ্রেশ
-      </button>
+      </button> */}
       {loadingState === "error" && <Modal type="error" title={msg} onClose={closeModal} />}
       {loadingState === "fetchingData" && <Modal type="processing" title={msg} />}
-      <Table head={InvoiceTableHead} rows={invoices} />
+      <Table type="AllInvoices" head={InvoiceTableHead} rows={invoices} />
     </div>
   );
 };

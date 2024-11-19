@@ -9,6 +9,7 @@ import InvoiceData from "./InvoiceData";
 import PatientData from "./PatientData";
 import Modal from "../../../components/modal";
 import { testList, referrerList } from "../../../data";
+import { API_URL } from "../../../../config";
 
 const CreateInvoice = () => {
   const [checkedTest, setCheckedTest] = useState([]);
@@ -133,7 +134,7 @@ const CreateInvoice = () => {
       };
       setLoadingState("sendingData");
       setMsg("Invoice তৈরি হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন....");
-      const response = await axios.post("http://localhost:3000/api/v1/invoice/new", {
+      const response = await axios.post(API_URL + "/v1/invoice/new", {
         patientData: pData,
         invoiceData: iData,
       });
@@ -147,7 +148,7 @@ const CreateInvoice = () => {
             invoiceData: iData,
             invoiceId: response.data.invoiceId,
             date: response.data.date,
-            successMsg: "ইনভয়েসটি তৈরি হয়েছে। ইনভয়েসটি প্রিন্ট করতে নিচের বাটনে ক্লিক করুন"
+            successMsg: "ইনভয়েসটি তৈরি হয়েছে। ইনভয়েসটি প্রিন্ট করতে নিচের বাটনে ক্লিক করুন",
           },
         });
       }

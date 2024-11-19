@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Layout from "./components/layout/Layout";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/home";
@@ -16,6 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/invoice/new" element={<NewInvoice />} />
         <Route path="/invoice/all" element={<AllInvoices />} />
+
         <Route path="/invoice/print" element={<PrintReceipt />} />
         <Route path="/lab-test" element={<LabTest />} />
         <Route path="/send-sms" element={<SendSMS />} />
