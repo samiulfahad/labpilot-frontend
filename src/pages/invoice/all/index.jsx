@@ -8,6 +8,7 @@ import { API_URL } from "../../../../config";
 
 const AllInvoices = () => {
   const [invoices, setInvoices] = useState([]);
+  const [activeInvoice, setActiveInvoice] = useState(null);
   const [loadingState, setLoadingState] = useState(null);
   const [msg, setMsg] = useState("ইনভয়েসলিস্ট লোড হচ্ছে");
 
@@ -53,12 +54,27 @@ const AllInvoices = () => {
     fetchInvoices();
   }, []); // Runs once when the component mounts
 
+  const openModal = (invoice, modalType) => {
+    if (modalType === "dueCollection") {
+      setActiveInvoice(invoice);
+      setLoadingState("dueCollectionModal");
+      setMsg("বকেয়া বিল কালেকশন");
+    }
+  };
+
+  const collectDue = () => {
+    setLoadingState("processingDueCollection");
+    setMsg("ইনভয়েসটির পেমেন্ট তথ্য আপডেট করা হচ্ছে");
+    console.log(activeInvoice);
+  };
+
   const refreshData = () => {
     fetchInvoices(true);
   };
   const closeModal = () => {
     setLoadingState(null);
     setMsg(null);
+    setActiveInvoice(null);
   };
 
   return (
@@ -67,8 +83,24 @@ const AllInvoices = () => {
         রিফ্রেশ
       </button> */}
       {loadingState === "error" && <Modal type="error" title={msg} onClose={closeModal} />}
-      {loadingState === "fetchingData" && <Modal type="processing" title={msg} />}
-      <Table type="AllInvoices" head={InvoiceTableHead} rows={invoices} />
+      {(loadingState === "fetchingData" || loadingState === "processingDueCollection") && (
+        <Modal type="processing" title={msg} />
+      )}
+      {loadingState === "dueCollectionModal" && (
+        <Modal
+          type="dueCollection"
+          title={msg}
+          name={activeInvoice.name}
+          contact={activeInvoice.contact}
+          invoiceId={activeInvoice.invoiceId}
+          netAmount={activeInvoice.netAmount}
+          paid={activeInvoice.paid}
+          onDueCollection={collectDue}
+          onClosingModal={closeModal}
+        />
+      )}
+
+      <Table type="AllInvoices" head={InvoiceTableHead} rows={invoices} onOpenModal={openModal} />
     </div>
   );
 };

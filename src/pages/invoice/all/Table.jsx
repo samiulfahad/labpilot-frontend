@@ -1,6 +1,6 @@
 /** @format */
 
-import { Card, Typography } from "@material-tailwind/react";
+import { Card } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 
 function Table(props) {
@@ -13,9 +13,7 @@ function Table(props) {
           <tr>
             {props.head.map((head) => (
               <th key={head} className="border-b border-blue-gray-400 bgColor p-4">
-                <p className="text-gray-300 font-bold">
-                  {head}
-                </p>
+                <p className="text-gray-300 font-bold">{head}</p>
               </th>
             ))}
           </tr>
@@ -48,7 +46,10 @@ function Table(props) {
                           {/* <p>জমা- {item.paid}</p> */}
                           <p className="text-red-500">বাকি- {item.netAmount - item.paid}</p>
                         </div>
-                        <button onClick={props.onDueCollection} className={tableBtn + " text-[11px]"}>
+                        <button
+                          onClick={() => props.onOpenModal(item, "dueCollection")}
+                          className={tableBtn + " text-[11px]"}
+                        >
                           Collect Due
                         </button>
                       </td>
