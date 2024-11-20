@@ -6,8 +6,8 @@ const InvoiceData = (props) => {
   const due = netAmount - paid;
 
   return (
-    <div className="bg-blue-gray-500 w-auto text-white rounded-lg shadow-lg p-6">
-      <h2 className="text-2xl text-center font-semibold mb-4">Invoice Summary</h2>
+    <div className="bg-blue-gray-500 w-auto text-white rounded-lg shadow-lg px-4 py-2">
+      {/* <h2 className="text-2xl text-center font-semibold mb-4">Invoice Summary</h2> */}
       <div className="flex justify-between mb-2">
         <p>মোট:</p>
         <p>{total} টাকা</p>

@@ -18,9 +18,10 @@ const Modal = (props) => {
           )}
 
           {type === "dueCollection" && (
-            <div>
+            <div className="w-3/5 mx-auto">
+              <p className="text-md font-bold text-center">{title}</p>
               <div>
-                <p>Invoice ID: {props.invoiceId}</p>
+                <p className="text-sm">Invoice ID: {props.invoiceId}</p>
                 <p>নামঃ {props.name}</p>
                 <p>মোবাইলঃ {props.contact}</p>
                 <p className="pt-4">মোটঃ {props.netAmount}</p>
@@ -30,6 +31,30 @@ const Modal = (props) => {
               <div className="flex justify-between mt-4">
                 <button onClick={props.onDueCollection} className="btn-sm">
                   Collect Due
+                </button>
+                <button onClick={props.onClosingModal} className="btn-sm !bg-white !text-blue-gray-500">
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
+
+          {type === "reportDelivery" && (
+            <div className="w-4/5 mx-auto">
+              <p className="text-md font-bold text-center">{title}</p>
+              <div className="text-justify">
+                <p className="text-sm">Invoice ID: {props.invoiceId}</p>
+                <p>নামঃ {props.name}</p>
+                <p>মোবাইলঃ {props.contact}</p>
+                {props.netAmount === props.paid && <p className="text-green-500 font-bold">সম্পূর্ণ টাকা পরিশোধিত</p>}
+                {props.netAmount > props.paid && <p className="text-red-500 font-bold">বকেয়াঃ {props.netAmount - props.paid}</p>}
+                <p className="text-justify text-sm"> এই ইনভয়েসের অন্তর্ভুক্ত রিপোর্ট কাস্টমারকে ডেলিভারি দিয়েছেন? নিশ্চিত করতে Confirm বাটনে ক্লিক
+                  করুন
+                </p>
+              </div>
+              <div className="flex justify-between mt-4">
+                <button onClick={props.onReportDelivery} className="btn-sm">
+                  Confirm
                 </button>
                 <button onClick={props.onClosingModal} className="btn-sm !bg-white !text-blue-gray-500">
                   Close
