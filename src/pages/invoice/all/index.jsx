@@ -29,7 +29,7 @@ const AllInvoices = () => {
 
       // Fetch new data if no cache or forced
       setLoadingState("fetchingData");
-      const response = await axios.get(API_URL + "/v1/invoice/all");
+      const response = await axios.get(API_URL + "/api/v1/invoice/all");
       if (response.data.success) {
         setInvoices(response.data.invoices);
         localStorage.setItem("invoices", JSON.stringify(response.data.invoices)); // Cache data
@@ -62,10 +62,35 @@ const AllInvoices = () => {
     }
   };
 
-  const collectDue = () => {
+  const collectDue = async () => {
     setLoadingState("processingDueCollection");
     setMsg("ইনভয়েসটির পেমেন্ট তথ্য আপডেট করা হচ্ছে");
     console.log(activeInvoice);
+
+    try {
+      const response = await axios.put(API_URL + "/api/v1/invoice/update", {
+        update: "paid",
+        _id: activeInvoice._id,
+      });
+      if (response.data.success === true) {
+        setLoadingState("paymentUpdated");
+        setMsg("ইনভয়েসটি সফলভাবে আপডেট হয়েছে");
+        const updatedInvoices = invoices.map((item) => {
+          if (item._id === activeInvoice._id) {
+            item.paid = activeInvoice.netAmount;
+          }
+          return item;
+        });
+        // Hey ChatGPT, Why it doesnot reflect on my screen??????????
+        setInvoices(updatedInvoices);
+      }
+    } catch (e) {
+      setLoadingState("error");
+      setMsg(
+        "ইনভয়েসটি আপডেট করা জায়নি। দয়া করে ইন্টারনেট সংযোগ চেক করুন এবং আবার চেষ্টা করুন। একই সমস্যা বারবার হলে আমাদের সাথে যোগাযোগ করিন 01910 121 929 এই নাম্বারে"
+      );
+      console.log(e);
+    }
   };
 
   const refreshData = () => {
@@ -83,6 +108,7 @@ const AllInvoices = () => {
         রিফ্রেশ
       </button> */}
       {loadingState === "error" && <Modal type="error" title={msg} onClose={closeModal} />}
+      {loadingState === "paymentUpdated" && <Modal type="success" title={msg} onClose={closeModal} />}
       {(loadingState === "fetchingData" || loadingState === "processingDueCollection") && (
         <Modal type="processing" title={msg} />
       )}

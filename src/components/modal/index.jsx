@@ -5,7 +5,6 @@ import Spinner from "./Spinner";
 
 const Modal = (props) => {
   const { type, title, onClose } = props;
-  console.log(props.type);
   return (
     <Fragment>
       <div className="fixed inset-0 bg-blue-gray-800 bg-opacity-30 backdrop-blur-lg z-20 flex justify-center items-center">
@@ -29,11 +28,17 @@ const Modal = (props) => {
                 <p className="pt-2 text-red-500 font-bold">বাকিঃ {props.netAmount - props.paid}</p>
               </div>
               <div className="flex justify-between mt-4">
-                <button onClick={props.onDueCollection} className="btn-sm">Collect Due</button>
-                <button onClick={props.onClosingModal} className="btn-sm !bg-white !text-blue-gray-500">Close</button>
+                <button onClick={props.onDueCollection} className="btn-sm">
+                  Collect Due
+                </button>
+                <button onClick={props.onClosingModal} className="btn-sm !bg-white !text-blue-gray-500">
+                  Close
+                </button>
               </div>
             </div>
           )}
+
+          {type === "success" && <p className="text-md text-center text-blue-gray-500">{title}</p>}
 
           <div className="flex space-x-8">
             {onClose && (

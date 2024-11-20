@@ -134,7 +134,7 @@ const CreateInvoice = () => {
       };
       setLoadingState("sendingData");
       setMsg("Invoice তৈরি হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন....");
-      const response = await axios.post(API_URL + "/v1/invoice/new", {
+      const response = await axios.post(API_URL + "/api/v1/invoice/new", {
         patientData: pData,
         invoiceData: iData,
       });
