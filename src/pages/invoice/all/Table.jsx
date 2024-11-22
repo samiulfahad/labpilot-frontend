@@ -70,11 +70,8 @@ function Table(props) {
                     </td>
 
                     <td className={classes}>
-                      <Link to="/invoice/print" className="tableBtn mr-2 text-sm py-1 px-2">
-                        View
-                      </Link>
-                      <Link to="/invoice/print" className="tableBtn mr-2 text-sm py-1 px-2">
-                        Edit
+                      <Link to="/invoice/action" state={item} className="tableBtn mr-2 text-sm py-1 px-2">
+                        Action
                       </Link>
                     </td>
                   </>

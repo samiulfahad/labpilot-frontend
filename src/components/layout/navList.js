@@ -1,15 +1,13 @@
 const navList = [
-  { label: "হিসাব", path: "/" },
-  { label: "ইনভয়েস তৈরি", path: "/invoice/new" },
-  { label: "All Invoices", path: "/invoice/all" },
-  { label: "Invoice Managenent", path: "/invoice/manage" },
-  { label: "ল্যাব টেস্ট", path: "/lab-test" },
-  { label: "SMS পাঠান", path: "/send-sms" },
-  { label: "রেফারেন্সকারী", path: "/referrer" },
-  { label: "সেটিংস", path: "/settings" },
-  { label: "রিচার্জ", path: "/recharge" },
-  { label: "যোগাযোগ", path: "/contact" },
-  { label: "Modal", path: "/modal" },
+  { label: "Day-End Cash Memo", path: "/" },
+  { label: "Invoice - New", path: "/invoice/new" },
+  { label: "Invoices - All", path: "/invoice/all" },
+  { label: "Lab Test", path: "/lab-test" },
+  { label: "Send SMS", path: "/send-sms" },
+  { label: "Referrer", path: "/referrer" },
+  { label: "Settings", path: "/settings" },
+  { label: "Contact Us", path: "/contact" },
+  { label: "Support", path: "/customer-care" },
 ];
 
 export default navList
