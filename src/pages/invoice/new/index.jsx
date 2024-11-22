@@ -145,9 +145,7 @@ const CreateInvoice = () => {
         navigate("/invoice/print", {
           state: {
             patientData: pData,
-            invoiceData: iData,
-            invoiceId: response.data.invoiceId,
-            date: response.data.date,
+            invoiceData: { ...iData, invoiceId: response.data.invoiceId },
             successMsg: "ইনভয়েসটি তৈরি হয়েছে। ইনভয়েসটি প্রিন্ট করতে নিচের বাটনে ক্লিক করুন",
           },
         });

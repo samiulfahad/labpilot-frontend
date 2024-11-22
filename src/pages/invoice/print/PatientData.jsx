@@ -1,6 +1,7 @@
 /** @format */
 
 import React from "react";
+import ConvertDate from "../action/ConvertDate";
 
 const PatidentData = ({ name, age, contact, doctorName, date, invoiceId }) => {
   return (
@@ -12,7 +13,7 @@ const PatidentData = ({ name, age, contact, doctorName, date, invoiceId }) => {
       </div>
       <div>
         <p className="text-[12px] text-black">Invoice ID: {invoiceId}</p>
-        <p className="text-[12px] text-black">তারিখঃ {date}</p>
+        <p className="text-[12px] text-black">তারিখঃ <ConvertDate dateString={invoiceId}/> </p>
         <p className="text-[12px] text-black">ডাক্তার: {doctorName}</p>
       </div>
     </div>

@@ -6,7 +6,7 @@
 
 @layer base {
   body {
-    @apply text-blue-gray-500; /* Replace with your preferred color */
+    @apply text-blue-gray-700; /* Replace with your preferred color */
   }
 }
 
@@ -30,7 +30,7 @@
 }
 
 .active {
-  @apply bg-blue-gray-700 text-white font-bold;
+  @apply bg-blue-gray-900 text-white font-bold;
 }
 
 

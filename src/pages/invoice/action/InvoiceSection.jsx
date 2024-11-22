@@ -1,7 +1,7 @@
 /** @format */
 
 import React from "react";
-import InvoiceDate from "./InvoiceDate";
+import InvoiceDate from "./ConvertDate";
 
 const InvoiceSection = (props) => {
   const invoice = props.invoice;

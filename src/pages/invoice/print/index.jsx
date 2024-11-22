@@ -1,21 +1,32 @@
 /** @format */
 
-import React from "react";
+import React, { useEffect } from "react";
 import PatientData from "./PatientData";
 import LabData from "./LabData";
 import QRCode from "./QRCode";
 import TestTable from "./TestTable";
 import AmountTable from "./AmountTable";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const PrintReceipt = () => {
+  const navigate = useNavigate();
   const location = useLocation();
-  const { patientData, invoiceData, invoiceId, date } = location.state;
-  console.log(invoiceData);
+
+  // Safely access state with a fallback
+  const state = location?.state || {};
+  const { patientData, invoiceData, successMsg } = state;
+
+  console.log(patientData);
+
+  useEffect(() => {
+    if (!patientData || !invoiceData) {
+      navigate("/invoice/new");
+    }
+  }, [location]);
 
   return (
     <section className="print relative max-w-xl px-10 mx-auto pt-3 min-h-screen">
-      {location.state.successMsg && <p className="hide py-2 text-center flex justify-center items-center">{ location.state.successMsg}</p>}
+      {successMsg && <p className="hide py-2 text-center flex justify-center items-center">{successMsg}</p>}
       <button onClick={() => window.print()} className="btn mx-auto w-40 flex justify-center items-center my-4">
         Print Invoice
       </button>
@@ -27,8 +38,7 @@ const PrintReceipt = () => {
         age={patientData.age}
         contact={patientData.contact}
         doctorName={patientData.doctorName}
-        invoiceId={invoiceId}
-        date={date}
+        invoiceId={invoiceData.invoiceId}
       />
       <TestTable tests={invoiceData.testList} />
       <div className="flex items-center justify-between border-b-[1px] border-t-[1px] border-black"></div>

@@ -8,7 +8,7 @@ const Nav = () => {
   return (
     <>
     
-      <div className="bg-blue-gray-800 text-gray-200 text-sm mt-4 font-bold rounded-full mx-auto flex justify-center items-center h-24 w-24">
+      <div className="bg-blue-gray-900 text-gray-200 text-sm mt-4 font-bold rounded-full mx-auto flex justify-center items-center h-24 w-24">
         <Link to={"/recharge"} className="mx-auto text-center">
           <p>৳500000</p>
           <p className="">Recharge</p>
@@ -18,7 +18,7 @@ const Nav = () => {
         <p>Total Invoice (November): 125</p>
         <p>FREE after 100 More</p>
       </div>
-      <div className="flex flex-col my-2">
+      <div className="flex flex-col justify-center items-center my-2">
         {navList.map((item, index) => (
           <NavItem key={index} label={item.label} path={item.path} />
         ))}
