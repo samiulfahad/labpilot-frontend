@@ -16,13 +16,16 @@ const PrintReceipt = () => {
   const state = location?.state || {};
   const { patientData, invoiceData, successMsg } = state;
 
-  console.log(patientData);
-
   useEffect(() => {
     if (!patientData || !invoiceData) {
+      console.log(11111);
       navigate("/invoice/new");
     }
   }, [location]);
+
+  if (!patientData || !invoiceData) {
+    return null;
+  }
 
   return (
     <section className="print relative max-w-xl px-10 mx-auto pt-3 min-h-screen">

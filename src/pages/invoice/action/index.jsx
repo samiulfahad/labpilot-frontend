@@ -8,6 +8,7 @@ import { API_URL } from "../../../../config";
 import Modal from "../../../components/modal";
 import InvoiceSection from "./InvoiceSection";
 import LabReports from "./LabReports";
+import TriggerAction from "./TriggerAction";
 
 const Action = () => {
   const location = useLocation();
@@ -24,7 +25,7 @@ const Action = () => {
 
   const fetchData = async () => {
     try {
-      setLoadingState("fetchingData");
+      setLoadingState("processing");
       setMsg("ইনভয়েসের তথ্য লোড হচ্ছে");
       const response = await axios.get(API_URL + "/api/v1/invoice", {
         params: { _id: id },
@@ -85,7 +86,7 @@ const Action = () => {
 
   const handleUpdate = async () => {
     try {
-      setLoadingState("updating");
+      setLoadingState("processing");
       setMsg("ইনভয়েসের তথ্যটি আপডেট করা হচ্ছে");
       const response = await axios.put(API_URL + "/api/v1/invoice/update", {
         _id: id,
@@ -118,7 +119,7 @@ const Action = () => {
 
   const handlePrint = async () => {
     try {
-      setLoadingState("fetchingData");
+      setLoadingState("processing");
       setMsg("ইনভয়েসটি প্রিন্ট করার জন্য প্রস্তুত হচ্ছে");
 
       // Fetch the latest data
@@ -170,6 +171,52 @@ const Action = () => {
     }
   };
 
+  const handleActions = async (update) => {
+    let msg = null;
+    let processingMsg = null;
+    let updatedField = {};
+    if (update === "payment" || update === "collectDue") {
+      if (update === "payment") {
+        setLoadingState("dueCollectionModal");
+        return null;
+      }
+      if (update === "collectDue") {
+        processingMsg = "পেমেন্ট তথ্য আপডেট করা হচ্ছে";
+      }
+      updatedField = { paid: invoice.netAmount };
+
+      if (update === "collectDue") {
+        update = "payment";
+      }
+    } else if (update === "sendSMS") {
+      processingMsg = "কাস্টমারকে SMS প্রেরণ করা হচ্ছে";
+      updatedField = { notified: true };
+    } else if (update === "reportDelivery") {
+      processingMsg = "রিপোর্ট ডেলিভারি তথ্য আপডেট করা হচ্ছে";
+      updatedField = { delivered: true };
+    } else {
+      return null;
+    }
+
+    try {
+      setLoadingState("processing");
+      setMsg(processingMsg);
+      const response = await axios.put(API_URL + "/api/v1/invoice/update", {
+        _id: invoice._id,
+        update: update,
+      });
+      if (response.data.success) {
+        setLoadingState("success");
+        setMsg("তথ্যটি সফলভাবে আপডেট করা হয়েছে");
+        // Hey ChatGPT, How can I make this update dynamic?
+        setInvoice({ ...invoice, ...updatedField });
+      }
+    } catch (e) {
+      setLoadingState("error");
+      setMsg("তথ্যটি আপডেট করা যায়নি। অনুগ্রহ করে পেইজটি Refresh করে আবার চেষ্টা করুন");
+    }
+  };
+
   const closeModal = () => {
     setLoadingState(null);
     setMsg(null);
@@ -177,8 +224,20 @@ const Action = () => {
 
   return (
     <section>
-      {loadingState === "fetchingData" && <Modal type="processing" title={msg} />}
-      {loadingState === "updating" && <Modal type="processing" title={msg} />}
+      {loadingState === "processing" && <Modal type="processing" title={msg} />}
+      {loadingState === "dueCollectionModal" && (
+        <Modal
+          type="dueCollection"
+          invoiceId={invoice.invoiceId}
+          name={invoice.name}
+          title="Due Collection"
+          contact={invoice.contact}
+          netAmount={invoice.netAmount}
+          paid={invoice.paid}
+          onClosingModal={closeModal}
+          onDueCollection={() => handleActions("collectDue")}
+        />
+      )}
       {loadingState === "success" && <Modal type="success" title={msg} onClose={closeModal} />}
       {loadingState === "error" && <Modal type="error" title={msg} onClose={closeModal} />}
       <div className="mt-4">
@@ -190,7 +249,8 @@ const Action = () => {
             Print Invoice
           </button>
         </div>
-        <div className="flex justify-center space-x-8 items-start mx-auto">
+
+        <section className="flex justify-center space-x-8 items-start mx-auto">
           <div className="w-1/3 bg-blue-gray-200 text-black shadow-lg px-8 py-4 rounded">
             <InvoiceSection invoice={invoice} />
           </div>
@@ -243,7 +303,11 @@ const Action = () => {
             </div>
             <p className="text-right">Managed by Lab-Pilot</p>
           </div>
-        </div>
+        </section>
+
+        <section className="bg-blue-gray-200 px-8 font-semibold py-4 my-8 w-1/2 rounded-lg shadow-lg mx-auto ">
+          <TriggerAction invoice={invoice} onAction={handleActions} />
+        </section>
 
         <section>
           <LabReports invoice={invoice} />

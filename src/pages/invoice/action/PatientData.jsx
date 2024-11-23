@@ -29,7 +29,7 @@ const PatientData = ({ label, val, name, type, onChange, onUpdate }) => {
         onChange={onChange}
         type={type}
         disabled={disabled}
-        className={`px-2 py-1 ${disabled ? "bg-gray-300" : "border-2 border-blue-gray-500 text-black"} rounded-lg`}
+        className={`px-2 py-1 ${disabled ? "bg-gray-300" : " focus:outline-none text-black"} rounded-lg`}
       />
       <button className="btn-sm" onClick={handleToggle}>
         {action}

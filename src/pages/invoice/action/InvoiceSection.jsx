@@ -63,11 +63,7 @@ const InvoiceSection = (props) => {
           )}
 
           {invoice?.netAmount > invoice.paid && (
-            <p className="text-right w-full font-bold text-red-500">
-              {" "}
-              <span className="text-black font-light">Paid - {invoice?.paid}, </span> Due-{" "}
-              {invoice?.netAmount - invoice?.paid}
-            </p>
+            <p className="text-right w-full font-bold text-red-500"> Due-{invoice?.netAmount - invoice?.paid}</p>
           )}
         </div>
       </div>
@@ -75,7 +71,10 @@ const InvoiceSection = (props) => {
       {/* Total Test */}
       <div className="flex w-full justify-between items-center">
         <p>Total Test </p>
-        <p className="font-bold text-black"> {invoice?.testList?.length || ""} <span className="font-normal text-sm">(Online - 5, Offline - 3)</span></p>
+        <p className="font-bold text-black">
+          {" "}
+          {invoice?.testList?.length || ""} <span className="font-normal text-sm">(Online - 5, Offline - 3)</span>
+        </p>
       </div>
     </div>
   );
