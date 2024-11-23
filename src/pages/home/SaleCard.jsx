@@ -5,7 +5,7 @@ import React from "react";
 const SaleCard = ({ cardType, total, due, received, doctorCommission, onDetails }) => {
   const title = cardType === "daily" ? "আজকের হিসাব" : " চলতি মাসের হিসাব";
   return (
-    <div className="bg-blue-gray-500 px-4 py-4 w-60 rounded-md">
+    <div className="bg-blue-gray-700 px-4 py-4 w-60 rounded-md">
       <p className="xl text-center text-white font-bold border-b-2 border-white w-full">{title}</p>
       <div className="flex justify-between items-center text-white px-2"></div>
       <h2 className="text-2xl text-center text-white">

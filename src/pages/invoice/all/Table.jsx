@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 function Table(props) {
   const tableBtn = "px-2 py-1 text-white text-sm bgColor rounded";
   const tableBtn2 =
-    "text-[11px] px-2 py-1 bgColor border-2 border-blue-gray-500 hover:text-blue-gray-500 rounded text-sm text-white hover:bg-white hover:text-blue-gray-500 duration-300";
+    "text-[11px] px-2 py-1 bgColor border-2 border-blue-gray-700 hover:text-blue-gray-500 rounded text-sm text-white hover:bg-white hover:text-blue-gray-500 duration-300";
 
   return (
     <Card className="h-full w-full overflow-scroll">
@@ -14,7 +14,7 @@ function Table(props) {
         <thead>
           <tr>
             {props.head.map((head) => (
-              <th key={head} className="border-b border-blue-gray-400 bgColor p-4">
+              <th key={head} className="border-b border-blue-gray-900 bgColor p-4">
                 <p className="text-gray-300 font-bold">{head}</p>
               </th>
             ))}
@@ -35,11 +35,6 @@ function Table(props) {
                       <p className="text-sm">{item.name}</p>
                       <p className="text-sm">{item.contact}</p>
                     </td>
-                    {/* Test status */}
-                    {/* <td className={classes}>
-                      <p className="text-sm">Completed - {item.testList.length}</p>
-                      <p className="text-sm">Pending- {item.testList.length}</p>
-                    </td> */}
                     {item.netAmount === item.paid ? (
                       <td className={classes + " text-blue-gray-600"}>পরিশোধিত </td>
                     ) : (

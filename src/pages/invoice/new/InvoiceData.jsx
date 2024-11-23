@@ -6,7 +6,7 @@ const InvoiceData = (props) => {
   const due = netAmount - paid;
 
   return (
-    <div className="bg-blue-gray-500 w-auto text-white rounded-lg shadow-lg px-4 py-2">
+    <div className="bg-blue-gray-700 w-auto text-white rounded-lg shadow-lg px-4 py-2">
       {/* <h2 className="text-2xl text-center font-semibold mb-4">Invoice Summary</h2> */}
       <div className="flex justify-between mb-2">
         <p>মোট:</p>
@@ -18,13 +18,13 @@ const InvoiceData = (props) => {
           <p className="text-sm">কমিশনভোগী ব্যক্তি বা প্রতিষ্ঠান কোনো ডিস্কাউন্ট দিয়েছে কি?</p>
           <p
             onClick={() => props.handleHasDiscount(false)}
-            className={`${!hasDiscount ? "px-2 py-1 bg-blue-gray-500 text-white" : "text-gray-500"}`}
+            className={`${!hasDiscount ? "px-2 py-1 bg-blue-gray-900 text-white" : "text-gray-500"}`}
           >
             না
           </p>
           <p
             onClick={() => props.handleHasDiscount(true)}
-            className={`${hasDiscount ? "px-2 py-1 bg-blue-gray-500 text-white" : "text-gray-500"}`}
+            className={`${hasDiscount ? "px-2 py-1 bg-blue-gray-900 text-white" : "text-gray-500"}`}
           >
             হ্যাঁ
           </p>
