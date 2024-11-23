@@ -7,8 +7,8 @@ const Modal = (props) => {
   const { type, title, onClose } = props;
   return (
     <Fragment>
-      <div className="fixed inset-0 bg-blue-gray-800 bg-opacity-30 backdrop-blur-lg z-20 flex justify-center items-center">
-        <div className="flex flex-col justify-center items-center w-full md:w-1/3 h-auto py-10 -mt-20 mx-auto bg-gray-100 px-10 rounded-md">
+      <div className="fixed inset-0 bg-blue-gray-300 bg-opacity-10 backdrop-blur-sm z-20 flex justify-center items-center">
+        <div className="flex flex-col justify-center items-center w-full md:w-1/3 h-auto py-10 -mt-20 mx-auto bg-gray-200 px-10 rounded-md">
           {type === "error" && <p className="text-md text-center text-red-700">{title}</p>}
           {type === "processing" && (
             <div className="flex flex-col space-y-4 justify-center items-center">
@@ -67,7 +67,7 @@ const Modal = (props) => {
 
           <div className="flex space-x-8">
             {onClose && (
-              <button onClick={onClose} className="button px-4 py-2 my-8 border-2 border-blue-600 rounded-lg font-bold">
+              <button onClick={onClose} className="button px-4 py-2 my-8 border-2 border-blue-gray-500 rounded-lg font-bold">
                 Close
               </button>
             )}
