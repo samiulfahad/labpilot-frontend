@@ -11,9 +11,9 @@ const GlobalTestList = () => {
   const [fullList, setFullTList] = useState([]);
   const [myList, setMyList] = useState([]);
   const [msg, setMsg] = useState(null);
-  const [status, setStatus] = useState(null);
+  const [status, setStatus] = useState("processing");
 
-  // Fetch Global Test List
+  // Fetch Full Test List
   useEffect(() => {
     const fetchList = async () => {
       try {
@@ -42,6 +42,7 @@ const GlobalTestList = () => {
   // Fetch My Test List (only after Global Test List has been fetched)
   useEffect(() => {
     if (fullList?.length === 0) return; // Wait until fullList is fetched
+    if (fullList === null) return;
     const fetchMyList = async () => {
       try {
         setStatus("processing");
@@ -86,7 +87,7 @@ const GlobalTestList = () => {
       {/* Modal for Status */}
       {status === "processing" && msg && <Modal type="processing" title={msg} />}
       {(status === "error" || myList === null) && msg && <Modal type="error" title={msg} onClose={closeModal} />}
-      {fullList !== null && myList !== null && status !== "processing" && (
+      {status !== "processing" && fullList !== null && myList !== null && (
         <div>
           <FullList list={fullList} myList={myList} onChange={handleChecked} />
           <MyList list={myList} />
