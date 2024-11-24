@@ -40,7 +40,6 @@ function Table(props) {
                     ) : (
                       <td className={classes + " text-sm"}>
                         <div className="flex space-x-2 text-[13px] text-justify">
-                          {/* <p>জমা- {item.paid}</p> */}
                           <p className="text-red-500">বাকি- {item.netAmount - item.paid}</p>
                         </div>
                         <button
