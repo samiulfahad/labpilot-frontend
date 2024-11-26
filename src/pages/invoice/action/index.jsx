@@ -17,6 +17,8 @@ const Action = () => {
   const [invoice, setInvoice] = useState({});
   const [status, setStatus] = useState("");
   const [msg, setMsg] = useState(null);
+  const [disabled, setDisabled] = useState(true)
+
   // console.log(location.state);
 
   const fetchData = async () => {
@@ -49,31 +51,39 @@ const Action = () => {
     if (!location.state) {
       navigate("/invoice/all", { replace: true });
     }
-  }, [navigate]); 
+  }, [navigate]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInvoice({ ...invoice, [name]: value });
     console.log(invoice);
   };
+
+
   const handleUpdate = async () => {
     try {
       setStatus("processing");
       setMsg("তথ্য আপডেট করা হচ্ছে....");
+      const patientData = {
+        name: invoice.name,
+        age: invoice.age,
+        contact: invoice.contact,
+        gender: invoice.gender,
+        doctorName: invoice.doctorName,
+      };
       const response = await axios.put(API_URL + "/api/v1/invoice/update/patient-data", {
         _id: invoice._id,
-        patientData: {
-          name: invoice.name,
-          age: invoice.age,
-          contact: invoice.contact,
-          gender: invoice.gender,
-          doctorName: invoice.doctorName,
-        },
+        patientData: patientData,
       });
       if (response.data.success) {
         setStatus("success");
         setMsg("তথ্য সফলভাবে আপডেট করা হয়েছে");
+        setDisabled(true)
         console.log(response.data);
+      } else {
+        setMsg("তথ্য আপডেট করা যায়নি। অনুগ্রহ করে পেইজটি Refresh করে আবার চেষ্টা করুন");
+        setStatus("error");
       }
     } catch (e) {
       setStatus("error");
@@ -136,6 +146,7 @@ const Action = () => {
     }
   };
 
+
   const handleActions = async (update) => {
     let processingMsg = null;
     let updatedField = {};
@@ -180,6 +191,12 @@ const Action = () => {
     }
   };
 
+  
+  const handleEdit = () => {
+    setDisabled(!disabled)
+  }
+
+
   const closeModal = () => {
     setStatus(null);
     setMsg(null);
@@ -219,7 +236,7 @@ const Action = () => {
           </div>
 
           <div className="w-2/5 bg-blue-gray-200 text-black px-6 py-4 shadow-lg rounded">
-            <PatientData invoice={invoice} onChange={handleChange} onSave={handleUpdate} />
+            <PatientData invoice={invoice} disabled={disabled} onEdit={handleEdit} onChange={handleChange} onSave={handleUpdate} />
             {/* <p>Managed bt Lab-Pilot.com</p> */}
           </div>
         </section>

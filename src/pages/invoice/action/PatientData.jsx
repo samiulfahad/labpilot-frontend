@@ -2,18 +2,13 @@
 
 import { useState } from "react";
 
-const PatientData = ({ invoice, onChange, onSave }) => {
-  const [disabled, setDisabled] = useState(true);
-
-  const handleEdit = () => {
-    setDisabled(!disabled);
-  };
+const PatientData = ({ invoice, onChange, onSave, disabled, onEdit }) => {
   return (
     <div>
       <div className="flex justify-between items-center text-center w-full">
         <p className="font-bold text-lg text-left w-28 py-4">Patient Info</p>
         {disabled && (
-          <button onClick={handleEdit} className="mr-20 px-4 bgColor text-center flex-shrink-0 w-16 h-8 text-white">
+          <button onClick={onEdit} className="mr-20 px-4 bgColor text-center flex-shrink-0 w-16 h-8 text-white">
             Edit
           </button>
         )}
@@ -75,7 +70,7 @@ const PatientData = ({ invoice, onChange, onSave }) => {
             <button onClick={onSave} className="px-2 py-1 bgColor text-white rounded">
               Save
             </button>
-            <button onClick={handleEdit} className="px-2 py-1 bg-red-400 text-white rounded">
+            <button onClick={onEdit} className="px-2 py-1 bg-red-400 text-white rounded">
               Cancel
             </button>
           </div>
