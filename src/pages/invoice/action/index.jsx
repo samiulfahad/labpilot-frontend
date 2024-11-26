@@ -58,8 +58,7 @@ const Action = () => {
     const { name, value } = e.target;
     setInvoice({ ...invoice, [name]: value });
     console.log(invoice);
-  };
-
+  }
 
   const handleUpdate = async () => {
     try {
