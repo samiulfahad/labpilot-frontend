@@ -27,7 +27,7 @@ const AmountTable = ({ total, discount, discountType, labAdjustment, paid }) => 
           )}
           {labAdjustment !== 0 && (
             <tr>
-              <td className="text-[13px] text-black">Adjustment</td>
+              <td className="text-[13px] text-black">ল্যাব প্রদত্ত ডিস্কাউন্ট</td>
               <td className="text-base text-black text-right">- ৳ {labAdjustment}</td>
             </tr>
           )}
@@ -47,7 +47,7 @@ const AmountTable = ({ total, discount, discountType, labAdjustment, paid }) => 
           </tr>
 
           <tr>
-            <td className="text-[11px] font-bold text-base text-gray-900">বাকি</td>
+            <td className="text-[11px] text-base text-gray-900">বাকি</td>
             <td className="text-[11px] font-bold text-base text-black text-right">
               ৳ {total - discount - labAdjustment - paid}
             </td>

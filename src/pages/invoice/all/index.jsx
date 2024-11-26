@@ -5,6 +5,7 @@ import Table from "./Table";
 import axios from "axios";
 import Modal from "../../../components/modal";
 import { API_URL } from "../../../../config";
+import FallbackUI from "../../../components/fallback-ui";
 
 const AllInvoices = () => {
   const [invoices, setInvoices] = useState([]);
@@ -26,17 +27,13 @@ const AllInvoices = () => {
       } else {
         setInvoices(null);
         setStatus("error");
-        setMsg(
-          "ইনভয়েসের লিস্ট আনা সম্ভব হয়নি। পেইজটি রিফ্রেশ করে পুনরায় চেষ্টা করুন অথবা সার্পোটের জন্য কল করুন 01910 121 929 নাম্বারে"
-        );
+        setMsg("ইনভয়েসের লিস্ট আনা সম্ভব হয়নি। পেইজটি রিফ্রেশ করে পুনরায় চেষ্টা করুন");
       }
     } catch (error) {
       setInvoices(null);
       console.log("Error fetching invoices:", error);
       setStatus("error");
-      setMsg(
-        "ইনভয়েসের লিস্ট আনা সম্ভব হয়নি। পেইজটি রিফ্রেশ করে পুনরায় চেষ্টা করুন অথবা সার্পোটের জন্য কল করুন 01910 121 929 নাম্বারে"
-      );
+      setMsg("ইনভয়েসের লিস্ট আনা সম্ভব হয়নি। পেইজটি রিফ্রেশ করে পুনরায় চেষ্টা করুন");
     }
   };
 
@@ -60,36 +57,26 @@ const AllInvoices = () => {
   const updateInvoice = async (updateType) => {
     const errorMsg = "ইনভয়েসটি আপডেট করা যায়নি। দয়া করে পেইজটি Refresh করুন অথবা ইন্টারনেট সংযোগ চেক করুন।";
     const successMsg = "ইনভয়েসটি সফলভাবে আপডেট হয়েছে";
-    const updateMessages = {
-      payment: {
-        status: "processing",
-        loadingMsg: "ইনভয়েসটির পেমেন্ট তথ্য আপডেট করা হচ্ছে",
-        successState: "paymentUpdated",
-      },
-      reportDelivery: {
-        status: "processing",
-        loadingMsg: "ইনভয়েসটির রিপোর্ট ডেলিভারি তথ্য আপডেট করা হচ্ছে",
-        successState: "reportDeliveryUpdated",
-      },
-    };
 
-    const messages = updateMessages[updateType];
-    if (!messages) {
-      console.error("Invalid update type");
-      return;
+    let msg = null;
+    if (updateType === "payment") {
+      msg = "পেমেন্ট তথ্য আপডেট করা হচ্ছে...";
+    } else if (updateType === "reportDelivery") {
+      msg = "রিপোর্ট ডেলিভারি তথ্য আপডেট করা হচ্ছে...";
+    } else {
+      return null;
     }
-
-    setStatus(messages.status);
-    setMsg(messages.loadingMsg);
+    setStatus("processing");
+    setMsg(msg);
 
     try {
-      const response = await axios.put(API_URL + "/api/v1/invoice/update", {
+      const response = await axios.put(API_URL + "/api/v1/invoice/update/actions", {
         update: updateType,
         _id: activeInvoice._id,
       });
 
       if (response.data.success === true) {
-        setStatus(messages.successState);
+        setStatus("success");
         setMsg(successMsg);
 
         const updatedInvoices = invoices.map((item) => {
@@ -104,6 +91,9 @@ const AllInvoices = () => {
         });
 
         setInvoices(updatedInvoices);
+      } else {
+        setStatus("error");
+        setMsg(errorMsg);
       }
     } catch (e) {
       setStatus("error");
@@ -121,12 +111,8 @@ const AllInvoices = () => {
   return (
     <div className="w-full pl-4 mx-auto mt-4">
       {status === "error" && <Modal type="error" title={msg} onClose={closeModal} />}
-      {(status === "paymentUpdated" || status === "reportDeliveryUpdated") && (
-        <Modal type="success" title={msg} onClose={closeModal} />
-      )}
-      {(status === "processing" || status === "processing" || status === "processing") && (
-        <Modal type="processing" title={msg} />
-      )}
+      {status === "success" && <Modal type="success" title={msg} onClose={closeModal} />}
+      {status === "processing" && <Modal type="processing" title={msg} />}
       {status === "dueCollectionModal" && (
         <Modal
           type="dueCollection"
@@ -154,6 +140,14 @@ const AllInvoices = () => {
           onClosingModal={closeModal}
         />
       )}
+
+      {invoices === null && (
+        <div className="-mt-28">
+          {" "}
+          <FallbackUI />{" "}
+        </div>
+      )}
+
       {invoices !== null && (
         <Table type="AllInvoices" head={InvoiceTableHead} rows={invoices} onOpenModal={openModal} />
       )}

@@ -7,9 +7,10 @@ import { API_URL } from "../../../config";
 import Modal from "../../components/modal";
 import FullList from "./FullList";
 import MyList from "./MyList";
+import FallbackUI from "../../components/fallback-ui";
 
 const UpdateTestList = () => {
-  const [fullList, setFullTList] = useState([]);
+  const [fullList, setFullList] = useState([]);
   const [myList, setMyList] = useState([]);
   const [msg, setMsg] = useState(null);
   const [status, setStatus] = useState("processing");
@@ -22,16 +23,16 @@ const UpdateTestList = () => {
         setMsg("Lab-Pilot এ নিবন্ধিত টেস্টগুলি লোড করা হচ্ছে...");
         const response = await axios.get(API_URL + "/api/v1/global/test/all");
         if (response.data.success) {
-          setFullTList(response.data.list);
+          setFullList(response.data.list);
           setStatus(null);
           setMsg(null);
         } else {
-          setFullTList(null);
+          setFullList(null);
           setStatus("error");
           setMsg("Lab-Pilot এ নিবন্ধিত টেস্টগুলি লোড করা যায়নি। অনুগ্রহ করে পেইজটি Refresh/Reload করুন।");
         }
       } catch (e) {
-        setFullTList(null);
+        setFullList(null);
         setStatus("error");
         setMsg("Lab-Pilot এ নিবন্ধিত টেস্টগুলি লোড করা যায়নি। অনুগ্রহ করে পেইজটি Refresh/Reload করুন।");
         console.error("Error fetching global test list:", e);
@@ -126,6 +127,7 @@ const UpdateTestList = () => {
           <MyList list={myList} onUpdate={handleUpdate} />
         </div>
       )}
+      {fullList === null && <div className="-mt-20"><FallbackUI/></div>}
     </section>
   );
 };

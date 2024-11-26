@@ -18,7 +18,6 @@ const PrintReceipt = () => {
 
   useEffect(() => {
     if (!patientData || !invoiceData) {
-      console.log(11111);
       navigate("/invoice/new");
     }
   }, [location]);

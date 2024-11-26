@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-export const Profile = () => {
+const Profile = () => {
   const [disabled, setDisabled] = useState(true);
   const [list, setList] = useState([]);
   const [status, setStatus] = useState("processing");
@@ -83,3 +83,4 @@ export const Profile = () => {
     </section>
   );
 };
+export default Profile

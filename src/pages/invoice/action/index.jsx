@@ -14,6 +14,7 @@ const Action = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const _id = location?.state?._id || null;
+  
   const [invoice, setInvoice] = useState({});
   const [status, setStatus] = useState("");
   const [msg, setMsg] = useState(null);
@@ -223,24 +224,24 @@ const Action = () => {
         <div className="mb-8 w-full mx-auto text-center">
           <button
             onClick={handlePrint}
-            className="px-4 py-2 border-2 text-blue-gray-500 border-blue-gray-700 font-bold"
+            className="px-4 py-2 bg-white text-blue-gray-700 rounded-md font-bold"
           >
             Print Invoice
           </button>
         </div>
 
         <section className="flex justify-center space-x-8 items-start mx-auto">
-          <div className="w-1/3 bg-blue-gray-200 text-black shadow-lg px-8 py-4 rounded">
+          <div className="w-1/3 bg-white text-black shadow-lg rounded-lg px-8 py-4">
             <InvoiceSection invoice={invoice} />
           </div>
 
-          <div className="w-2/5 bg-blue-gray-200 text-black px-6 py-4 shadow-lg rounded">
+          <div className="w-2/5 bg-white text-black px-6 py-4 shadow-xl rounded-lg">
             <PatientData invoice={invoice} disabled={disabled} onEdit={handleEdit} onChange={handleChange} onSave={handleUpdate} />
             {/* <p>Managed bt Lab-Pilot.com</p> */}
           </div>
         </section>
 
-        <section className="bg-blue-gray-200 px-8 font-semibold py-4 my-8 w-1/2 rounded-lg shadow-lg mx-auto ">
+        <section className="bg-white px-8 font-semibold py-4 my-8 w-1/2 rounded-lg shadow-lg mx-auto ">
           <TriggerAction invoice={invoice} onAction={handleActions} />
         </section>
 

@@ -5,6 +5,15 @@ const InvoiceData = (props) => {
     props.data;
   const due = netAmount - paid;
 
+  const handleDownKey = (e) => {
+    if (e.code === "ArrowUp" || e.code === "ArrowDown") {
+      console.log("FuckingKey");
+    } else {
+      props.onPay(parseFloat(e.target.value) || 0);
+      console.log("Good Key");
+    }
+  };
+
   return (
     <div className="bg-blue-gray-700 w-auto text-white rounded-lg shadow-lg px-4 py-2">
       {/* <h2 className="text-2xl text-center font-semibold mb-4">Invoice Summary</h2> */}
@@ -34,9 +43,7 @@ const InvoiceData = (props) => {
       {hasDiscount && referrer && (
         <>
           <div className="flex justify-between text-sm mb-2 items-center">
-            <label htmlFor="discount">
-              ডিস্কাউন্ট:
-            </label>
+            <label htmlFor="discount">ডিস্কাউন্ট:</label>
             <div className="flex items-center">
               <input
                 type="number"
@@ -57,15 +64,21 @@ const InvoiceData = (props) => {
       )}
 
       <div className="flex justify-between mb-2 text-sm items-center">
-        <label htmlFor="labAdjustment">
-          ল্যাব প্রদত্ত ছাড়:
-        </label>
+        <label htmlFor="labAdjustment">ল্যাব প্রদত্ত ছাড়:</label>
         <div className="flex items-center">
           <input
             type="number"
             className="p-1 border w-20 outline-none text-black text-right border-gray-300 rounded-md mr-2"
             value={labAdjustment}
             onChange={(e) => props.onLabAdjustment(parseFloat(e.target.value) || 0)}
+            onKeyDown={(e) => {
+              if (e.code === "ArrowUp" || e.code === "ArrowDown") {
+                e.preventDefault();
+              }
+            }}
+            onWheel={(e) => e.target.blur()} // Remove focus to prevent scroll
+            onFocus={(e) => e.target.addEventListener("wheel", (ev) => ev.preventDefault(), { passive: false })}
+            onBlur={(e) => e.target.removeEventListener("wheel", (ev) => ev.preventDefault())}
           />
           <span>টাকা</span>
         </div>
@@ -76,15 +89,21 @@ const InvoiceData = (props) => {
       </div>
       <hr className="my-2 border-t border-gray-300" />
       <div className="flex justify-between mb-2 items-center">
-        <label htmlFor="paid">
-          নগদ:
-        </label>
+        <label htmlFor="paid">নগদ:</label>
         <div className="flex items-center">
           <input
             type="number"
             className="p-1 border w-20 outline-none text-black text-right border-gray-300 rounded-md mr-2"
             value={paid}
             onChange={(e) => props.onPay(parseFloat(e.target.value) || 0)}
+            onKeyDown={(e) => {
+              if (e.code === "ArrowUp" || e.code === "ArrowDown") {
+                e.preventDefault();
+              }
+            }}
+            onWheel={(e) => e.target.blur()} // Remove focus to prevent scroll
+            onFocus={(e) => e.target.addEventListener("wheel", (ev) => ev.preventDefault(), { passive: false })}
+            onBlur={(e) => e.target.removeEventListener("wheel", (ev) => ev.preventDefault())}
           />
           <span>টাকা</span>
         </div>

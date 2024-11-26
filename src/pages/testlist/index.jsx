@@ -5,8 +5,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Test from "./Test";
-import Modal from "../../components/modal"
+import Modal from "../../components/modal";
 import { USER_ID, API_URL } from "../../../config";
+import FallbackUI from "../../components/fallback-ui";
 
 const TestList = () => {
   const [testList, setTestList] = useState([]);
@@ -26,18 +27,18 @@ const TestList = () => {
           setStatus(null);
           setMsg(null);
         } else {
-          setTestList(null)
+          setTestList(null);
           setStatus("error");
           setMsg("টেস্টলিস্ট লোড করা যায়নি। অনুগ্রহ করে পেইজটি Refresh/Reload করে আবার চেষ্টা করুন");
         }
       } catch (e) {
-        setTestList(null)
+        setTestList(null);
         setStatus("error");
         setMsg("টেস্টলিস্ট লোড করা যায়নি। অনুগ্রহ করে পেইজটি Refresh/Reload করে আবার চেষ্টা করুন");
         console.log(e);
       }
     };
-    fetchData()
+    fetchData();
   }, []);
 
   const closeModal = () => {
@@ -52,15 +53,27 @@ const TestList = () => {
       {testList?.length === 0 && status !== "processing" && (
         <div className="flex flex-col gap-4 justify-center items-center w-full h-screen">
           <p>আপনি কোনো টেস্ট Add করেননি। আপনি যেসব টেস্ট করান সেগুলি Add করার জন্য নিচের "Add Test" বাটনে ক্লিক করুন</p>
-          <Link to="/global/test/all" className="px-4 py-2 bgColor btn">Add Test</Link>
+          <Link to="/global/test/all" className="px-4 py-2 bgColor btn">
+            Add Test
+          </Link>
         </div>
       )}
-      {
-        testList.length > 0 && status !== "processing" && <div>
-          {testList.map(test => <p key={test.code}>{test.name} ...... price {test.price}</p>)}
+      {testList?.length > 0 && status !== "processing" && (
+        <div>
+          {testList.map((test) => (
+            <p key={test.code}>
+              {test.name} ...... price {test.price}
+            </p>
+          ))}
           <Link to="/testlist/update">Update Test List</Link>
         </div>
-      }
+      )}
+      {testList === null && (
+        <div className="-mt-20">
+          {" "}
+          <FallbackUI />{" "}
+        </div>
+      )}
     </section>
   );
 };
