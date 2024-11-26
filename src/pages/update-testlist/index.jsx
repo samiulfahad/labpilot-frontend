@@ -2,12 +2,13 @@
 
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { API_URL } from "../../../config";
 import Modal from "../../components/modal";
 import FullList from "./FullList";
 import MyList from "./MyList";
 
-const GlobalTestList = () => {
+const UpdateTestList = () => {
   const [fullList, setFullTList] = useState([]);
   const [myList, setMyList] = useState([]);
   const [msg, setMsg] = useState(null);
@@ -67,18 +68,49 @@ const GlobalTestList = () => {
     fetchMyList();
   }, [fullList]); // Trigger only after fullList is fetched
 
+  // Handle Checkbox Selection
+  const handleChecked = (test) => {
+    const isChecked = myList.some((item) => item.code === test.code);
+
+    if (isChecked) {
+      // Remove the test if it's already in myList
+      setMyList(myList.filter((item) => item.code !== test.code));
+    } else {
+      // Add the test if it's not in myList
+      setMyList([...myList, test]);
+    }
+  };
+
   // Handle Modal Close
   const closeModal = () => {
     setStatus(null);
     setMsg(null);
   };
 
-  // Handle Checkbox Selection
-  const handleChecked = (test) => {
-    if (myList.includes(test)) {
-      setMyList(myList.filter((item) => item !== test)); // Remove if already checked
-    } else {
-      setMyList([...myList, test]); // Add if not checked
+  const handleUpdate = async () => {
+    try {
+      setStatus("processing");
+      setMsg("টেস্টলিস্ট আপডেট হচ্ছে। অনুগ্রহ করে অপেক্ষা করুন....");
+      const response = await axios.put(API_URL + "/api/v1/user/testlist/update", {
+        testList: myList,
+      });
+      if (response.data.success) {
+        setStatus("success");
+        setMsg(
+          <>
+            টেস্টলিস্ট আপডেট করা হয়েছে। <br className="p"/>
+            <Link className="px-4 py-1 rounded bgColor text-white" to="/testlist">নতুন টেস্টলিস্ট দেখুন</Link>{" "}
+          </>
+        );
+      } else {
+        setStatus("error");
+        setMsg("টেস্টলিস্ট আপডেট করা যায়নি। অনুগ্রহ করে পেইজটি Refresh/Reload করে আবার চেষ্টা করুন");
+      }
+      console.log(response);
+    } catch (e) {
+      setStatus("error");
+      setMsg("টেস্টলিস্ট আপডেট করা যায়নি। অনুগ্রহ করে পেইজটি Refresh/Reload করে আবার চেষ্টা করুন");
+      console.log(e);
     }
   };
 
@@ -86,15 +118,16 @@ const GlobalTestList = () => {
     <section>
       {/* Modal for Status */}
       {status === "processing" && msg && <Modal type="processing" title={msg} />}
+      {status === "success" && msg && <Modal type="success" title={msg} onClose={closeModal} />}
       {(status === "error" || myList === null) && msg && <Modal type="error" title={msg} onClose={closeModal} />}
       {status !== "processing" && fullList !== null && myList !== null && (
         <div>
           <FullList list={fullList} myList={myList} onChange={handleChecked} />
-          <MyList list={myList} />
+          <MyList list={myList} onUpdate={handleUpdate} />
         </div>
       )}
     </section>
   );
 };
 
-export default GlobalTestList;
+export default UpdateTestList;

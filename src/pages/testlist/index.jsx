@@ -55,6 +55,12 @@ const TestList = () => {
           <Link to="/global/test/all" className="px-4 py-2 bgColor btn">Add Test</Link>
         </div>
       )}
+      {
+        testList.length > 0 && status !== "processing" && <div>
+          {testList.map(test => <p key={test.code}>{test.name} ...... price {test.price}</p>)}
+          <Link to="/testlist/update">Update Test List</Link>
+        </div>
+      }
     </section>
   );
 };

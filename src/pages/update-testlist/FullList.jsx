@@ -5,7 +5,7 @@ import { Checkbox } from "@material-tailwind/react";
 
 const FullList = (props) => {
   return (
-    <div className="w-full">
+    <div className="w-full ml-4">
       <p className="text-center my-2 text-black font-semibold">
         যে Test এর রিপোর্টগুলি আমাদের ওয়েবসাইটে আপলোড করা যাবে সেগুলো Online Test আর বাকিগুলি Offline Test
       </p>
@@ -18,7 +18,7 @@ const FullList = (props) => {
                 key={test.code}
                 label={test.name}
                 value={test.name}
-                checked={props.myList.includes(test)}
+                checked={props.myList.some((item) => item.code === test.code)} // Compare using unique property
                 onChange={() => props.onChange(test)}
               />
             );
@@ -34,7 +34,7 @@ const FullList = (props) => {
                 key={test.code}
                 label={test.name}
                 value={test.name}
-                checked={props.myList.includes(test)}
+                checked={props.myList.some((item) => item.code === test.code)} // Compare using unique property
                 onChange={() => props.onChange(test)}
               />
             );

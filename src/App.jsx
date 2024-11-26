@@ -11,7 +11,8 @@ import PrintReceipt from "./pages/invoice/print";
 import SendSMS from "./pages/send-sms";
 import Action from "./pages/invoice/action";
 import Recharge from "./pages/recharge";
-import GlobalTestList from "./pages/update-testlist";
+import UpdateTestList from "./pages/update-testlist";
+import { Profile } from "./pages/profile";
 
 function App() {
   return (
@@ -23,12 +24,13 @@ function App() {
         <Route path="/invoice/all" element={<AllInvoices />} />
         <Route path="/invoice/action" element={<Action />} />
 
-        <Route path="/lab-test" element={<LabTest />} />
-        <Route path="/global/test/all" element={<GlobalTestList />} />
+        <Route path="/testlist" element={<LabTest />} />
+        <Route path="/testlist/update" element={<UpdateTestList />} />
 
+        <Route path="/profile" element={<Profile />} />
         <Route path="/send-sms" element={<SendSMS />} />
         <Route path="/recharge" element={<Recharge />} />
-        <Route path="/modal" element={<Modal type="processing" title="Creating invoice. Please wait"/>} />
+        <Route path="/modal" element={<Modal type="processing" title="Creating invoice. Please wait" />} />
       </Routes>
     </Layout>
   );

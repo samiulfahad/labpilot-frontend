@@ -47,7 +47,7 @@ const MyList = (props) => {
             </div>
           </div>
           <div className="flex justify-center items-center py-4">
-            <button className="btn">Save</button>
+            <button onClick={props.onUpdate} className="btn">Update</button>
           </div>
         </div>
       )}
