@@ -13,7 +13,7 @@ const FallbackUI = () => {
               <p className="text-center font-semibold">=======সম্ভাব্য কারণ ও সমাধান======= </p>
         <p className="font-bold text-lg text-red-500">ইন্টারনেট সংযোগ Check করে দেখুন</p>
               <p>অথবা পেইজটি Refresh / Reload করুন</p>
-              <p>অথবা সার্ভারের সমস্যার কারণে এমনটি হতে পারে (যার সম্ভাবনা খুবই কম)</p>
+              <p>অথবা সার্ভারের সমস্যার কারণেও এমনটি হতে পারে (যার সম্ভাবনা খুবই কম)</p>
       </div>
       <div>
         <button onClick={handleReload} className="btn">Refresh</button>
