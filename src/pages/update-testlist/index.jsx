@@ -12,6 +12,7 @@ import FallbackUI from "../../components/fallback-ui";
 const UpdateTestList = () => {
   const [fullList, setFullList] = useState([]);
   const [myList, setMyList] = useState([]);
+  const [cachedData, setCachedData] = useState([]);
   const [msg, setMsg] = useState(null);
   const [status, setStatus] = useState("processing");
 
@@ -52,15 +53,19 @@ const UpdateTestList = () => {
         const { data } = await axios.get(API_URL + "/api/v1/user/test/all");
         if (data?.success) {
           setMyList(data.list);
+          setCachedData(data.list);
+          console.log(cachedData);
           setStatus(null);
           setMsg(null);
         } else {
           setMyList(null);
+          setCachedData([])
           setStatus("error");
           setMsg("আপনার ল্যাবের টেস্টলিস্ট লোড করা যায়নি। অনুগ্রহ করে পেইজটি Refresh/Reload করে আবার চেষ্টা করুন।");
         }
       } catch (e) {
         setMyList(null);
+        setCachedData([])
         setStatus("error");
         setMsg("আপনার ল্যাবের টেস্টলিস্ট লোড করা যায়নি। অনুগ্রহ করে পেইজটি Refresh/Reload করে আবার চেষ্টা করুন।");
         console.error("Error fetching my test list:", e);
@@ -71,11 +76,11 @@ const UpdateTestList = () => {
 
   // Handle Checkbox Selection
   const handleChecked = (test) => {
-    const isChecked = myList.some((item) => item.code === test.code);
+    const isChecked = myList.some((item) => item._id === test._id);
 
     if (isChecked) {
       // Remove the test if it's already in myList
-      setMyList(myList.filter((item) => item.code !== test.code));
+      setMyList(myList.filter((item) => item._id !== test._id));
     } else {
       // Add the test if it's not in myList
       setMyList([...myList, test]);
@@ -90,17 +95,25 @@ const UpdateTestList = () => {
 
   const handleUpdate = async () => {
     try {
+      // Create the updated list by prioritizing cachedData for matching objects
+      const updatedList = myList.map((test) => {
+        const cachedItem = cachedData.find((cached) => cached._id === test._id);
+        return cachedItem || test; // Replace with cachedItem if found, otherwise keep test
+      });
+  
       setStatus("processing");
       setMsg("টেস্টলিস্ট আপডেট হচ্ছে। অনুগ্রহ করে অপেক্ষা করুন....");
+  
       const response = await axios.put(API_URL + "/api/v1/user/testlist/update", {
-        testList: myList,
+        testList: updatedList, // Use the updated list for the request
       });
+  
       if (response.data.success) {
         setStatus("success");
         setMsg(
           <>
-            টেস্টলিস্ট আপডেট করা হয়েছে। <br className="p"/>
-            <Link className="px-4 py-1 rounded bgColor text-white" to="/testlist">নতুন টেস্টলিস্ট দেখুন</Link>{" "}
+            টেস্টলিস্ট আপডেট করা হয়েছে। <br className="p" />
+            <Link className="px-4 py-1 rounded bgColor text-white" to="/testlist">নতুন টেস্টলিস্ট দেখুন</Link>
           </>
         );
       } else {
@@ -111,9 +124,10 @@ const UpdateTestList = () => {
     } catch (e) {
       setStatus("error");
       setMsg("টেস্টলিস্ট আপডেট করা যায়নি। অনুগ্রহ করে পেইজটি Refresh/Reload করে আবার চেষ্টা করুন");
-      console.log(e);
+      console.error(e);
     }
   };
+  
 
   return (
     <section>
@@ -127,7 +141,11 @@ const UpdateTestList = () => {
           <MyList list={myList} onUpdate={handleUpdate} />
         </div>
       )}
-      {fullList === null && <div className="-mt-20"><FallbackUI/></div>}
+      {fullList === null && (
+        <div className="-mt-20">
+          <FallbackUI />
+        </div>
+      )}
     </section>
   );
 };

@@ -4,7 +4,7 @@ import React from "react";
 
 const MyList = (props) => {
   return (
-    <div className="w-full mx-auto">
+    <div className="">
       <p className="text-lg font-bold text-center">My Tests</p>
       {props.list.length === 0 && (
         <p className="text-center">আপনি এখনো কোনো টেস্ট সিলেক্ট করেন নি। উপরের লিস্ট থেকে টেস্ট সিলেক্ট করুন</p>
@@ -12,10 +12,10 @@ const MyList = (props) => {
       {props.list.length !== 0 && (
         <div>
           <div className="flex flex-col justify-center items-center">
-            <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-col justify-start items-start">
               {/* Online Test */}
-              <div className="flex space-x-4">
-                <p className="font-bold">Online Test: </p>
+              <div className="flex space-x-4 w-full">
+                <p className="font-bold text-left">Online Test: </p>
                 {props.list.filter((test) => test.type === 1).length > 0 ? (
                   <p>
                     {props.list
@@ -31,7 +31,7 @@ const MyList = (props) => {
 
               {/* Offline Test */}
               <div className="flex space-x-4">
-                <p className="font-bold">Offline Test: </p>
+                <p className="font-bold text-left">Offline Test: </p>
                 {props.list.filter((test) => test.type === 2).length > 0 ? (
                   <p>
                     {props.list

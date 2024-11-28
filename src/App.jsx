@@ -12,6 +12,9 @@ import Action from "./pages/invoice/action";
 import Recharge from "./pages/recharge";
 import UpdateTestList from "./pages/update-testlist";
 import Profile from "./pages/profile";
+import Referrer from "./pages/referrer";
+import AddNew from "./pages/referrer/ReferrerCard";
+import ReferrerCard from "./pages/referrer/ReferrerCard";
 
 function App() {
   return (
@@ -23,6 +26,8 @@ function App() {
         <Route path="/invoice/action" element={<Action />} />
         <Route path="/invoice/all" element={<AllInvoices />} />
 
+        <Route path="/referrer" element={<Referrer />} />
+        <Route path="/referrer/add-edit" element={<ReferrerCard />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/testlist" element={<TestList />} />
         <Route path="/testlist/update" element={<UpdateTestList />} />

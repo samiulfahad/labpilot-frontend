@@ -15,10 +15,10 @@ const FullList = (props) => {
           if (test.type === 1) {
             return (
               <Checkbox
-                key={test.code}
+                key={test._id}
                 label={test.name}
                 value={test.name}
-                checked={props.myList.some((item) => item.code === test.code)} // Compare using unique property
+                checked={props.myList.some((item) => item._id === test._id)} // Compare using unique property
                 onChange={() => props.onChange(test)}
               />
             );
@@ -31,10 +31,10 @@ const FullList = (props) => {
           if (test.type === 2) {
             return (
               <Checkbox
-                key={test.code}
+                key={test._id}
                 label={test.name}
                 value={test.name}
-                checked={props.myList.some((item) => item.code === test.code)} // Compare using unique property
+                checked={props.myList.some((item) => item._id === test._id)} // Compare using unique property
                 onChange={() => props.onChange(test)}
               />
             );
