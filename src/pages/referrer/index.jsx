@@ -20,7 +20,6 @@ const index = () => {
           setList(response.data.list);
           setStatus("success");
           setMsg(null);
-          console.log(response.data);
         } else {
           setStatus("error");
           setMsg("রেফারারদের তালিকা আনা সম্ভব হয়নি। অনুগ্রহ করে পেইজটি Refresh/Reload করুন");
@@ -41,7 +40,7 @@ const index = () => {
           <div className="flex justify-between items-center">
             <p className="text-left text-lg font-semibold">Referrer List</p>
             <Link
-              state={{ type: "add", title: "Add New Referrer" }}
+              state={{ actionType: "add", title: "Add New Referrer" }}
               to="/referrer/add-edit"
               className="px-4 py-1 bgColor text-white text-semibold rounded-md"
             >
@@ -62,12 +61,12 @@ const index = () => {
               <Link
                 to={`/referrer/add-edit`}
                 state={{
-                  type: "edit",
+                  actionType: "edit",
                   title: "Edit Referrer",
+                  referrerId: item._id,
                   name: item.name,
-                  _id: item._id,
-                  commissionType: item.commissionType,
                   commission: item.commission,
+                  commissionType: item.commissionType,
                   isDoctor: item.isDoctor,
                   description: item.description,
                 }}

@@ -6,26 +6,26 @@ import { API_URL } from "../../../config";
 import Modal from "../../components/modal";
 import axios from "axios";
 
+const defaultReferrer = {
+  referrerId: null,
+  name: "",
+  commissionType: "percentage",
+  commission: "",
+  isDoctor: "yes",
+  description: "",
+};
 const ReferrerCard = () => {
-  const [referrer, setReferrer] = useState({
-    name: "",
-    commissionType: "percentage",
-    commission: "",
-    isDoctor: "yes",
-    description: "",
-  });
+  const [referrer, setReferrer] = useState(defaultReferrer);
   const [status, setStatus] = useState(null);
   const [msg, setMsg] = useState(null);
   const location = useLocation();
-  console.log(location.state);
   const navigate = useNavigate();
-  console.log(location.state);
   useEffect(() => {
     if (!location.state) {
       navigate("/referrer");
-    } else {
-      const {name, commission, commissionType, isDoctor, description} = location.state
-      setReferrer({name, commission, commissionType, isDoctor, description})
+    } else if (location.state.actionType === "edit") {
+      const { referrerId, name, commission, commissionType, isDoctor, description } = location.state;
+      setReferrer({ referrerId, name, commission, commissionType, isDoctor, description });
     }
   }, [navigate]);
 
@@ -39,40 +39,39 @@ const ReferrerCard = () => {
   };
 
   const handleAction = async () => {
+    const startMsg = location.state.actionType === "add" ? "নতুন রেফারার তৈরি করা হচ্ছে..." : "তথ্য আপডেট হচ্ছে...";
+    const successMsg =
+      location.state.actionType === "add" ? "নতুন রেফারার সফলভাবে তৈরি হয়েছে।" : "তথ্য সফলভাবে আপডেট হয়েছে";
+    const failedMsg =
+      location.state.actionType === "add"
+        ? "দুঃখিত, নতুন রেফারার তৈরি করা যায়নি। দয়া করে পেইজটি Refresh/Reload করে আবার চেষ্টা করুন।"
+        : "দুঃখিত, তথ্য আপডেট করা যায়নি। দয়া করে পেইজটি Refresh/Reload করে আবার চেষ্টা করুন।";
     setStatus("processing");
-    setMsg("নতুন রেফারার তৈরি করা হচ্ছে...");
+    setMsg(startMsg);
     try {
       const url = location?.state?.actionType === "edit" ? "/api/v1/user/referrer/edit" : "/api/v1/user/referrer/add";
       const method = location?.state?.actionType === "edit" ? axios.put : axios.post;
-      console.log(referrer);
-      const { data } = await method(API_URL + url, {
-        name: referrer.name,
-        commissionType: referrer.commissionType,
-        commission: referrer.commission,
-        isDoctor: referrer.isDoctor,
-        description: referrer.description,
-      });
-      const p = (
+      const response = await method(API_URL + url, { ...referrer });
+      const div = (
         <div className="flex flex-col justify-center items-center space-y-2">
           {" "}
-          <p>নতুন রেফারার সফলভাবে তৈরি হয়েছে।</p>{" "}
+          <p>{successMsg}</p>{" "}
           <Link to="/referrer" className="px-4 py-2 bgColor text-white">
             Go To referrer list
           </Link>{" "}
         </div>
       );
-      if (data.success) {
+      if (response.data.success) {
         setStatus("success");
-        // setMsg("সফলভাবে নতুন রেফারার তৈরি করা হয়েছে।");
-        setMsg(p);
-        setReferrer({ isDoctor: "yes", commissionType: "percentage" });
+        setMsg(div);
+        setReferrer(defaultReferrer);
       } else {
         setStatus("error");
-        setMsg("নতুন রেফারার তৈরি করা যায়নি। দয়া করে পেইজটি Refresh/Reload করে আবার চেষ্টা করুন।");
+        setMsg(failedMsg);
       }
     } catch (e) {
       setStatus("error");
-      setMsg("নতুন রেফারার তৈরি করা যায়নি। দয়া করে পেইজটি Refresh/Reload করে আবার চেষ্টা করুন।");
+      setMsg(failedMsg);
       console.log(e.response);
     }
   };
@@ -91,13 +90,13 @@ const ReferrerCard = () => {
         <p className="text-lg font-bold text-center py-2">{location?.state?.title}</p>
         <div className="flex space-x-4 justify-between items-center">
           <p>Name</p>
-          <input name="name" value={referrer?.name || ""} onChange={handleReferrer} className="px-2 py-1 bg-gray-200" />
+          <input name="name" value={referrer.name} onChange={handleReferrer} className="px-2 py-1 bg-gray-200" />
         </div>
         <div className="flex space-x-4 justify-between items-center">
           <p>Commission Type</p>
           <select
             name="commissionType"
-            value={referrer?.commissionType || ""}
+            value={referrer.commissionType}
             onChange={handleReferrer}
             className="bg-gray-200"
           >
@@ -109,14 +108,14 @@ const ReferrerCard = () => {
           <p>Commission</p>
           <input
             name="commission"
-            value={referrer?.commission || ""}
+            value={referrer.commission}
             onChange={handleReferrer}
             className="px-2 py-1 bg-gray-200"
           />
         </div>
         <div className="flex space-x-4 justify-between items-center">
           <p>Is a doctor</p>
-          <select name="isDoctor" value={referrer?.isDoctor || ""} onChange={handleReferrer} className="bg-gray-200">
+          <select name="isDoctor" value={referrer.isDoctor} onChange={handleReferrer} className="bg-gray-200">
             <option value="yes">Yes</option>
             <option value="no">No</option>
           </select>
@@ -125,7 +124,7 @@ const ReferrerCard = () => {
           <p>Description</p>
           <input
             name="description"
-            value={referrer?.description || ""}
+            value={referrer.description}
             onChange={handleReferrer}
             className="px-2 py-1 bg-gray-200"
           />
