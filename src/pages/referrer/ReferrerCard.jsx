@@ -1,13 +1,19 @@
 /** @format */
 
-import { useEffect, useLo, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { API_URL } from "../../../config";
 import Modal from "../../components/modal";
 import axios from "axios";
 
 const ReferrerCard = () => {
-  const [referrer, setReferrer] = useState({ isDoctor: "yes", commissionType: "percentage" });
+  const [referrer, setReferrer] = useState({
+    name: "",
+    commissionType: "percentage",
+    commission: "",
+    isDoctor: "yes",
+    description: "",
+  });
   const [status, setStatus] = useState(null);
   const [msg, setMsg] = useState(null);
   const location = useLocation();
@@ -17,6 +23,9 @@ const ReferrerCard = () => {
   useEffect(() => {
     if (!location.state) {
       navigate("/referrer");
+    } else {
+      const {name, commission, commissionType, isDoctor, description} = location.state
+      setReferrer({name, commission, commissionType, isDoctor, description})
     }
   }, [navigate]);
 
@@ -43,9 +52,20 @@ const ReferrerCard = () => {
         isDoctor: referrer.isDoctor,
         description: referrer.description,
       });
+      const p = (
+        <div className="flex flex-col justify-center items-center space-y-2">
+          {" "}
+          <p>নতুন রেফারার সফলভাবে তৈরি হয়েছে।</p>{" "}
+          <Link to="/referrer" className="px-4 py-2 bgColor text-white">
+            Go To referrer list
+          </Link>{" "}
+        </div>
+      );
       if (data.success) {
         setStatus("success");
-        setMsg("সফলভাবে নতুন রেফারার তৈরি করা হয়েছে।");
+        // setMsg("সফলভাবে নতুন রেফারার তৈরি করা হয়েছে।");
+        setMsg(p);
+        setReferrer({ isDoctor: "yes", commissionType: "percentage" });
       } else {
         setStatus("error");
         setMsg("নতুন রেফারার তৈরি করা যায়নি। দয়া করে পেইজটি Refresh/Reload করে আবার চেষ্টা করুন।");

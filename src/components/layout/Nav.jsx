@@ -10,7 +10,7 @@ const Nav = () => {
     
       <div className="bg-blue-gray-900 text-gray-200 text-sm mt-4 font-bold rounded-full mx-auto flex justify-center items-center h-24 w-24">
         <Link to={"/recharge"} className="mx-auto text-center">
-          <p>৳500000</p>
+          <p>৳5000</p>
           <p className="">Recharge</p>
         </Link>
       </div>

@@ -63,7 +63,7 @@ const Modal = (props) => {
             </div>
           )}
 
-          {type === "success" && <p className="text-md text-center text-blue-gray-500">{title}</p>}
+          {type === "success" && <div className="text-md text-center text-blue-gray-500">{title}</div>}
 
           <div className="flex space-x-8">
             {onClose && (
