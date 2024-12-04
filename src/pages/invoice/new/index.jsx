@@ -17,8 +17,7 @@ const CreateInvoice = () => {
   const [invoiceData, setInvoiceData] = useState({
     total: 0,
     hasDiscount: false,
-    discountType: null,
-    referrer: null,
+    referrer: {_id: "", commission: "", commissionType: ""},
     discount: 0,
     afterDiscount: 0,
     labAdjustment: 0,
@@ -26,7 +25,7 @@ const CreateInvoice = () => {
     paid: 0,
   });
   const [patientData, setPatientData] = useState({ name: "", age: "", contact: "", doctorName: "" });
-  const { total, hasDiscount, discountType, discount, labAdjustment } = invoiceData;
+  const { total, referrer, hasDiscount, discount, labAdjustment } = invoiceData;
   const [status, setStatus] = useState(null);
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
@@ -38,14 +37,6 @@ const CreateInvoice = () => {
         setMsg("Loading Data. Please wait...");
         const response = await axios.get(API_URL + "/api/v1/user/dataForNewInvoice");
         if (response.data.success) {
-        //   const refinedTestlist = response.data.testList.map((test) => {
-        //     if (typeof (test.price ) !== "number") {
-        //       test.price = 0;
-        //       return test;
-        //     }
-        //     return test;
-        //   });
-          // console.log(refinedTestlist);
           setTestList(response.data.testList);
           setReferrerList(response.data.referrerList);
           setStatus(null);
@@ -74,7 +65,7 @@ const CreateInvoice = () => {
     let afterDiscount;
     let netAmount;
     if (hasDiscount) {
-      if (discountType === "fixed") {
+      if (referrer.commissionType === "fixed") {
         afterDiscount = total - discount;
       } else {
         afterDiscount = total - (discount * total) / 100;
@@ -86,19 +77,19 @@ const CreateInvoice = () => {
       afterDiscount = total;
       setInvoiceData({ ...invoiceData, afterDiscount, netAmount });
     }
-  }, [total, hasDiscount, discount, discountType, labAdjustment]);
+  }, [total, hasDiscount, discount, referrer._id, labAdjustment]);
 
   const handleHasDiscount = (val) => {
     if (val) {
-      setInvoiceData({ ...invoiceData, hasDiscount: true, discount: invoiceData.referrer.discountAmount });
+      setInvoiceData({ ...invoiceData, hasDiscount: true, discount: invoiceData.referrer.commission });
     } else {
       setInvoiceData({ ...invoiceData, hasDiscount: false, discount: 0 });
     }
   };
 
   const handleDiscount = (value, referrer) => {
-    if (value > referrer.discountAmount) {
-      setInvoiceData({ ...invoiceData, discount: referrer.discountAmount });
+    if (value > referrer.commission) {
+      setInvoiceData({ ...invoiceData, discount: referrer.commission });
     } else {
       setInvoiceData({ ...invoiceData, discount: value });
     }
@@ -107,10 +98,10 @@ const CreateInvoice = () => {
   const handleReferrer = (val) => {
     const referrer = JSON.parse(val);
     setInvoiceData((state) => {
-      return { ...state, discountType: referrer.type, referrer };
+      return { ...state, referrer };
     });
-    console.log(invoiceData);
-    if (referrer.isDoctor) {
+    // console.log(invoiceData);
+    if (referrer.isDoctor === "yes") {
       setPatientData({ ...patientData, doctorName: referrer.name });
     }
   };
@@ -156,14 +147,14 @@ const CreateInvoice = () => {
       const iData = {
         total: invoiceData.total,
         netAmount: invoiceData.netAmount,
-        referrerId: invoiceData.referrer.id,
+        referrerId: invoiceData.referrer._id,
         hasDiscount: invoiceData.hasDiscount,
         discount: invoiceData.discount,
-        discountType: invoiceData.discountType,
         paid: invoiceData.paid,
         labAdjustment: invoiceData.labAdjustment,
         testList: checkedTest,
       };
+      console.log(iData);
       setStatus("processing");
       setMsg("Invoice তৈরি হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন....");
       const response = await axios.post(API_URL + "/api/v1/invoice/new", {

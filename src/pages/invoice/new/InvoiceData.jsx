@@ -1,7 +1,7 @@
 /** @format */
 
 const InvoiceData = (props) => {
-  const { total, discount, afterDiscount, labAdjustment, netAmount, paid, hasDiscount, discountType, referrer } =
+  const { total, discount, afterDiscount, labAdjustment, netAmount, paid, hasDiscount, referrer } =
     props.data;
   const due = netAmount - paid;
 
@@ -45,7 +45,7 @@ const InvoiceData = (props) => {
                 value={discount}
                 onChange={(e) => props.onDiscount(e.target.value, referrer)}
               />
-              <span>{discountType === "fixed" ? "টাকা" : "%"}</span>
+              <span>{referrer.commissionType === "fixed" ? "টাকা" : "%"}</span>
             </div>
           </div>
 

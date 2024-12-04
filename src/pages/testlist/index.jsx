@@ -45,10 +45,6 @@ const TestList = () => {
     setMsg(null);
   };
 
-  const handleUpdateTest = (code, updatedPrice) => {
-    setTestList((prev) => prev.map((test) => (test.code === code ? { ...test, price: updatedPrice } : test)));
-    console.log(testList);
-  };
 
   return (
     <section>

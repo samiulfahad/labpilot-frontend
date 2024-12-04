@@ -54,7 +54,7 @@ const UpdateTestList = () => {
         if (data?.success) {
           setMyList(data.list);
           setCachedData(data.list);
-          console.log(cachedData);
+          // console.log(cachedData);
           setStatus(null);
           setMsg(null);
         } else {
@@ -120,7 +120,7 @@ const UpdateTestList = () => {
         setStatus("error");
         setMsg("টেস্টলিস্ট আপডেট করা যায়নি। অনুগ্রহ করে পেইজটি Refresh/Reload করে আবার চেষ্টা করুন");
       }
-      console.log(response);
+      // console.log(response);
     } catch (e) {
       setStatus("error");
       setMsg("টেস্টলিস্ট আপডেট করা যায়নি। অনুগ্রহ করে পেইজটি Refresh/Reload করে আবার চেষ্টা করুন");
