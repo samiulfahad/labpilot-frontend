@@ -22,7 +22,7 @@ const UpdateTestList = () => {
       try {
         setStatus("processing");
         setMsg("Lab-Pilot এ নিবন্ধিত টেস্টগুলি লোড করা হচ্ছে...");
-        const response = await axios.get(API_URL + "/api/v1/global/test/all");
+        const response = await axios.get(API_URL + "/api/v1/system/test/all");
         if (response.data.success) {
           setFullList(response.data.list);
           setStatus(null);

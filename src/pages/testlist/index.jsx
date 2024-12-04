@@ -21,6 +21,7 @@ const TestList = () => {
       try {
         const response = await axios.get(API_URL + "/api/v1/user/test/all", { params: { _id: USER_ID } });
         if (response.data.success) {
+          // console.log(response.data);
           setTestList(response.data.list);
           setStatus(null);
           setMsg(null);

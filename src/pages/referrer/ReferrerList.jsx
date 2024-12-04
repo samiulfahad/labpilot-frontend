@@ -4,8 +4,9 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { API_URL } from "../../../config";
+import Modal from "../../components/modal";
 
-const index = () => {
+const ReferrerList = () => {
   const [list, setList] = useState([]);
   const [status, setStatus] = useState("processing");
   const [msg, setMsg] = useState(null);
@@ -16,7 +17,7 @@ const index = () => {
         setMsg("রেফারারদের তালিকা লোড হচ্ছে...");
         const response = await axios.get(API_URL + "/api/v1/user/referrer/all");
 
-        if (response.data.success) {
+        if (response?.data.success) {
           setList(response.data.list);
           setStatus("success");
           setMsg(null);
@@ -28,26 +29,35 @@ const index = () => {
       } catch (e) {
         setStatus("error");
         setMsg("রেফারারদের তালিকা আনা সম্ভব হয়নি। অনুগ্রহ করে পেইজটি Refresh/Reload করুন");
-        console.log(e.response.data);
+        console.log(e.response?.data);
       }
     };
     fetchData();
   }, []);
+
+  const closeModal = () => {
+    setStatus(null)
+    setMsg(null)
+  }
   return (
     <section>
+      {status === "processing" && <Modal type="processing" title={msg} />}
+      {status === "error" && <Modal type="error" title={msg} onClose={closeModal} />}
       <div className="w-[550px]  p-8 mt-8 bg-white rounded-md ml-24">
+        {/* Button to Add new Referrer */}
         <div>
           <div className="flex justify-between items-center">
             <p className="text-left text-lg font-semibold">Referrer List</p>
             <Link
               state={{ actionType: "add", title: "Add New Referrer" }}
-              to="/referrer/add-edit"
+              to="/referrer/add"
               className="px-4 py-1 bgColor text-white text-semibold rounded-md"
             >
               Add New
             </Link>
           </div>
         </div>
+        {/* List of available Referrers */}
         <div className="flex flex-col justify-start items-center">
           {list.map((item) => (
             <div
@@ -57,9 +67,9 @@ const index = () => {
               <p className="text-left w-60">{item.name}</p>
               <p className="text-left w-12">{item.commission}</p>
               <p className="text-left w-32">{item.commissionType}</p>
-
+              {/* Edit Referrer Button */}
               <Link
-                to={`/referrer/add-edit`}
+                to={`/referrer/edit`}
                 state={{
                   actionType: "edit",
                   title: "Edit Referrer",
@@ -83,4 +93,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default ReferrerList;

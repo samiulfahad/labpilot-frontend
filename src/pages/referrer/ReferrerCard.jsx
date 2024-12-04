@@ -56,7 +56,7 @@ const ReferrerCard = () => {
         <div className="flex flex-col justify-center items-center space-y-2">
           {" "}
           <p>{successMsg}</p>{" "}
-          <Link to="/referrer" className="px-4 py-2 bgColor text-white">
+          <Link to="/referrer/all" className="px-4 py-2 bgColor text-white">
             Go To referrer list
           </Link>{" "}
         </div>

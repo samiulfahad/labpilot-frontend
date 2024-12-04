@@ -6,7 +6,7 @@ const TestList = ({ list, onChange }) => {
       <h2 className="w-full text-left text-md">ল্যাব টেস্টঃ</h2>
       <div className="flex flex-wrap justify-start items-center">
         {list.map((test) => (
-          <Checkbox key={test.code} label={`${test.name}(${test.price}৳)`} value={test.name} onChange={() => onChange(test)} />
+          <Checkbox key={test._id} label={`${test.name} [${test.price} tk]`} value={test.name} onChange={() => onChange(test)} />
         ))}
       </div>
     </>

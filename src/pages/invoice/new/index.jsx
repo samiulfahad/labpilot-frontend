@@ -8,10 +8,11 @@ import TestList from "./TestList";
 import InvoiceData from "./InvoiceData";
 import PatientData from "./PatientData";
 import Modal from "../../../components/modal";
-import { testList, referrerList } from "../../../data";
 import { API_URL } from "../../../../config";
 
 const CreateInvoice = () => {
+  const [testList, setTestList] = useState([]);
+  const [referrerList, setReferrerList] = useState([]);
   const [checkedTest, setCheckedTest] = useState([]);
   const [invoiceData, setInvoiceData] = useState({
     total: 0,
@@ -26,9 +27,40 @@ const CreateInvoice = () => {
   });
   const [patientData, setPatientData] = useState({ name: "", age: "", contact: "", doctorName: "" });
   const { total, hasDiscount, discountType, discount, labAdjustment } = invoiceData;
-  const [loadingState, setLoadingState] = useState(null);
+  const [status, setStatus] = useState(null);
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setStatus("processing");
+        setMsg("Loading Data. Please wait...");
+        const response = await axios.get(API_URL + "/api/v1/user/dataForNewInvoice");
+        if (response.data.success) {
+        //   const refinedTestlist = response.data.testList.map((test) => {
+        //     if (typeof (test.price ) !== "number") {
+        //       test.price = 0;
+        //       return test;
+        //     }
+        //     return test;
+        //   });
+          // console.log(refinedTestlist);
+          setTestList(response.data.testList);
+          setReferrerList(response.data.referrerList);
+          setStatus(null);
+          setMsg(null);
+        } else {
+          setStatus("error");
+          setMsg("একটি সমস্যা হয়েছে। দয়া করে পেইজটি Refresh/Reload করে পুনরায় চেষ্টা করুন।");
+        }
+      } catch (e) {
+        setStatus("error");
+        setMsg("একটি সমস্যা হয়েছে। দয়া করে পেইজটি Refresh/Reload করে পুনরায় চেষ্টা করুন।");
+      }
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     let totalAmount = 0;
@@ -99,17 +131,17 @@ const CreateInvoice = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (checkedTest.length === 0) {
-      setLoadingState("error");
+      setStatus("error");
       setMsg("ল্যাব টেস্ট সিলেক্ট করুন");
       return;
     }
     if (!invoiceData.referrer) {
-      setLoadingState("error");
+      setStatus("error");
       setMsg("রেফারেন্সকারী সিলেক্ট করুন");
       return;
     }
     if (!patientData.gender) {
-      setLoadingState("error");
+      setStatus("error");
       setMsg("রোগীর Gender সিলেক্ট করুন");
       return;
     }
@@ -132,14 +164,14 @@ const CreateInvoice = () => {
         labAdjustment: invoiceData.labAdjustment,
         testList: checkedTest,
       };
-      setLoadingState("sendingData");
+      setStatus("processing");
       setMsg("Invoice তৈরি হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন....");
       const response = await axios.post(API_URL + "/api/v1/invoice/new", {
         patientData: pData,
         invoiceData: iData,
       });
       if (response.data.success) {
-        setLoadingState(null);
+        setStatus(null);
         setMsg(null);
         console.log(response.data);
         navigate("/invoice/print", {
@@ -151,10 +183,8 @@ const CreateInvoice = () => {
         });
       }
     } catch (e) {
-      setLoadingState("error");
-      setMsg(
-        "ইনভয়েস তৈরি করা সম্ভব হয়নি। অনুগ্রহ করে পেইজটি রিফ্রেশ করে পুনরায় চেষ্টা করুন।"
-      );
+      setStatus("error");
+      setMsg("ইনভয়েস তৈরি করা সম্ভব হয়নি। অনুগ্রহ করে পেইজটি রিফ্রেশ করে পুনরায় চেষ্টা করুন।");
       if (e.response) {
         console.log(e.response.data);
       } else {
@@ -163,14 +193,14 @@ const CreateInvoice = () => {
     }
   };
   const closeModal = () => {
-    setLoadingState(null);
+    setStatus(null);
     setMsg("");
   };
 
   return (
     <section className="flex mx-auto w-full">
-      {loadingState == "error" && <Modal type="error" title={msg} onClose={closeModal} />}
-      {loadingState == "sendingData" && <Modal type="processing" title={msg} />}
+      {status === "error" && <Modal type="error" title={msg} onClose={closeModal} />}
+      {status === "processing" && <Modal type="processing" title={msg} />}
       <form onSubmit={handleSubmit}>
         <div className="w-full pl-20">
           <PatientData

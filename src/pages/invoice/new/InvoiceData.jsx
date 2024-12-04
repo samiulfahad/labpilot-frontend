@@ -5,14 +5,7 @@ const InvoiceData = (props) => {
     props.data;
   const due = netAmount - paid;
 
-  const handleDownKey = (e) => {
-    if (e.code === "ArrowUp" || e.code === "ArrowDown") {
-      console.log("FuckingKey");
-    } else {
-      props.onPay(parseFloat(e.target.value) || 0);
-      console.log("Good Key");
-    }
-  };
+ 
 
   return (
     <div className="bg-blue-gray-700 w-auto text-white rounded-lg shadow-lg px-4 py-2">

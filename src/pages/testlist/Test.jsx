@@ -7,7 +7,7 @@ import { API_URL } from "../../../config";
 const Test = ({ test, statusUpdate, msgUpdate }) => {
   const [disabled, setDisabled] = useState(true);
   const testId = test._id;
-  const [price, setPrice] = useState(test.price);
+  const [price, setPrice] = useState(test.price || 0);
 
   useEffect(() => {}, [test.price]);
 
@@ -41,7 +41,7 @@ const Test = ({ test, statusUpdate, msgUpdate }) => {
   };
 
   const handleChange = (e) => {
-    setPrice(e.target.value);
+    setPrice(parseFloat(e.target.value));
   };
 
   return (
@@ -51,8 +51,8 @@ const Test = ({ test, statusUpdate, msgUpdate }) => {
           <p className="w-32 text-right">{test.name}</p>
           <input
             value={price}
-            disabled={disabled}
             type="number"
+            disabled={disabled}
             onChange={handleChange} // Handle input changes
             className="px-4 text-center w-40 rounded"
           />
