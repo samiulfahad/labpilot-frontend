@@ -77,7 +77,7 @@ const CreateInvoice = () => {
       afterDiscount = total;
       setInvoiceData({ ...invoiceData, afterDiscount, netAmount });
     }
-  }, [total, hasDiscount, discount, referrer._id, labAdjustment]);
+  }, [total, hasDiscount, discount, referrer, labAdjustment]);
 
   const handleHasDiscount = (val) => {
     if (val) {
@@ -97,9 +97,7 @@ const CreateInvoice = () => {
 
   const handleReferrer = (val) => {
     const referrer = JSON.parse(val);
-    setInvoiceData((state) => {
-      return { ...state, referrer };
-    });
+    setInvoiceData((prev) => ({ ...prev, referrer, discount: referrer.commission }))
     // console.log(invoiceData);
     if (referrer.isDoctor === "yes") {
       setPatientData({ ...patientData, doctorName: referrer.name });
