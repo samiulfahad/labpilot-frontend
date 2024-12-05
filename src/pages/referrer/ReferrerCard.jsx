@@ -34,7 +34,10 @@ const ReferrerCard = () => {
   }
 
   const handleReferrer = (e) => {
-    const { name, value } = e.target;
+    let { name, value } = e.target;
+    if (name === "commission") {
+      value = parseFloat(value)
+    }
     setReferrer({ ...referrer, [name]: value });
   };
 
@@ -108,6 +111,7 @@ const ReferrerCard = () => {
           <p>Commission</p>
           <input
             name="commission"
+            type="number"
             value={referrer.commission}
             onChange={handleReferrer}
             className="px-2 py-1 bg-gray-200"

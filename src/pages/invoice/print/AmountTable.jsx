@@ -3,7 +3,8 @@
 import React from "react";
 
 const AmountTable = ({ total, discount, discountType, labAdjustment, paid }) => {
-  let percentDiscount= 0
+  let percentDiscount = 0
+  discount = parseFloat(discount)
   if (discountType === "percentage") {
     percentDiscount = discount
     discount = (discount * total) / 100;
@@ -22,7 +23,7 @@ const AmountTable = ({ total, discount, discountType, labAdjustment, paid }) => 
               <td className="text-[13px] text-black">
                 ডিস্কাউন্ট {discountType === "percentage" ? `(${percentDiscount}%)` : null}
               </td>
-              <td className="text-base text-black text-right">- ৳ {discount}</td>
+              <td className="text-base text-black text-right">- ৳ {parseFloat(discount)}</td>
             </tr>
           )}
           {labAdjustment !== 0 && (

@@ -1,11 +1,8 @@
 /** @format */
 
 const InvoiceData = (props) => {
-  const { total, discount, afterDiscount, labAdjustment, netAmount, paid, hasDiscount, referrer } =
-    props.data;
+  const { total, discount, afterDiscount, labAdjustment, netAmount, paid, hasDiscount, referrer } = props.data;
   const due = netAmount - paid;
-
- 
 
   return (
     <div className="bg-blue-gray-700 w-auto text-white rounded-lg shadow-lg px-4 py-2">
@@ -15,7 +12,7 @@ const InvoiceData = (props) => {
         <p>{total} টাকা</p>
       </div>
 
-      {referrer && referrer.discountAmount !== 0 && (
+      {referrer && referrer._id !== null && (
         <div className="flex justify-start space-x-4 py-1 items-center">
           <p className="text-sm">কমিশনভোগী ব্যক্তি বা প্রতিষ্ঠান কোনো ডিস্কাউন্ট দিয়েছে কি?</p>
           <p
@@ -43,7 +40,17 @@ const InvoiceData = (props) => {
                 id="discount"
                 className="p-1 w-20 text-right text-black outline-none border border-gray-300 rounded-md mr-2"
                 value={discount}
-                onChange={(e) => props.onDiscount(e.target.value, referrer)}
+                onChange={(e) => {
+                  const value = parseFloat(e.target.value || 0);
+                  if (value >= 0) {
+                    props.onDiscount(value, referrer);
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.code === "ArrowUp" || e.code === "ArrowDown") {
+                    e.preventDefault();
+                  }
+                }}
               />
               <span>{referrer.commissionType === "fixed" ? "টাকা" : "%"}</span>
             </div>
@@ -63,7 +70,13 @@ const InvoiceData = (props) => {
             type="number"
             className="p-1 border w-20 outline-none text-black text-right border-gray-300 rounded-md mr-2"
             value={labAdjustment}
-            onChange={(e) => props.onLabAdjustment(parseFloat(e.target.value) || 0)}
+            // onChange={(e) => props.onLabAdjustment(parseFloat(e.target.value) || 0)}
+            onChange={(e) => {
+              const value = parseFloat(e.target.value || 0);
+              if (value >= 0 && value <= total) {
+                props.onLabAdjustment(value, referrer);
+              }
+            }}
             onKeyDown={(e) => {
               if (e.code === "ArrowUp" || e.code === "ArrowDown") {
                 e.preventDefault();
@@ -88,7 +101,12 @@ const InvoiceData = (props) => {
             type="number"
             className="p-1 border w-20 outline-none text-black text-right border-gray-300 rounded-md mr-2"
             value={paid}
-            onChange={(e) => props.onPay(parseFloat(e.target.value) || 0)}
+            onChange={(e) => {
+              const value = parseFloat(e.target.value || 0);
+              if (value >= 0 && value <= netAmount) {
+                props.onPay(value, referrer);
+              }
+            }}
             onKeyDown={(e) => {
               if (e.code === "ArrowUp" || e.code === "ArrowDown") {
                 e.preventDefault();

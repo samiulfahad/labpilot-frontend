@@ -25,6 +25,8 @@ const PrintReceipt = () => {
   if (!patientData || !invoiceData) {
     return null;
   }
+  
+  let discountType = typeof invoiceData.discount !== "number" && invoiceData.discount.includes("%") ? "percentage" : 'fixed'
 
   return (
     <section className="print relative max-w-xl px-10 mx-auto pt-3 min-h-screen">
@@ -49,7 +51,7 @@ const PrintReceipt = () => {
         <AmountTable
           total={invoiceData.total}
           discount={invoiceData.discount}
-          discountType={invoiceData.discountType}
+          discountType={discountType}
           labAdjustment={invoiceData.labAdjustment}
           paid={invoiceData.paid}
         />

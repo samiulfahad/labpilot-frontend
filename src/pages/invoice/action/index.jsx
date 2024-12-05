@@ -14,11 +14,26 @@ const Action = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const _id = location?.state?._id || null;
-  
-  const [invoice, setInvoice] = useState({});
-  const [status, setStatus] = useState("");
+
+  const [invoice, setInvoice] = useState({
+    invoiceId: "",
+    referrerId: "",
+    name: "",
+    age: "",
+    contact: "",
+    gender: "",
+    doctorName: "",
+    total: "",
+    discount: "",
+    labAdjustment: "",
+    netAmount: "",
+    paid: "",
+    commission: "",
+    testList: [],
+  });
+  const [status, setStatus] = useState("processing");
   const [msg, setMsg] = useState(null);
-  const [disabled, setDisabled] = useState(true)
+  const [disabled, setDisabled] = useState(true);
 
   // console.log(location.state);
 
@@ -54,12 +69,11 @@ const Action = () => {
     }
   }, [navigate]);
 
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInvoice({ ...invoice, [name]: value });
     console.log(invoice);
-  }
+  };
 
   const handleUpdate = async () => {
     try {
@@ -79,7 +93,7 @@ const Action = () => {
       if (response.data.success) {
         setStatus("success");
         setMsg("তথ্য সফলভাবে আপডেট করা হয়েছে");
-        setDisabled(true)
+        setDisabled(true);
         console.log(response.data);
       } else {
         setMsg("তথ্য আপডেট করা যায়নি। অনুগ্রহ করে পেইজটি Refresh করে আবার চেষ্টা করুন");
@@ -115,14 +129,13 @@ const Action = () => {
 
         const invoiceData = {
           invoiceId: fetchedInvoice.invoiceId,
-          total: fetchedInvoice.total,
-          netAmount: fetchedInvoice.netAmount,
           referrerId: fetchedInvoice.referrerId,
-          hasDiscount: fetchedInvoice.hasDiscount,
+          total: fetchedInvoice.total,
           discount: fetchedInvoice.discount,
-          discountType: fetchedInvoice.discountType,
-          paid: fetchedInvoice.paid,
           labAdjustment: fetchedInvoice.labAdjustment,
+          netAmount: fetchedInvoice.netAmount,
+          paid: fetchedInvoice.paid,
+          commission: fetchedInvoice.commission,
           testList: fetchedInvoice.testList,
         };
 
@@ -145,7 +158,6 @@ const Action = () => {
       console.log(error);
     }
   };
-
 
   const handleActions = async (update) => {
     let processingMsg = null;
@@ -191,11 +203,9 @@ const Action = () => {
     }
   };
 
-  
   const handleEdit = () => {
-    setDisabled(!disabled)
-  }
-
+    setDisabled(!disabled);
+  };
 
   const closeModal = () => {
     setStatus(null);
@@ -222,10 +232,7 @@ const Action = () => {
       {status === "error" && <Modal type="error" title={msg} onClose={closeModal} />}
       <div className="mt-4">
         <div className="mb-8 w-full mx-auto text-center">
-          <button
-            onClick={handlePrint}
-            className="px-4 py-2 bg-white text-blue-gray-700 rounded-md font-bold"
-          >
+          <button onClick={handlePrint} className="px-4 py-2 bg-white text-blue-gray-700 rounded-md font-bold">
             Print Invoice
           </button>
         </div>
@@ -236,7 +243,13 @@ const Action = () => {
           </div>
 
           <div className="w-2/5 bg-white text-black px-6 py-4 shadow-xl rounded-lg">
-            <PatientData invoice={invoice} disabled={disabled} onEdit={handleEdit} onChange={handleChange} onSave={handleUpdate} />
+            <PatientData
+              invoice={invoice}
+              disabled={disabled}
+              onEdit={handleEdit}
+              onChange={handleChange}
+              onSave={handleUpdate}
+            />
             {/* <p>Managed bt Lab-Pilot.com</p> */}
           </div>
         </section>

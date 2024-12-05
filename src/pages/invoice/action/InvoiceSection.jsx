@@ -5,6 +5,9 @@ import InvoiceDate from "./ConvertDate";
 
 const InvoiceSection = (props) => {
   const invoice = props.invoice;
+  console.log(invoice);
+  const discount = parseFloat(invoice.discount)
+  const discountType = invoice.discount?.includes("%") ? "percentage" : "fixed"
   return (
     <div className="flex flex-col justify-between items-start space-y-2">
       {/* Invoice ID */}
@@ -36,16 +39,16 @@ const InvoiceSection = (props) => {
       <div className="flex w-full justify-between items-center">
         <p>Referrer Discount</p>
         <p className="font-bold text-black">
-          {invoice.discount === 0
+          {discount === 0
             ? "0"
-            : `${invoice.discount}${invoice.discountType === "percentage" ? " %" : " Taka"}`}
+            : `${discount}${discountType === "percentage" ? " %" : " Taka"}`}
         </p>
       </div>
 
       {/* Lab Adjustment */}
       <div className="flex w-full justify-between items-center">
         <p>Lab Discount</p>
-        <p className="font-bold text-black"> {invoice.labAdjustment === 0 ? "0" : invoice.discount + " Taka"}</p>
+        <p className="font-bold text-black"> {invoice.labAdjustment === 0 ? "0" : invoice.labAdjustment + " Taka"}</p>
       </div>
 
       {/* Net Amount */}
@@ -63,7 +66,7 @@ const InvoiceSection = (props) => {
           )}
 
           {invoice?.netAmount > invoice.paid && (
-            <p className="text-right w-full font-bold text-red-500"> Due-{invoice?.netAmount - invoice?.paid}</p>
+            <p className="text-right w-full font-bold text-red-500"> <span className="text-black">Paid- { invoice.paid },</span>  Due-{invoice?.netAmount - invoice?.paid}</p>
           )}
         </div>
       </div>
