@@ -74,6 +74,8 @@ const Test = ({ test, statusUpdate, msgUpdate }) => {
           </div>
         </div>
       </div>
+
+
     </div>
   );
 };

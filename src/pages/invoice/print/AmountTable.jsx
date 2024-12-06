@@ -3,12 +3,7 @@
 import React from "react";
 
 const AmountTable = ({ total, discount, discountType, labAdjustment, paid }) => {
-  let percentDiscount = 0
-  discount = parseFloat(discount)
-  if (discountType === "percentage") {
-    percentDiscount = discount
-    discount = (discount * total) / 100;
-  }
+  
   return (
     <div className="w-2/3">
       <table className="w-full mt-2">
@@ -21,7 +16,7 @@ const AmountTable = ({ total, discount, discountType, labAdjustment, paid }) => 
           {discount !== 0 && (
             <tr>
               <td className="text-[13px] text-black">
-                ডিস্কাউন্ট {discountType === "percentage" ? `(${percentDiscount}%)` : null}
+                ডিস্কাউন্ট 
               </td>
               <td className="text-base text-black text-right">- ৳ {parseFloat(discount)}</td>
             </tr>

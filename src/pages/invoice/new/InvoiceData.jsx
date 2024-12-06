@@ -30,7 +30,7 @@ const InvoiceData = (props) => {
         </div>
       )}
 
-      {hasDiscount && referrer && (
+      {hasDiscount && referrer._id && (
         <>
           <div className="flex justify-between text-sm mb-2 items-center">
             <label htmlFor="discount">ডিস্কাউন্ট:</label>
@@ -52,7 +52,7 @@ const InvoiceData = (props) => {
                   }
                 }}
               />
-              <span>{referrer.commissionType === "fixed" ? "টাকা" : "%"}</span>
+              <span>{referrer.commissionType === "percentage" ?  "%" :"টাকা"}</span>
             </div>
           </div>
 
@@ -70,7 +70,6 @@ const InvoiceData = (props) => {
             type="number"
             className="p-1 border w-20 outline-none text-black text-right border-gray-300 rounded-md mr-2"
             value={labAdjustment}
-            // onChange={(e) => props.onLabAdjustment(parseFloat(e.target.value) || 0)}
             onChange={(e) => {
               const value = parseFloat(e.target.value || 0);
               if (value >= 0 && value <= total) {

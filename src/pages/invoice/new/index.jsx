@@ -91,7 +91,7 @@ const CreateInvoice = () => {
   }, [total, hasDiscount, discount, referrer, labAdjustment]);
 
   const handleHasDiscount = (val) => {
-    if (val) {
+    if (val === true) {
       setInvoiceData({ ...invoiceData, hasDiscount: true, discount: parseFloat(invoiceData.referrer.commission) });
     } else {
       setInvoiceData({ ...invoiceData, hasDiscount: false, discount: 0 });
@@ -108,7 +108,7 @@ const CreateInvoice = () => {
 
   const handleReferrer = (val) => {
     const referrer = JSON.parse(val);
-    setInvoiceData((prev) => ({ ...prev, referrer, discount: referrer.commission }));
+    setInvoiceData((prev) => ({ ...prev, referrer }));
     if (referrer.isDoctor === "yes") {
       setPatientData({ ...patientData, doctorName: referrer.name });
     }
@@ -152,12 +152,13 @@ const CreateInvoice = () => {
         contact: patientData.contact,
         doctorName: patientData.doctorName,
       };
-      let discount = 0;
+
+      let discountAmount = 0;
       if (hasDiscount) {
         if (invoiceData.referrer.commissionType === "percentage") {
-          discount = invoiceData.discount + "%";
+          discountAmount = (invoiceData.total * discount)/100
         } else {
-          discount = invoiceData.discount + " Taka";
+          discountAmount = invoiceData.discount
         }
       }
 
@@ -165,13 +166,14 @@ const CreateInvoice = () => {
         total: invoiceData.total,
         netAmount: invoiceData.netAmount,
         referrerId: invoiceData.referrer._id,
-        discount: discount,
+        discount: discountAmount,
         paid: invoiceData.paid,
         labAdjustment: invoiceData.labAdjustment,
         commission: invoiceData.commission,
         testList: checkedTest,
       };
       // console.log(iData);
+      // return;
       setStatus("processing");
       setMsg("Invoice তৈরি হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন....");
       const response = await axios.post(API_URL + "/api/v1/invoice/new", {
