@@ -1,16 +1,22 @@
 /** @format */
 
+// Optional feature => Add title to the Card Element. Like if the date is "Today's Cash Memo", "Cash Memo - January, 2024 ", "Cash Memo - Feb 27, 2023", "Cash Memo - From Nov 5, 2024 to Dec 10, 2024"
+
+
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { API_URL } from "../../../config";
 import Modal from "../../components/modal";
 import Card from "./Card";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [status, setStatus] = useState("");
-  const [msg, setMsg] = useState(null);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [msg, setMsg] = useState("");
+  const [startDate, setStartDate] = useState("today");
+  const [cachedDate, setCachedDate] = useState(null)
+  const [endDate, setEndDate] = useState("today");
+  const [date, setDate] = useState("");
   const [picker, setPicker] = useState("");
 
   const [cashMemo, setCashMemo] = useState({
@@ -22,30 +28,29 @@ const Home = () => {
     totalNetAmount: 0,
     totalInvoice: 0,
   });
-  const months = [
-    { name: "জানুয়ারি", value: "january" },
-    { name: "ফেব্রুয়ারি", value: "january" },
-    { name: "মার্চ", value: "january" },
-    { name: "এপ্রিল", value: "january" },
-    { name: "মে", value: "january" },
-    { name: "জুন", value: "january" },
-    { name: "জুলাই", value: "january" },
-    { name: "অগাস্ট", value: "january" },
-    { name: "সেপ্টেম্বর", value: "january" },
-    { name: "অক্টোবর", value: "january" },
-    { name: "নভেম্বর", value: "january" },
-    { name: "ডিসেম্বর", value: "january" },
-  ];
 
-  const fetchData = async () => {
+  const nullMaker = () => {
+    setStatus(null);
+    setMsg(null);
+    setStartDate("");
+    setEndDate("");
+    setPicker("");
+    setDate("");
+  };
+
+  const fetchData = async (startDate, endDate) => {
     try {
       setStatus("processing");
-      const response = await axios.get(API_URL + "/api/v1/user/cashmemo");
+      const response = await axios.get(API_URL + "/api/v1/user/cashmemo", {
+        params: { startDate, endDate },
+      });
       if (response.data.success === true) {
         console.log(response.data);
         setCashMemo(response.data.cashMemo);
         setStatus(null);
         setMsg(null);
+        setCachedDate({startDate, endDate})
+        nullMaker();
       } else {
         setStatus("error");
         setMsg("ক্যাশমেমো আনা সম্ভব হয়নি। দয়া করে পেইজটি Refresh/Reload করে আবার চেষ্টা করুন");
@@ -58,16 +63,9 @@ const Home = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchData("today", "today");
   }, []);
 
-  const closeModal = () => {
-    setStatus(null);
-    setMsg(null);
-    setStartDate("");
-    setEndDate("");
-    setPicker("");
-  };
 
   const dateConverter = (date) => {
     const parts = date.split("-");
@@ -75,7 +73,23 @@ const Home = () => {
     return structured;
   };
 
-  const handleRangeSelection = (date, dateType) => {
+  const handleDateChange = (date) => {
+    if (picker === "date") {
+      const start = dateConverter(date) + "000000";
+      const end = dateConverter(date) + "235959";
+      setStartDate(start);
+      setEndDate(end);
+    }
+    if (picker === "month") {
+      const start = (dateConverter(date) + "01000000").replace("undefined", "");
+      const end = (dateConverter(date) + "31000000").replace("undefined", "");
+      setStartDate(start);
+      setEndDate(end);
+    }
+    setDate(date);
+  };
+
+  const handleDateRange = (date, dateType) => {
     if (dateType === "startDate") {
       const start = dateConverter(date) + "000000";
       setStartDate(start);
@@ -86,33 +100,18 @@ const Home = () => {
     }
   };
 
-  const handleSubmit = () => {
-    if (picker === "date") {
-      const start = dateConverter(startDate) + "000000";
-      const end = dateConverter(startDate) + "235959";
-      console.log(start);
-      console.log(end);
-    }
-    if (picker === "month") {
-      const start = (dateConverter(startDate) + "01000000").replace("undefined", "")
-      const end = (dateConverter(startDate) + "31000000").replace("undefined", "")
-      console.log(start);
-      console.log(end);
-    }
-    if (picker === "dateRange") {
-      console.log(startDate);
-      console.log(endDate);
-    }
-  };
+  const data = { list: "invoice", ...cachedDate };
 
   return (
     <section>
       {status === "processing" && <Modal type="processing" title={msg} />}
-      {status === "error" && <Modal type="error" title={msg} onClose={closeModal} />}
+      {status === "error" && <Modal type="error" title={msg} onClose={nullMaker} />}
 
       <div className="flex flex-wrap gap-2 justify-center items-center mx-auto px-10 mt-8">
         <div>
-          <button className="btn-sm">আজকের Cash Memo</button>
+          <button onClick={() => fetchData("today", "today")} className="btn-sm">
+            আজকের Cash Memo
+          </button>
         </div>
         <div className="text-left flex flex-col justify-center items-center space-y-2">
           <button onClick={() => setPicker("date")} className="btn-sm">
@@ -133,25 +132,30 @@ const Home = () => {
         </div>
       </div>
 
-      <Card cashMemo={cashMemo} />
       {(picker === "date" || picker === "month") && (
         <Modal
           type="dateOrMonth"
           pick={picker}
-          startDate={startDate}
-          onSelection={(date) => setStartDate(date)}
-          onSubmit={handleSubmit}
-          onClosingModal={closeModal}
+          startDate={date}
+          onDateChange={(date) => handleDateChange(date)}
+          onSubmit={() => fetchData(startDate, endDate)}
+          onClosingModal={nullMaker}
         />
       )}
       {picker === "dateRange" && (
         <Modal
           type="dateRange"
-          onSelection={handleRangeSelection}
-          onSubmit={handleSubmit}
-          onClosingModal={closeModal}
+          onDateChange={handleDateRange}
+          onSubmit={() => fetchData(startDate, endDate)}
+          onClosingModal={nullMaker}
         />
       )}
+      <Card cashMemo={cashMemo} />
+      <div className="mt-4 ml-32">
+        <Link to="/render-list" state={data} className="btn-sm">
+          Invoice দেখুন{" "}
+        </Link>
+      </div>
     </section>
   );
 };

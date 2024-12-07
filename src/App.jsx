@@ -14,6 +14,7 @@ import UpdateTestList from "./pages/update-testlist";
 import Profile from "./pages/profile";
 import ReferrerList from "./pages/referrer/ReferrerList";
 import ReferrerCard from "./pages/referrer/ReferrerCard";
+import RenderList from "./pages/render-list";
 
 function App() {
   return (
@@ -31,6 +32,8 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/testlist" element={<TestList />} />
         <Route path="/testlist/update" element={<UpdateTestList />} />
+
+        <Route path="/render-list" element={<RenderList />} />
 
         <Route path="/send-sms" element={<SendSMS />} />
         <Route path="/recharge" element={<Recharge />} />

@@ -81,7 +81,7 @@ const Modal = (props) => {
               <input
                 type={props.pick}
                 value={props.startDate}
-                onChange={(e) => props.onSelection(e.target.value)}
+                onChange={(e) => props.onDateChange(e.target.value)}
                 className="px-4 py-2"
               />
               <div className="flex justify-between items-center space-x-4 mt-4">
@@ -102,7 +102,7 @@ const Modal = (props) => {
                 <input
                   type="date"
                   value={props.startDate}
-                  onChange={(e) => props.onSelection(e.target.value, "startDate")}
+                  onChange={(e) => props.onDateChange(e.target.value, "startDate")}
                   className="px-4 py-2"
                 />
               </div>
@@ -111,7 +111,7 @@ const Modal = (props) => {
                 <input
                   type="date"
                   value={props.endDate}
-                  onChange={(e) => props.onSelection(e.target.value, "endDate")}
+                  onChange={(e) => props.onDateChange(e.target.value, "endDate")}
                   className="px-4 py-2"
                 />
               </div>
