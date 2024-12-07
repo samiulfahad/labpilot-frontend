@@ -1,26 +1,27 @@
 /** @format */
 
-import { Option, Select } from "@material-tailwind/react";
-import SaleCard from "./SaleCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { API_URL } from "../../../config";
 import Modal from "../../components/modal";
+import Card from "./Card";
 
 const Home = () => {
   const [status, setStatus] = useState("");
   const [msg, setMsg] = useState(null);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [picker, setPicker] = useState("");
+
   const [cashMemo, setCashMemo] = useState({
     totalSale: 0,
     totalLabAdjustment: 0,
-    totalReferrerDiscunt: 0,
+    totalReferrerDiscount: 0,
     totalCommission: 0,
     totalReceived: 0,
-    totalCashInCounter: 0,
     totalNetAmount: 0,
     totalInvoice: 0,
   });
-  const handleDetails = () => {};
   const months = [
     { name: "জানুয়ারি", value: "january" },
     { name: "ফেব্রুয়ারি", value: "january" },
@@ -63,59 +64,94 @@ const Home = () => {
   const closeModal = () => {
     setStatus(null);
     setMsg(null);
+    setStartDate("");
+    setEndDate("");
+    setPicker("");
+  };
+
+  const dateConverter = (date) => {
+    const parts = date.split("-");
+    const structured = parts[0][2] + parts[0][3] + parts[1] + parts[2];
+    return structured;
+  };
+
+  const handleRangeSelection = (date, dateType) => {
+    if (dateType === "startDate") {
+      const start = dateConverter(date) + "000000";
+      setStartDate(start);
+    }
+    if (dateType === "endDate") {
+      const end = dateConverter(date) + "235959";
+      setEndDate(end);
+    }
+  };
+
+  const handleSubmit = () => {
+    if (picker === "date") {
+      const start = dateConverter(startDate) + "000000";
+      const end = dateConverter(startDate) + "235959";
+      console.log(start);
+      console.log(end);
+    }
+    if (picker === "month") {
+      const start = (dateConverter(startDate) + "01000000").replace("undefined", "")
+      const end = (dateConverter(startDate) + "31000000").replace("undefined", "")
+      console.log(start);
+      console.log(end);
+    }
+    if (picker === "dateRange") {
+      console.log(startDate);
+      console.log(endDate);
+    }
   };
 
   return (
     <section>
       {status === "processing" && <Modal type="processing" title={msg} />}
       {status === "error" && <Modal type="error" title={msg} onClose={closeModal} />}
-      <div>
-        <div className="ml-32 text-lg w-[600px] bg-white shadow-lg p-6 rounded-md mt-4">
-          <p className="text-center text-xl font-bold">Today's Sale</p>
-          <div className="flex justify-between items-center w-full my-4">
-            <p>Today's Total Invoices</p>
-            <p> {cashMemo.totalInvoice}</p>
-          </div>
 
-          <div className="flex justify-between items-center w-full">
-            <p>Total Sale</p>
-            <p>{cashMemo.totalSale}</p>
-          </div>
-          <div className="flex justify-between items-center w-full">
-            <p>Total Lab Discount</p>
-            <p> {cashMemo.totalLabAdjustment}</p>
-          </div>
+      <div className="flex flex-wrap gap-2 justify-center items-center mx-auto px-10 mt-8">
+        <div>
+          <button className="btn-sm">আজকের Cash Memo</button>
+        </div>
+        <div className="text-left flex flex-col justify-center items-center space-y-2">
+          <button onClick={() => setPicker("date")} className="btn-sm">
+            নির্দিষ্ট তারিখের Cash Memo দেখুন
+          </button>
+        </div>
 
-          <div className="flex justify-between items-center w-full">
-            <p>Total Referrers Discount</p>
-            <p> {cashMemo.totalReferrerDiscunt}</p>
-          </div>
+        <div className="text-left flex flex-col justify-center items-center space-y-2">
+          <button onClick={() => setPicker("month")} className="btn-sm">
+            নির্দিষ্ট মাসের Cash Memo দেখুন
+          </button>
+        </div>
 
-          <div className="flex justify-between items-center w-full mt-4">
-            <p>Net Sale (Total Sale - Discount)</p>
-            <p> {cashMemo.totalNetAmount}</p>
-          </div>
-
-          <div className="flex  mt-4 justify-between items-center w-full">
-            <p> Total Received  </p>
-            <p> {cashMemo.totalReceived}</p>
-          </div>
-
-          <div className="flex justify-between items-center w-full">
-            <p> Total Due </p>
-            <p> {cashMemo.totalNetAmount - cashMemo.totalReceived}</p>
-          </div>
-
-          <div className="flex text-sm justify-between items-center w-full mt-4">
-            <p>Total Commission</p>
-            <p> {cashMemo.totalCommission}</p>
-          </div>
-          <div className="flex text-sm justify-between items-center w-full">
-            <p>Final Receiving Amount</p>
-            <p> {cashMemo.totalNetAmount - cashMemo.totalCommission}</p>
-          </div>
+        <div className="text-left flex flex-col justify-center items-center space-y-2">
+          <button onClick={() => setPicker("dateRange")} className="btn-sm">
+            নির্দিষ্ট দিনসমূহের Cash Memo দেখুন
+          </button>
         </div>
       </div>
+
+      <Card cashMemo={cashMemo} />
+      {(picker === "date" || picker === "month") && (
+        <Modal
+          type="dateOrMonth"
+          pick={picker}
+          startDate={startDate}
+          onSelection={(date) => setStartDate(date)}
+          onSubmit={handleSubmit}
+          onClosingModal={closeModal}
+        />
+      )}
+      {picker === "dateRange" && (
+        <Modal
+          type="dateRange"
+          onSelection={handleRangeSelection}
+          onSubmit={handleSubmit}
+          onClosingModal={closeModal}
+        />
+      )}
     </section>
   );
 };
