@@ -2,7 +2,7 @@
 
 import React from "react";
 
-const Card = ({cashMemo, title}) => {
+const CashMemo = ({cashMemo, title}) => {
   return (
     <div>
       <div className="ml-32 text-lg w-[600px] bg-white shadow-lg p-6 rounded-md mt-4">
@@ -54,4 +54,4 @@ const Card = ({cashMemo, title}) => {
   );
 };
 
-export default Card;
+export default CashMemo;

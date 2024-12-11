@@ -2,19 +2,19 @@
 
 // Optional feature => Add title to the Card Element. Like if the date is "Today's Cash Memo", "Cash Memo - January, 2024 ", "Cash Memo - Feb 27, 2023", "Cash Memo - From Nov 5, 2024 to Dec 10, 2024"
 
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { API_URL } from "../../../config";
 import Modal from "../../components/modal";
-import Card from "./Card";
+import CashMemo from "./CashMemo";
 import { Link } from "react-router-dom";
 
 const Home = () => {
+  const [page, setPage] = useState("cashMemo");
   const [status, setStatus] = useState("");
   const [msg, setMsg] = useState("");
   const [startDate, setStartDate] = useState("today");
-  const [cachedDate, setCachedDate] = useState(null)
+  const [cachedDate, setCachedDate] = useState(null);
   const [endDate, setEndDate] = useState("today");
   const [date, setDate] = useState("");
   const [picker, setPicker] = useState("");
@@ -41,15 +41,20 @@ const Home = () => {
   const fetchData = async (startDate, endDate) => {
     try {
       setStatus("processing");
-      const response = await axios.get(API_URL + "/api/v1/user/cashmemo", {
+      setMsg("Loading Data...")
+      let url
+      if (page === "cashMemo") url = "/api/v1/user/cashmemo"
+      if (page === "commissionMemo") url = "/api/v1/user/commissionmemo"
+      const response = await axios.get(API_URL + url, {
         params: { startDate, endDate },
       });
       if (response.data.success === true) {
         console.log(response.data);
+
         setCashMemo(response.data.cashMemo);
         setStatus(null);
         setMsg(null);
-        setCachedDate({startDate, endDate})
+        setCachedDate({ startDate, endDate });
         nullMaker();
       } else {
         setStatus("error");
@@ -65,7 +70,6 @@ const Home = () => {
   useEffect(() => {
     fetchData("today", "today");
   }, []);
-
 
   const dateConverter = (date) => {
     const parts = date.split("-");
@@ -150,12 +154,16 @@ const Home = () => {
           onClosingModal={nullMaker}
         />
       )}
-      <Card cashMemo={cashMemo} />
-      <div className="mt-4 ml-32">
-        <Link to="/render-list" state={data} className="btn-sm">
-          Invoice দেখুন{" "}
-        </Link>
-      </div>
+      {page === "cashMemo" && (
+        <>
+          <CashMemo cashMemo={cashMemo} />
+          <div className="mt-4 ml-32">
+            <Link to="/render-list" state={data} className="btn-sm">
+              Invoice দেখুন{" "}
+            </Link>
+          </div>
+        </>
+      )}
     </section>
   );
 };
