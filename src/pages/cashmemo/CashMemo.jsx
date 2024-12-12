@@ -4,11 +4,8 @@ import React from "react";
 
 const CashMemo = ({ cashMemo, title }) => {
   return (
-    <div className="flex justify-center items-center py-4 mx-auto">
+    <div>
       <div className="w-[500px] shadow-2xl rounded-xl bg-white overflow-hidden">
-        {/* Decorative Background */}
-        {/* <div className="absolute inset-0 bg-gradient-to-r bg-white from-indigo-100 to-purple-100 opacity-20 pointer-events-none"></div> */}
-
         {/* Header */}
         <div className="bg-gradient-to-r from-blue-gray-300 to-blue-gray-700 text-white py-6 px-8">
           <p className="text-center text-2xl font-bold">{title || "Cash Memo"}</p>

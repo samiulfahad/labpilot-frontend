@@ -2,7 +2,6 @@
 
 import Layout from "./components/layout/Layout";
 import { Route, Routes } from "react-router-dom";
-import Home from "./pages/home";
 import NewInvoice from "./pages/invoice/new";
 import AllInvoices from "./pages/invoice/all";
 import TestList from "./pages/testlist";
@@ -15,27 +14,28 @@ import Profile from "./pages/profile";
 import ReferrerList from "./pages/referrer/ReferrerList";
 import ReferrerCard from "./pages/referrer/ReferrerCard";
 import RenderList from "./pages/render-list";
+import TestingComponent from "./pages/test/TestingComponent";
+import CashMemo from "./pages/cashmemo";
+import CommissionTracker from "./pages/commission-tracker";
 
 function App() {
   return (
     <Layout>
       <Routes>
-      <Route path="/" element={<Home />} /> // Cashmemo and Commission Tracker
-        <Route path="/:component" element={<Home />} /> // Cashmemo and Commission Tracker
+        <Route path="/test-feature" element={<TestingComponent />} />
+        <Route path="/cashMemo" element={<CashMemo />} /> // Cashmemo and Commission Tracker
+        <Route path="/commissionTracker" element={<CommissionTracker />} /> // Cashmemo and Commission Tracker
         <Route path="/invoice/new" element={<NewInvoice />} />
         <Route path="/invoice/print" element={<PrintReceipt />} />
         <Route path="/invoice/action" element={<Action />} />
         <Route path="/invoice/all" element={<AllInvoices />} />
-
         <Route path="/referrer/all" element={<ReferrerList />} />
         <Route path="/referrer/add" element={<ReferrerCard />} />
         <Route path="/referrer/edit" element={<ReferrerCard />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/testlist" element={<TestList />} />
         <Route path="/testlist/update" element={<UpdateTestList />} />
-
         <Route path="/render-list" element={<RenderList />} />
-
         <Route path="/send-sms" element={<SendSMS />} />
         <Route path="/recharge" element={<Recharge />} />
       </Routes>

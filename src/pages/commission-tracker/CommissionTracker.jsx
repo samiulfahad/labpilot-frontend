@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const CommissionTracker = () => {
   const list = [1, 3, 4, 5];
   return (
-    <div className="overflow-x-auto w-4/5 mt-8 mx-auto">
+    <div className="overflow-x-auto w-4/5 mx-auto">
       <table className="min-w-full bg-white text-blue-gray-800 border border-gray-200 rounded-md">
         <thead>
           <tr className="bg-gray-100 border-b">
