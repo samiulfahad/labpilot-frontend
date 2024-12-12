@@ -2,52 +2,74 @@
 
 import React from "react";
 
-const CashMemo = ({cashMemo, title}) => {
+const CashMemo = ({ cashMemo, title }) => {
   return (
-    <div>
-      <div className="ml-32 text-lg w-[600px] bg-white shadow-lg p-6 rounded-md mt-4">
-        <p className="text-center text-xl font-bold">{ title ? title : "Cash Memo" }</p>
-        <div className="flex justify-between items-center w-full my-4">
-          <p>Today's Total Invoices</p>
-          <p> {cashMemo.totalInvoice}</p>
+    <div className="flex justify-center items-center py-4 mx-auto">
+      <div className="w-[500px] shadow-2xl rounded-xl bg-white overflow-hidden">
+        {/* Decorative Background */}
+        {/* <div className="absolute inset-0 bg-gradient-to-r bg-white from-indigo-100 to-purple-100 opacity-20 pointer-events-none"></div> */}
+
+        {/* Header */}
+        <div className="bg-gradient-to-r from-blue-gray-300 to-blue-gray-700 text-white py-6 px-8">
+          <p className="text-center text-2xl font-bold">{title || "Cash Memo"}</p>
         </div>
 
-        <div className="flex justify-between items-center w-full">
-          <p>Total Sale</p>
-          <p>{cashMemo.totalSale}</p>
-        </div>
-        <div className="flex justify-between items-center w-full">
-          <p>Total Lab Discount</p>
-          <p> {cashMemo.totalLabAdjustment}</p>
-        </div>
+        {/* Content */}
+        <div className="p-8 space-y-2">
+          {/* Invoice and Sales */}
+          <div className="flex justify-between items-center">
+            <p className="text-gray-700 font-medium">Today's Total Invoices</p>
+            <p className="text-gray-900 font-bold">{cashMemo.totalInvoice}</p>
+          </div>
 
-        <div className="flex justify-between items-center w-full">
-          <p>Total Referrers Discount</p>
-          <p> {cashMemo.totalReferrerDiscount}</p>
-        </div>
+          <div className="flex justify-between items-center">
+            <p className="text-gray-700 font-medium">Total Sale</p>
+            <p className="text-gray-900 font-bold">{cashMemo.totalSale}</p>
+          </div>
 
-        <div className="flex justify-between items-center w-full mt-4">
-          <p>Net Sale (Total Sale - Discount)</p>
-          <p> {cashMemo.totalNetAmount}</p>
-        </div>
+          {/* Discounts */}
+          <div className="flex justify-between items-center">
+            <p className="text-gray-700 font-medium">Total Lab Discount</p>
+            <p className="text-gray-900 font-semibold">{cashMemo.totalLabAdjustment}</p>
+          </div>
 
-        <div className="flex  mt-4 justify-between items-center w-full">
-          <p> Total Received </p>
-          <p> {cashMemo.totalReceived}</p>
-        </div>
+          <div className="flex justify-between items-center">
+            <p className="text-gray-700 font-medium">Total Referrers Discount</p>
+            <p className="text-gray-900 font-semibold">{cashMemo.totalReferrerDiscount}</p>
+          </div>
 
-        <div className="flex justify-between items-center w-full">
-          <p> Total Due </p>
-          <p> {cashMemo.totalNetAmount - cashMemo.totalReceived}</p>
-        </div>
+          {/* Net Sale */}
+          <div className="flex justify-between items-center border-t border-gray-200 pt-4">
+            <p className="text-gray-700 font-medium">Net Sale (Total Sale - Discount)</p>
+            <p className="text-gray-900 font-bold">{cashMemo.totalNetAmount}</p>
+          </div>
 
-        <div className="flex text-sm justify-between items-center w-full mt-4">
-          <p>Total Commission</p>
-          <p> {cashMemo.totalCommission}</p>
-        </div>
-        <div className="flex text-sm justify-between items-center w-full">
-          <p>Final Receiving Amount</p>
-          <p> {cashMemo.totalNetAmount - cashMemo.totalCommission}</p>
+          {/* Received and Due */}
+          <div className="flex justify-between items-center">
+            <p className="text-gray-700 font-medium">Total Received</p>
+            <p className="text-green-600 font-bold">{cashMemo.totalReceived}</p>
+          </div>
+
+          <div className="flex justify-between items-center">
+            <p className="text-gray-700 font-medium">Total Due</p>
+            <p className="text-red-600 font-bold">
+              {cashMemo.totalNetAmount - cashMemo.totalReceived}
+            </p>
+          </div>
+
+          {/* Commission */}
+          <div className="flex justify-between items-center border-t border-gray-200 pt-4 text-sm">
+            <p className="text-gray-600">Total Commission</p>
+            <p className="text-gray-800">{cashMemo.totalCommission}</p>
+          </div>
+
+          {/* Final Receiving */}
+          <div className="flex justify-between items-center text-sm">
+            <p className="text-gray-600">Final Receiving Amount</p>
+            <p className="text-gray-800 font-semibold">
+              {cashMemo.totalNetAmount - cashMemo.totalCommission}
+            </p>
+          </div>
         </div>
       </div>
     </div>

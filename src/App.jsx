@@ -20,7 +20,8 @@ function App() {
   return (
     <Layout>
       <Routes>
-        <Route path="/" element={<Home />} />
+      <Route path="/" element={<Home />} /> // Cashmemo and Commission Tracker
+        <Route path="/:component" element={<Home />} /> // Cashmemo and Commission Tracker
         <Route path="/invoice/new" element={<NewInvoice />} />
         <Route path="/invoice/print" element={<PrintReceipt />} />
         <Route path="/invoice/action" element={<Action />} />

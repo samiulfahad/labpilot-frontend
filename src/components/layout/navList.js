@@ -1,5 +1,6 @@
 const navList = [
-  { label: "Cash Memo", path: "/" },
+  { label: "Cash Memo", path: "/cashMemo" },
+  { label: "Commission", path: "/commissionTracker" },
   { label: "Invoice - New", path: "/invoice/new" },
   { label: "Invoice - All", path: "/invoice/all" },
   { label: "Send SMS", path: "/send-sms" },

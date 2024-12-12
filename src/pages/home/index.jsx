@@ -7,7 +7,8 @@ import axios from "axios";
 import { API_URL } from "../../../config";
 import Modal from "../../components/modal";
 import CashMemo from "./CashMemo";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import CommissionTracker from "./CommissionTracker";
 
 const Home = () => {
   const [page, setPage] = useState("cashMemo");
@@ -18,6 +19,8 @@ const Home = () => {
   const [endDate, setEndDate] = useState("today");
   const [date, setDate] = useState("");
   const [picker, setPicker] = useState("");
+  const { component } = useParams();
+  console.log(component);
 
   const [cashMemo, setCashMemo] = useState({
     totalSale: 0,
@@ -41,10 +44,10 @@ const Home = () => {
   const fetchData = async (startDate, endDate) => {
     try {
       setStatus("processing");
-      setMsg("Loading Data...")
-      let url
-      if (page === "cashMemo") url = "/api/v1/user/cashmemo"
-      if (page === "commissionMemo") url = "/api/v1/user/commissionmemo"
+      setMsg("Loading Data...");
+      let url;
+      if (page === "cashMemo") url = "/api/v1/user/cashmemo";
+      if (page === "commissionMemo") url = "/api/v1/user/cashmemo";
       const response = await axios.get(API_URL + url, {
         params: { startDate, endDate },
       });
@@ -66,6 +69,14 @@ const Home = () => {
       setMsg("ক্যাশমেমো আনা সম্ভব হয়নি। দয়া করে পেইজটি Refresh/Reload করে আবার চেষ্টা করুন");
     }
   };
+
+  useEffect(() => {
+    if (component === "cashMemo") {
+      setPage("cashMemo");
+    } else if (component === "commissionTracker") {
+      setPage("commissionTracker");
+    }
+  }, [component]);
 
   useEffect(() => {
     fetchData("today", "today");
@@ -107,7 +118,7 @@ const Home = () => {
   const data = { list: "invoice", ...cachedDate };
 
   return (
-    <section>
+    <section className="">
       {status === "processing" && <Modal type="processing" title={msg} />}
       {status === "error" && <Modal type="error" title={msg} onClose={nullMaker} />}
 
@@ -154,15 +165,24 @@ const Home = () => {
           onClosingModal={nullMaker}
         />
       )}
+
       {page === "cashMemo" && (
-        <>
+          <div className="-ml-20">
+
           <CashMemo cashMemo={cashMemo} />
-          <div className="mt-4 ml-32">
-            <Link to="/render-list" state={data} className="btn-sm">
+          
+          <div className="mx-auto w-full flex">
+            <Link to="/render-list" state={data} className="btn-sm mx-auto">
               Invoice দেখুন{" "}
             </Link>
           </div>
-        </>
+        </div>
+      )}
+
+      {page === "commissionTracker" && (
+        <div>
+          <CommissionTracker />
+        </div>
       )}
     </section>
   );
