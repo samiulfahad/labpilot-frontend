@@ -3,7 +3,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const CommissionTracker = ({ list }) => {
+const CommissionTracker = ({ list, startDate, endDate }) => {
   return (
     <div className="overflow-x-auto w-4/5 mx-auto">
       <div className="text-lg font-bold text-center">Commission Tracker</div>
@@ -26,7 +26,7 @@ const CommissionTracker = ({ list }) => {
               <td className="px-4 py-2 text-sm">{1 + index}</td>
               <td className="px-4 py-2 text-sm">{item.name}</td>
               {list.length !== 0 && list[0].totalInvoice && <td className="px-4 py-2 text-sm">{item.totalInvoice}</td>}
-              <td>
+              <td className="px-4 py-2 text-sm">
                 <div className="flex space-x-2 text-sm justify-start items-center">
                   {item.testList.map((test, index) => {
                     const isLast = index + 1 == item.testList.length;
@@ -50,7 +50,8 @@ const CommissionTracker = ({ list }) => {
               <td className="px-4 py-2 text-sm">{item.totalCommission}</td>
               <td className="px-4 py-2 text-sm">
                 <Link
-                  to={"/invoice/action/"}
+                  state={{list: "invoicesByReferrer", startDate, endDate, referrerId: item.referrerId, referrerName: item.name}}
+                  to={"/render-list"}
                   className="px-3 py-1 text-white bg-blue-gray-800 hover:bg-blue-gray-600 rounded text-sm"
                 >
                   List

@@ -7,25 +7,29 @@ import axios from "axios";
 import { API_URL } from "../../../config";
 import Modal from "../../components/modal";
 import InvoiceList from "./InvoiceList";
+import InvoicesByReferrerId from "./InvoicesByReferrerId";
 
 const RenderList = () => {
   const [list, setList] = useState([]);
   const [state, setState] = useState("");
   const [msg, setMsg] = useState("");
   const location = useLocation();
+
+  const referrerId = location?.state?.referrerId || null;
+  const startDate = location.state.startDate;
+  const endDate = location.state.endDate;
+  const referrerName = location.state?.referrerName || "NOT AVAILABLE"
+
   const fetchData = async () => {
     try {
-      console.log(location.state);
       setState("processing");
       setMsg("ডাটা লোড হচ্ছে...");
-      const startDate = location.state.startDate;
-      const endDate = location.state.endDate;
       const response = await axios.get(API_URL + "/api/v1/invoice/render-list/", {
-        params: { startDate, endDate },
+        params: { startDate, endDate, referrerId },
       });
       if (response.data.success) {
-          setList(response.data.list);
-          console.log(response.data);
+        setList(response.data.list);
+        console.log(response.data);
         setState("");
         setMsg("");
       } else {
@@ -57,8 +61,9 @@ const RenderList = () => {
         )}
         {state === "processing" && <Modal type="processing" title={msg} />}
         {state === "error" && <Modal type="error" title={msg} onClose={closeModal} />}
-              {list?.length === 0 && <p className="text-center text-lg font-bold mt-20">দুঃখিত, কোনো ডাটা পাওয়া যায়নি</p>}
-              {location?.state?.list === "invoice" && <InvoiceList list= {list} />}
+        {list?.length === 0 && <p className="text-center text-lg font-bold mt-20">দুঃখিত, কোনো ডাটা পাওয়া যায়নি</p>}
+        {location?.state?.list === "invoice" && <InvoiceList list={list} />}
+        {location?.state?.list === "invoicesByReferrer" && <InvoicesByReferrerId list={list} referrerName={referrerName} />}
       </div>
     </section>
   );

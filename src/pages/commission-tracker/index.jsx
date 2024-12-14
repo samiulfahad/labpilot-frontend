@@ -10,8 +10,10 @@ import CommissionTracker from "./CommissionTracker";
 const index = () => {
   const [status, setStatus] = useState("processing");
   const [msg, setMsg] = useState("");
+  const [startDate, setStartDate] = useState("today")
+  const [endDate, setEndDate] = useState("today")
 
-  const [commissionTracker, setCommissionTracker] = useState([]);
+  const [list, setList] = useState([]);
 
   const fetchData = async (startDate, endDate) => {
     try {
@@ -22,7 +24,7 @@ const index = () => {
       });
       if (response.data.success === true) {
         console.log(response.data);
-        setCommissionTracker(response.data.commissionTracker);
+        setList(response.data.list);
         setStatus(null);
         setMsg(null);
       } else {
@@ -40,6 +42,12 @@ const index = () => {
     fetchData("today", "today");
   }, []);
 
+  const handleFetchData = (start, end) => {
+    setStartDate(start)
+    setEndDate(end)
+    fetchData(start, end)
+  }
+
   const closeModal = () => {
     setStatus("");
     setMsg("");
@@ -50,8 +58,8 @@ const index = () => {
       {status === "processing" && <Modal type="processing" title={msg} />}
       {status === "error" && <Modal type="error" title={msg} onClose={closeModal} />}
       <div className="flex flex-wrap gap-2 justify-center items-center mx-auto px-10">
-        <TimeFrame onFetchData={(startDate, endDate) => fetchData(startDate, endDate)} />
-        <CommissionTracker list={commissionTracker} />
+        <TimeFrame onFetchData={(startDate, endDate) => handleFetchData(startDate, endDate)} />
+        <CommissionTracker list={list} startDate={startDate} endDate={endDate} />
       </div>
     </section>
   );

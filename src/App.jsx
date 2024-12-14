@@ -17,6 +17,7 @@ import RenderList from "./pages/render-list";
 import TestingComponent from "./pages/test/TestingComponent";
 import CashMemo from "./pages/cashmemo";
 import CommissionTracker from "./pages/commission-tracker";
+import InvoicesByReferrer from "./pages/commission-tracker/InvoicesByReferrer";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/invoice/new" element={<NewInvoice />} />
         <Route path="/invoice/print" element={<PrintReceipt />} />
         <Route path="/invoice/action" element={<Action />} />
+        <Route path="/invoice/referrer" element={<InvoicesByReferrer />} />
         <Route path="/invoice/all" element={<AllInvoices />} />
         <Route path="/referrer/all" element={<ReferrerList />} />
         <Route path="/referrer/add" element={<ReferrerCard />} />
