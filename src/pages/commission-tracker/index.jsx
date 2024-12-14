@@ -11,7 +11,7 @@ const index = () => {
   const [status, setStatus] = useState("processing");
   const [msg, setMsg] = useState("");
 
-  const [commissionTracker, setCommissionTracker] = useState({});
+  const [commissionTracker, setCommissionTracker] = useState([]);
 
   const fetchData = async (startDate, endDate) => {
     try {
@@ -22,7 +22,6 @@ const index = () => {
       });
       if (response.data.success === true) {
         console.log(response.data);
-
         setCommissionTracker(response.data.commissionTracker);
         setStatus(null);
         setMsg(null);
@@ -52,7 +51,7 @@ const index = () => {
       {status === "error" && <Modal type="error" title={msg} onClose={closeModal} />}
       <div className="flex flex-wrap gap-2 justify-center items-center mx-auto px-10">
         <TimeFrame onFetchData={(startDate, endDate) => fetchData(startDate, endDate)} />
-        <CommissionTracker />
+        <CommissionTracker list={commissionTracker} />
       </div>
     </section>
   );

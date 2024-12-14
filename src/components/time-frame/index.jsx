@@ -47,9 +47,9 @@ const TimeFrame = ({ onFetchData, titleToday, titleDate, titleMonth, titleRange 
   const handleSubmit = () => {
     onFetchData(startDate, endDate)
     setModal(null)
-    setDate("")
-    setStartDate(null)
-    setEndDate(null)
+    // setDate("")
+    // setStartDate(null)
+    // setEndDate(null)
   }
 
   const closeModal = () => {
@@ -60,7 +60,7 @@ const TimeFrame = ({ onFetchData, titleToday, titleDate, titleMonth, titleRange 
   };
   return (
     <section>
-      <div className="flex flex-wrap gap-2 justify-center items-center mx-auto px-10 my-4">
+      <div className="flex flex-wrap gap-2 justify-center items-center mx-auto px-10 mt-4">
         <div>
           <button onClick={() => onFetchData("today", "today")} className="btn-sm">
             আজকের হিসাব
@@ -78,7 +78,7 @@ const TimeFrame = ({ onFetchData, titleToday, titleDate, titleMonth, titleRange 
           </button>
         </div>
 
-        <div className="text-left flex flex-col justify-center items-center space-y-2">
+        <div className="text-left flex flex-col justify-center items-center">
           <button onClick={() => setModal("dateRange")} className="btn-sm">
           নির্দিষ্ট দিনসমূহের হিসাব
           </button>

@@ -3,16 +3,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const CommissionTracker = () => {
-  const list = [1, 3, 4, 5];
+const CommissionTracker = ({ list }) => {
   return (
     <div className="overflow-x-auto w-4/5 mx-auto">
+      <div className="text-lg font-bold text-center">Commission Tracker</div>
       <table className="min-w-full bg-white text-blue-gray-800 border border-gray-200 rounded-md">
         <thead>
           <tr className="bg-gray-100 border-b">
             <th className="px-4 py-2 text-left font-semibold text-sm text-gray-700">SL No.</th>
             <th className="px-4 py-2 text-left font-semibold text-sm text-gray-700">Name</th>
-            <th className="px-4 py-2 text-left font-semibold text-sm text-gray-700">Total Invoice</th>
+            {list.length !== 0 && list[0].totalInvoice && (
+              <th className="px-4 py-2 text-left font-semibold text-sm text-gray-700">Invoice</th>
+            )}
+            <th className="px-4 py-2 text-left font-semibold text-sm text-gray-700">Test Count</th>
             <th className="px-4 py-2 text-left font-semibold text-sm text-gray-700">Commission</th>
             <th className="px-4 py-2 text-left font-semibold text-sm text-gray-700">Details</th>
           </tr>
@@ -20,10 +23,31 @@ const CommissionTracker = () => {
         <tbody>
           {list.map((item, index) => (
             <tr key={index} className={`${index % 2 === 0 ? "bg-gray-50" : "bg-white"} border-b hover:bg-gray-100`}>
-              <td className="px-4 py-2 text-sm">{1}</td>
-              <td className="px-4 py-2 text-sm">{"Ratul"}</td>
-              <td className="px-4 py-2 text-sm">{5}</td>
-              <td className="px-4 py-2 text-sm">{2000}</td>
+              <td className="px-4 py-2 text-sm">{1 + index}</td>
+              <td className="px-4 py-2 text-sm">{item.name}</td>
+              {list.length !== 0 && list[0].totalInvoice && <td className="px-4 py-2 text-sm">{item.totalInvoice}</td>}
+              <td>
+                <div className="flex space-x-2 text-sm justify-start items-center">
+                  {item.testList.map((test, index) => {
+                    const isLast = index + 1 == item.testList.length;
+                    if (!isLast) {
+                      return (
+                        <p key={index}>
+                          {" "}
+                          {test.testName}-{test.total},
+                        </p>
+                      );
+                    } else {
+                      return (
+                        <p key={index}>
+                          {test.testName}-{test.total}
+                        </p>
+                      );
+                    }
+                  })}
+                </div>
+              </td>
+              <td className="px-4 py-2 text-sm">{item.totalCommission}</td>
               <td className="px-4 py-2 text-sm">
                 <Link
                   to={"/invoice/action/"}
