@@ -54,10 +54,12 @@ const index = () => {
     fetchData("today", "today");
   }, []);
 
-  const handleFetchData = (startDate, endDate) => {
+  const handleFetchData = (startDate, endDate, fDate) => {
     setStartDate(startDate);
     setEndDate(endDate);
     fetchData(startDate, endDate);
+    console.log(fDate);
+
   };
   const closeModal = () => {
     setStatus("");
