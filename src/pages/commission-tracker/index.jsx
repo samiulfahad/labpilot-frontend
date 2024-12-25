@@ -12,6 +12,7 @@ const index = () => {
   const [msg, setMsg] = useState("");
   const [startDate, setStartDate] = useState("today")
   const [endDate, setEndDate] = useState("today")
+  const [formattedDate, setFormattedDate] = useState("Today")
 
   const [list, setList] = useState([]);
 
@@ -42,9 +43,10 @@ const index = () => {
     fetchData("today", "today");
   }, []);
 
-  const handleFetchData = (start, end) => {
+  const handleFetchData = (start, end, fDate) => {
     setStartDate(start)
     setEndDate(end)
+    setFormattedDate(fDate)
     fetchData(start, end)
   }
 
@@ -58,8 +60,8 @@ const index = () => {
       {status === "processing" && <Modal type="processing" title={msg} />}
       {status === "error" && <Modal type="error" title={msg} onClose={closeModal} />}
       <div className="flex flex-wrap gap-2 justify-center items-center mx-auto px-10">
-        <TimeFrame onFetchData={(startDate, endDate) => handleFetchData(startDate, endDate)} />
-        <CommissionTracker list={list} startDate={startDate} endDate={endDate} />
+        <TimeFrame onFetchData={handleFetchData} />
+        <CommissionTracker list={list} startDate={startDate} endDate={endDate} formattedDate={formattedDate} />
       </div>
     </section>
   );

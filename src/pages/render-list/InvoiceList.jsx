@@ -3,9 +3,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const InvoiceList = ({ list }) => {
+const InvoiceList = ({ list, formattedDate }) => {
   return (
     <div className="overflow-x-auto w-4/5 mt-8 mx-auto">
+      <div className="w-full mx-auto text-center">{ formattedDate }</div>
       <table className="min-w-full bg-white text-blue-gray-800 border border-gray-200 rounded-md">
         <thead>
           <tr className="bg-gray-100 border-b">

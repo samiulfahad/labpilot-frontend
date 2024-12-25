@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Modal from "../modal";
 
-const TimeFrame = ({ onFetchData, titleToday, titleDate, titleMonth, titleRange }) => {
+const TimeFrame = ({ onFetchData }) => {
   const [startDate, setStartDate] = useState("today");
   const [endDate, setEndDate] = useState("today");
   const [date, setDate] = useState("");
@@ -16,7 +16,7 @@ const TimeFrame = ({ onFetchData, titleToday, titleDate, titleMonth, titleRange 
   };
 
   // Utility: Formats the date for display
-  const formatDate = (start, end, mode) => {
+  const formatDate = (start, end, modal) => {
     const parseDate = (dateStr) => {
       const year = `20${dateStr.slice(0, 2)}`;
       const month = dateStr.slice(2, 4) - 1; // Month is zero-based
@@ -24,19 +24,19 @@ const TimeFrame = ({ onFetchData, titleToday, titleDate, titleMonth, titleRange 
       return new Date(year, month, day);
     };
 
-    if (mode === "today") return "Today";
+    if (modal === "today") return "Today";
 
-    if (mode === "month") {
+    if (modal === "month") {
       const startMonth = parseDate(start);
       return startMonth.toLocaleDateString("en-US", { year: "numeric", month: "long" });
     }
 
-    if (mode === "date") {
+    if (modal === "date") {
       const selectedDate = parseDate(start);
       return selectedDate.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
     }
 
-    if (mode === "range") {
+    if (modal === "dateRange") {
       const startFormatted = parseDate(start).toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",

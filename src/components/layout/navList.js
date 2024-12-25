@@ -1,5 +1,5 @@
 const navList = [
-  { label: "Time Frame", path: "/test-feature" },
+  { label: "Upload Report", path: "/upload-report" },
   { label: "Cash Memo", path: "/cashMemo" },
   { label: "Commission", path: "/commissionTracker" },
   { label: "Invoice - New", path: "/invoice/new" },

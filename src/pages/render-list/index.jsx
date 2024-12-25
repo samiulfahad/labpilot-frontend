@@ -18,6 +18,7 @@ const RenderList = () => {
   const referrerId = location?.state?.referrerId || null;
   const startDate = location.state.startDate;
   const endDate = location.state.endDate;
+  const formattedDate = location.state.formattedDate || ""
   const referrerName = location.state?.referrerName || "NOT AVAILABLE"
 
   const fetchData = async () => {
@@ -62,8 +63,8 @@ const RenderList = () => {
         {state === "processing" && <Modal type="processing" title={msg} />}
         {state === "error" && <Modal type="error" title={msg} onClose={closeModal} />}
         {list?.length === 0 && <p className="text-center text-lg font-bold mt-20">দুঃখিত, কোনো ডাটা পাওয়া যায়নি</p>}
-        {location?.state?.list === "invoice" && <InvoiceList list={list} />}
-        {location?.state?.list === "invoicesByReferrer" && <InvoicesByReferrerId list={list} referrerName={referrerName} />}
+        {location?.state?.list === "invoice" && <InvoiceList list={list} formattedDate={formattedDate} />}
+        {location?.state?.list === "invoicesByReferrer" && <InvoicesByReferrerId list={list} formattedDate={formattedDate} referrerName={referrerName} />}
       </div>
     </section>
   );

@@ -18,12 +18,18 @@ import TestingComponent from "./pages/test/TestingComponent";
 import CashMemo from "./pages/cashmemo";
 import CommissionTracker from "./pages/commission-tracker";
 import InvoicesByReferrer from "./pages/commission-tracker/InvoicesByReferrer";
+import UploadReport from "./pages/upload-report";
+import UploadCBC from "./pages/upload-report/cbc";
+import UploadRBS from "./pages/upload-report/rbs";
 
 function App() {
   return (
     <Layout>
       <Routes>
         <Route path="/test-feature" element={<TestingComponent />} />
+        <Route path="/upload-report" element={<UploadReport />} />
+        <Route path="/upload-report/cbc01" element={<UploadCBC />} />
+        <Route path="/upload-report/rbs01" element={<UploadRBS />} />
         <Route path="/cashMemo" element={<CashMemo />} /> // Cashmemo and Commission Tracker
         <Route path="/commissionTracker" element={<CommissionTracker />} /> // Cashmemo and Commission Tracker
         <Route path="/invoice/new" element={<NewInvoice />} />

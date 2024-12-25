@@ -3,10 +3,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const CommissionTracker = ({ list, startDate, endDate }) => {
+const CommissionTracker = ({ list, startDate, endDate, formattedDate }) => {
   return (
     <div className="overflow-x-auto w-4/5 mx-auto">
       <div className="text-lg font-bold text-center">Commission Tracker</div>
+      <div className="text-sm font-bold text-center">{ formattedDate }</div>
       <table className="min-w-full bg-white text-blue-gray-800 border border-gray-200 rounded-md">
         <thead>
           <tr className="bg-gray-100 border-b">
@@ -50,7 +51,7 @@ const CommissionTracker = ({ list, startDate, endDate }) => {
               <td className="px-4 py-2 text-sm">{item.totalCommission}</td>
               <td className="px-4 py-2 text-sm">
                 <Link
-                  state={{list: "invoicesByReferrer", startDate, endDate, referrerId: item.referrerId, referrerName: item.name}}
+                  state={{list: "invoicesByReferrer", startDate, endDate, formattedDate, referrerId: item.referrerId, referrerName: item.name}}
                   to={"/render-list"}
                   className="px-3 py-1 text-white bg-blue-gray-800 hover:bg-blue-gray-600 rounded text-sm"
                 >

@@ -15,6 +15,7 @@ const index = () => {
   const [msg, setMsg] = useState("");
   const [startDate, setStartDate] = useState("today");
   const [endDate, setEndDate] = useState("today");
+  const [formattedDate, setFormattedDate] = useState("Today");
 
   const [cashMemo, setCashMemo] = useState({
     totalSale: 0,
@@ -58,8 +59,8 @@ const index = () => {
     setStartDate(startDate);
     setEndDate(endDate);
     fetchData(startDate, endDate);
+    setFormattedDate(fDate);
     console.log(fDate);
-
   };
   const closeModal = () => {
     setStatus("");
@@ -72,10 +73,10 @@ const index = () => {
       {status === "error" && <Modal type="error" title={msg} onClose={closeModal} />}
       <div className="-ml-32 flex flex-wrap gap-2 justify-center items-center mx-auto px-10">
         <TimeFrame onFetchData={handleFetchData} />
-        <CashMemo cashMemo={cashMemo} />
+        <CashMemo cashMemo={cashMemo} formattedDate={formattedDate} />
         {cashMemo.totalInvoice !== 0 && (
           <div className="mx-auto w-full flex justify-center items-center my-2">
-            <Link to="/render-list" state={{ list: "invoice", startDate, endDate }} className="btn-sm">
+            <Link to="/render-list" state={{ list: "invoice", startDate, endDate, formattedDate }} className="btn-sm">
               ইনভয়েসগুলি দেখুন
             </Link>
           </div>

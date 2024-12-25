@@ -2,13 +2,12 @@
 
 import { Link } from "react-router-dom";
 
-
-const InvoicesByReferrerId = ({list, referrerName}) => {
-  
+const InvoicesByReferrerId = ({ list, referrerName, formattedDate }) => {
   return (
     <div className="overflow-x-auto w-4/5 mt-8 mx-auto">
       <div className="text-xl text-center w-full">
-        Referrer Name: {referrerName}
+        <p> Referrer Name: {referrerName} </p>
+        <p className="text-sm">{formattedDate}</p>
       </div>
       <table className="min-w-full bg-white text-blue-gray-800 border border-gray-200 rounded-md">
         <thead>
