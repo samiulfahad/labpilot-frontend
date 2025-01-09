@@ -1,7 +1,7 @@
 /** @format */
 
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const index = () => {
   const [active, setActive] = useState("all")
@@ -43,9 +43,9 @@ const index = () => {
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-800 border-b border-gray-200">
                       <div className="flex gap-2">
-                        <button className="px-4 py-2 bg-blue-gray-600 text-white rounded-md shadow-sm hover:bg-blue-gray-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <Link to='/upload-report/rbs01/form' className="px-4 py-2 bg-blue-gray-600 text-white rounded-md shadow-sm hover:bg-blue-gray-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
                           Upload Data
-                        </button>
+                        </Link>
                         <button className="px-4 py-2 bg-green-600 text-white rounded-md shadow-sm hover:bg-green-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-green-500">
                           Print
                         </button>

@@ -25,6 +25,16 @@ const PatientData = (props) => {
           }}
         />
 
+        {/* <label>Name</label>
+        <input type="text" maxLength={50} className="border-2 border-black rounded px-2" value={name} name="name" onChange={(e) => {
+            const value = e.target.value;
+            // Allow only a-z and A-Z characters
+            const regex = /^[a-zA-Z\s]*$/;
+            if (regex.test(value) || value === "") {
+              props.onChange(e); // Pass the valid input to the parent
+            }
+          }}/> */}
+
         <Input label="বয়স" required type="number" max={200} value={age} name="age" onChange={props.onChange} />
         <Input
           label="যোগাযোগের নাম্বার"

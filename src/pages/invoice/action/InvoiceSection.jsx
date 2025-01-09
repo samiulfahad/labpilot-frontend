@@ -5,6 +5,9 @@ import InvoiceDate from "./ConvertDate";
 
 const InvoiceSection = (props) => {
   const invoice = props.invoice;
+  if (!invoice || !invoice.invoiceId) {
+    return null; // Render nothing until data is available
+  }
   // console.log(invoice);
   return (
     <div className="flex flex-col justify-between items-start space-y-2">
@@ -18,14 +21,14 @@ const InvoiceSection = (props) => {
       <div className="flex w-full justify-between items-center">
         <p>Date</p>
         <p className="font-bold pl-2 text-black">
-          <InvoiceDate dateString={invoice.invoiceId || ""} />
+          <InvoiceDate invoiceId={invoice.invoiceId || ""} />
         </p>
       </div>
 
       {/* Referrer */}
       <div className="flex w-full justify-between items-center">
         <p>Referrer</p>
-        <p className="font-bold text-black">{invoice.referrerId || ""}</p>
+        <p className="font-bold text-black">{invoice.referrerName || ""}</p>
       </div>
 
       {/* Total */}

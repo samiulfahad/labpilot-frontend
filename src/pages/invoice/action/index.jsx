@@ -18,6 +18,7 @@ const Action = () => {
   const [invoice, setInvoice] = useState({
     invoiceId: "",
     referrerId: "",
+    referrerName: "",
     name: "",
     age: "",
     contact: "",
@@ -42,19 +43,20 @@ const Action = () => {
       setStatus("processing");
       setMsg("ইনভয়েসের তথ্য লোড হচ্ছে");
       const response = await axios.get(API_URL + "/api/v1/invoice", {
-        params: { _id: _id },
+        params: { _id: _id, referrerName: true },
       });
-      console.log(response.data);
+      // console.log(response.data);
       if (response.data.success === true) {
         const invoice = response.data.invoice;
         setInvoice(invoice);
         setStatus(null);
         setMsg(null);
+        // console.log(invoice);
       }
     } catch (e) {
       setStatus("error");
       setMsg("ইনভয়েসটি লোড করা যায়নি। অনুগ্রহ করে ইন্টারনেট সংযোগ চেক করুন বা পেইজটি Refresh করুন");
-      console.log(e);
+      // console.log(e);
     }
   };
   useEffect(() => {
@@ -72,7 +74,7 @@ const Action = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInvoice({ ...invoice, [name]: value });
-    console.log(invoice);
+    // console.log(invoice);
   };
 
   const handleUpdate = async () => {
@@ -94,7 +96,7 @@ const Action = () => {
         setStatus("success");
         setMsg("তথ্য সফলভাবে আপডেট করা হয়েছে");
         setDisabled(true);
-        console.log(response.data);
+        // console.log(response.data);
       } else {
         setMsg("তথ্য আপডেট করা যায়নি। অনুগ্রহ করে পেইজটি Refresh করে আবার চেষ্টা করুন");
         setStatus("error");
@@ -102,7 +104,7 @@ const Action = () => {
     } catch (e) {
       setStatus("error");
       setMsg("তথ্য আপডেট করা যায়নি। অনুগ্রহ করে পেইজটি Refresh করে আবার চেষ্টা করুন");
-      console.log(e.response.data);
+      // console.log(e.response.data);
     }
   };
 
@@ -155,7 +157,7 @@ const Action = () => {
     } catch (error) {
       setStatus("error");
       setMsg("ইনভয়েসটি প্রিন্ট করার জন্য তথ্য লোড করা যায়নি।");
-      console.log(error);
+      // console.log(error);
     }
   };
 

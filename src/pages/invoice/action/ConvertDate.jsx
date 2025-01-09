@@ -2,8 +2,9 @@
 
 import React from "react";
 
-const ConvertDate = ({ dateString }) => {
-  const convertDate = (dateString) => {
+const ConvertDate = ({ invoiceId }) => {
+  const convertDate = (invoiceId) => {
+    const dateString = invoiceId.toString()
     // Check if the dateString is empty or invalid
     if (!dateString || dateString.length !== 12 || isNaN(dateString)) {
       return "Invalid date format";
@@ -53,7 +54,7 @@ const ConvertDate = ({ dateString }) => {
     return `${suffix(day)} ${monthName} ${year}`;
   };
 
-  return <>{convertDate(dateString)}</>;
+  return <>{convertDate(invoiceId)}</>;
 };
 
 export default ConvertDate;
