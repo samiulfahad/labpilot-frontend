@@ -8,6 +8,7 @@ const navList = [
   { label: "Referrer", path: "/referrer/all" },
   { label: "Profile", path: "/profile" },
   { label: "Contact Us", path: "/contact" },
+  { label: "Login", path: "/login" },
 ];
 
 export default navList
