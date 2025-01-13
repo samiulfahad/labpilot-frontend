@@ -1,4 +1,5 @@
 config.js
+src/pages/upload-report/
 # Logs
 logs
 *.log
