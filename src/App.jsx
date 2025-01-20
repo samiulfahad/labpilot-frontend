@@ -28,7 +28,7 @@ import UserForm from "./pages/user-management/UserForm";
 function App() {
   const { user } = useAuth();
   const location = useLocation();
-  console.log(1111)
+  // console.log(1111)
   // console.log(location.pathname);
 
   // if (!user && location.pathname === "/") {
