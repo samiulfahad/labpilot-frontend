@@ -1,14 +1,12 @@
 const navList = [
-  { label: "Upload Report", path: "/upload-report" },
+  { label: "New Invoice", path: "/invoice/new" },
+  { label: "All Invoice", path: "/invoice/all" },
   { label: "Cash Memo", path: "/cashMemo" },
   { label: "Commission", path: "/commissionTracker" },
-  { label: "Invoice - New", path: "/invoice/new" },
-  { label: "Invoice - All", path: "/invoice/all" },
   { label: "Send SMS", path: "/send-sms" },
   { label: "Referrer", path: "/referrer/all" },
   { label: "Profile", path: "/profile" },
-  { label: "Contact Us", path: "/contact" },
-  { label: "Login", path: "/login" },
+  { label: "Contact Us", path: "/contact" }
 ];
 
 export default navList
