@@ -10,7 +10,7 @@ const UserManagement = () => {
     <section>
       <div className="flex flex-col w-full justify-start items-center">
         <div className="flex justify-center items-center w-full mx-auto">
-          <Link to="/user-management/user-form" className="btn-sm mt-10">Add New User</Link>
+          <Link to="/user-management/user-form" state={{page: "addUser"}} className="btn-sm mt-10">Add New User</Link>
         </div>
         <div></div>
       </div>
