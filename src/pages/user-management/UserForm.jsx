@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Modal from "../../components/modal";
 import axios from "axios";
-import { API_URL } from "../../../config";
+import { API_URL, ACCESS_CONTROL } from "../../../config";
 
 const UserForm = () => {
   const { page } = useLocation().state || "";
@@ -78,7 +78,8 @@ const UserForm = () => {
         credentials,
         personalInfo,
       });
-
+      console.log(7777777)
+      console.log(response.data)
       if (response.data.success) {
         // console.log(response.data);
         setState("success");
@@ -98,11 +99,18 @@ const UserForm = () => {
           text = "User Updated";
         }
         setMsg(msg);
+      } else if (response.data.duplicateUser) {
+        setState("error");
+        setMsg("এই Username ব্যবহার করা হয়েছে। দয়া করে অন্য কোনো Username ব্যবহার করুন");
+      } else {
+        setState("error");
+        setMsg("Something went wrong. Please refresh the page");
       }
     } catch (e) {
-      console.log(e);
-    } finally {
-    }
+      setState("error");
+      setMsg("Something went wrong. Please refresh the page");
+      console.log(e.response.data);
+    } 
   };
   const closeModal = () => {
     setState(null);
@@ -140,6 +148,22 @@ const UserForm = () => {
 
         {/* Rules */}
         <div>
+          <p className="text-lg font-bold text-black">Access</p>
+        </div>
+
+        {Object.entries(ACCESS_CONTROL).map(([key, value]) => (
+          <div className="flex space-x-2" key={key}>
+            <input
+              type="checkbox"
+              value={key}
+              onChange={handleRoles}
+              checked={credentials.accessControl.includes(key)}
+            />
+            <p>{value}</p>
+          </div>
+        ))}
+
+        {/* <div>
           <p className="text-lg font-bold text-black">Power</p>
         </div>
         <div className="flex space-x-2">
@@ -163,9 +187,9 @@ const UserForm = () => {
           <p>Access Cashmemo</p>
         </div>
         <div className="flex space-x-2">
-          <input onChange={handleRoles} type="checkbox" value="postReferrer" />
-          <p>Manage Referrers</p>
-        </div>
+          <input onChange={handleRoles} type="checkbox" value="manageReferrer" />
+          <p>Manage Referrers and Commission</p>
+        </div> */}
 
         {/* Personal Info */}
         <div>
