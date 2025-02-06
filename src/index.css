@@ -1,28 +1,26 @@
 /** @format */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 @layer base {
   body {
-    @apply text-blue-gray-700; /* Replace with your preferred color */
+    @apply text-slate-700; /* Replace with your preferred color */
   }
 }
 
 .btn {
-  @apply px-4 py-2 text-white bg-blue-gray-700 rounded-md hover:bg-white hover:text-blue-gray-500 duration-200 border-2 border-blue-gray-700 font-bold text-lg;
+  @apply px-4 py-2 text-white bg-slate-700 rounded-md hover:bg-white hover:text-slate-500 duration-200 border-2 border-slate-700 font-bold text-lg;
 }
 
 .bgColor {
-  @apply bg-blue-gray-700
+  @apply bg-slate-700
 }
 .textColor {
-  @apply text-gray-300
+  @apply text-slate-300
 }
 
 .btn-sm {
-  @apply px-2 py-1 text-white text-sm bg-blue-gray-800 rounded-md hover:bg-white hover:text-blue-gray-500 duration-200 border-2 border-blue-gray-800;
+  @apply px-2 py-1 text-white text-sm bg-slate-800 rounded-md hover:bg-white hover:text-slate-500 duration-200 border-2 border-slate-800;
 }
 
 .nav-btn {
@@ -30,12 +28,12 @@
 }
 
 .active {
-  @apply bg-blue-gray-900 text-white font-bold;
+  @apply bg-slate-900 text-white font-bold;
 }
 
 
 .tableBtn {
-  @apply font-bold border-2 border-blue-gray-800 rounded-lg w-20 text-center hover:bg-blue-gray-800 hover:text-white duration-200 text-blue-gray-600;
+  @apply font-bold border-2 border-slate-800 rounded-lg w-20 text-center hover:bg-slate-800 hover:text-white duration-200 text-slate-600;
 }
 
 

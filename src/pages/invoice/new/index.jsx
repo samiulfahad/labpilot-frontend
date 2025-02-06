@@ -106,8 +106,9 @@ const CreateInvoice = () => {
     }
   };
 
-  const handleReferrer = (val) => {
-    const referrer = JSON.parse(val);
+  const handleReferrer = (e) => {
+    // console.log(e.target.value)
+    const referrer = JSON.parse(e.target.value);
     setInvoiceData((prev) => ({ ...prev, referrer }));
     if (referrer.isDoctor === "yes") {
       setPatientData({ ...patientData, doctorName: referrer.name });

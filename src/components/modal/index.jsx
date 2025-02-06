@@ -29,14 +29,14 @@ const Modal = (props) => {
                 <p>নামঃ {props.name}</p>
                 <p>মোবাইলঃ {props.contact}</p>
                 <p className="pt-4">মোটঃ {props.netAmount}</p>
-                <p className="pb-2 border-b-2 border-blue-gray-500">জমাঃ {props.paid}</p>
+                <p className="pb-2 border-b-2 border-slate-500">জমাঃ {props.paid}</p>
                 <p className="pt-2 text-red-500 font-bold">বাকিঃ {props.netAmount - props.paid}</p>
               </div>
               <div className="flex justify-between mt-4">
                 <button onClick={props.onDueCollection} className="btn-sm">
                   Collect Due
                 </button>
-                <button onClick={props.onClosingModal} className="btn-sm !bg-white !text-blue-gray-500">
+                <button onClick={props.onClosingModal} className="btn-sm !bg-white !text-slate-500">
                   Close
                 </button>
               </div>
@@ -63,14 +63,14 @@ const Modal = (props) => {
                 <button onClick={props.onReportDelivery} className="btn-sm">
                   Confirm
                 </button>
-                <button onClick={props.onClosingModal} className="btn-sm !bg-white !text-blue-gray-500">
+                <button onClick={props.onClosingModal} className="btn-sm !bg-white !text-slate-500">
                   Close
                 </button>
               </div>
             </div>
           )}
 
-          {type === "success" && <div className="text-md text-center text-blue-gray-500">{title}</div>}
+          {type === "success" && <div className="text-md text-center text-slate-500">{title}</div>}
 
           {type === "dateOrMonth" && (
             <div>
@@ -88,7 +88,7 @@ const Modal = (props) => {
                 <button onClick={props.onSubmit} className="btn-sm">
                   Get Data
                 </button>
-                <button onClick={props.onClosingModal} className="btn-sm !bg-white !text-blue-gray-700">
+                <button onClick={props.onClosingModal} className="btn-sm !bg-white !text-slate-700">
                   Close
                 </button>
               </div>
@@ -119,7 +119,7 @@ const Modal = (props) => {
                 <button onClick={props.onSubmit} className="btn-sm">
                   Get Data
                 </button>
-                <button onClick={props.onClosingModal} className="btn-sm !bg-white !text-blue-gray-700">
+                <button onClick={props.onClosingModal} className="btn-sm !bg-white !text-slate-700">
                   Close
                 </button>
               </div>
@@ -139,7 +139,7 @@ const Modal = (props) => {
                 <button onClick={props.onSubmit} className="btn-sm">
                   Get Data
                 </button>
-                <button onClick={props.onClosingModal} className="btn-sm !bg-white !text-blue-gray-700">
+                <button onClick={props.onClosingModal} className="btn-sm !bg-white !text-slate-700">
                   Close
                 </button>
               </div>
@@ -150,7 +150,7 @@ const Modal = (props) => {
             {onClose && (
               <button
                 onClick={onClose}
-                className="button px-4 py-2 my-8 border-2 border-blue-gray-500 rounded-lg font-bold"
+                className="button px-4 py-2 my-8 border-2 border-slate-500 rounded-lg font-bold"
               >
                 Close
               </button>

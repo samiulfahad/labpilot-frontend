@@ -12,7 +12,7 @@ const Navbar = () => {
   };
   return (
     <>
-      <div className="bg-blue-gray-900 text-gray-200 text-sm mt-4 font-bold rounded-full mx-auto flex justify-center items-center h-24 w-24">
+      <div className="bg-sky-700 text-gray-200 text-sm mt-4 font-bold rounded-full mx-auto flex justify-center items-center h-24 w-24">
         <Link to={"/recharge"} className="mx-auto text-center">
           <p>৳5000</p>
           <p className="">Recharge</p>
@@ -27,7 +27,8 @@ const Navbar = () => {
           <NavItem key={index} label={item.label} path={item.path} />
         ))}
       </div>
-      <button onClick={handleLogout} className="text-white font-bold text-center text-md w-full">
+      
+      <button onClick={handleLogout} className="text-white font-bold text-md w-full">
         Logout
       </button>
     </>

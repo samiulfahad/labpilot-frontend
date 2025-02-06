@@ -10,7 +10,7 @@ const LandingPage = () => {
 
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>Welcome to Our Application</h1>
+      <h1>Welcome to Our Application {React.version}</h1>
       <p>Please log in to access the features.</p>
       <button onClick={() => login({username: 665})} style={{ marginTop: "20px" }}>
         Go to Login

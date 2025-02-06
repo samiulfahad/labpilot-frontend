@@ -6,7 +6,7 @@ const Spinner = () => {
   return (
     <div className="">
       <svg
-        className="w-12 h-12 animate-spin text-blue-gray-200"
+        className="w-12 h-12 animate-spin text-slate-200"
         viewBox="0 0 64 64"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +26,7 @@ const Spinner = () => {
           strokeWidth="5"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="text-blue-gray-600"
+          className="text-slate-600"
         ></path>
       </svg>
     </div>

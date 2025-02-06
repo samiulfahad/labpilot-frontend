@@ -31,11 +31,11 @@ function App() {
   // console.log(1111)
   // console.log(location.pathname);
 
-  // if (!user && location.pathname === "/") {
-  //   return <LandingPage/>
-  // } else if (!user && location.pathname !== "/") {
-  //   return <Navigate to="/" replace/>
-  // }
+  if (!user && location.pathname === "/") {
+    return <LandingPage/>
+  } else if (!user && location.pathname !== "/") {
+    return <Navigate to="/" replace/>
+  }
 
   return (
     <Layout>

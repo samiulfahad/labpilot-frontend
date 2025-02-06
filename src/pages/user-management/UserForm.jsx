@@ -129,12 +129,12 @@ const UserForm = () => {
         </div>
         <div className="flex justify-between items-center ">
           <p>Username</p>
-          <input name="username" onChange={handleCredentials} className="px-2 py-1 border-none focus:outline-none" />
+          <input name="username" onChange={handleCredentials} className="px-2 py-1 bg-white border-1 rounded focus:outline-none" />
         </div>
 
         <div className="flex justify-between items-center ">
           <p>Password</p>
-          <input name="password" onChange={handleCredentials} className="px-2 py-1 border-none focus:outline-none" />
+          <input name="password" onChange={handleCredentials} className="px-2 py-1 bg-white border-1 rounded focus:outline-none" />
         </div>
         <div className="flex justify-between items-center ">
           <p>Email</p>
@@ -142,7 +142,7 @@ const UserForm = () => {
             name="email"
             onChange={handleCredentials}
             type="email"
-            className="px-2 py-1 border-none focus:outline-none"
+            className="px-2 py-1 bg-white border-1 rounded focus:outline-none"
           />
         </div>
 
@@ -152,44 +152,19 @@ const UserForm = () => {
         </div>
 
         {Object.entries(ACCESS_CONTROL).map(([key, value]) => (
-          <div className="flex space-x-2" key={key}>
-            <input
+          <div key={key}>
+            <label className="cursor-pointer flex items-center"><input
               type="checkbox"
               value={key}
               onChange={handleRoles}
               checked={credentials.accessControl.includes(key)}
-            />
-            <p>{value}</p>
+              className="w-[30px] h-[30px]"
+            /> <span className="px-2">{value}</span></label>
+            
           </div>
         ))}
 
-        {/* <div>
-          <p className="text-lg font-bold text-black">Power</p>
-        </div>
-        <div className="flex space-x-2">
-          <input onChange={handleRoles} type="checkbox" value="postInvoice" />
-          <p>Create Invoice</p>
-        </div>
-        <div className="flex space-x-2">
-          <input onChange={handleRoles} type="checkbox" value="deleteInvoice" />
-          <p>Delete Invoice</p>
-        </div>
-        <div className="flex space-x-2">
-          <input onChange={handleRoles} type="checkbox" value="postReport" />
-          <p>Upload Reports</p>
-        </div>
-        <div className="flex space-x-2">
-          <input onChange={handleRoles} type="checkbox" value="getCommissionTracker" />
-          <p>Access Commission Tracker</p>
-        </div>
-        <div className="flex space-x-2">
-          <input onChange={handleRoles} type="checkbox" value="getCashMemo" />
-          <p>Access Cashmemo</p>
-        </div>
-        <div className="flex space-x-2">
-          <input onChange={handleRoles} type="checkbox" value="manageReferrer" />
-          <p>Manage Referrers and Commission</p>
-        </div> */}
+       
 
         {/* Personal Info */}
         <div>
@@ -221,7 +196,7 @@ const UserForm = () => {
             name="joiningDate"
             onChange={handlePersonalInfo}
             type="date"
-            className="px-2 py-1 border-none focus:outline-none"
+            className="px-2 py-1 bg-white border-1 rounded focus:outline-none"
           />
         </div>
 
