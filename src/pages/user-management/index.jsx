@@ -47,7 +47,7 @@ const UserManagement = () => {
       {status === "processing" && <Modal type="processing" title={msg} />}
       <div className="flex flex-col w-full justify-start items-center">
         <div className="flex justify-center items-center w-full mx-auto">
-          <Link to="/user-management/user-form" state={{ page: "addUser" }} className="btn-sm mt-10">
+          <Link to="/user-management/user-form" state={{ page: "addUser" }} className="btn-md mt-10">
             Add New User
           </Link>
         </div>

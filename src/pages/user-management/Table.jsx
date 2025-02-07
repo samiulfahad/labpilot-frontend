@@ -24,10 +24,10 @@ const Table = ({ list }) => {
               <td className="px-4 py-2 text-sm">{item.username}</td>
               <td className="px-4 py-2 text-sm">{item.accessControl.map(role=><p key={role}>{ACCESS_CONTROL[role] || "Something went wrong"}</p>)}</td>
               <td className="px-4 py-2 text-sm">
-                <Link to={"/invoice/action/"} state={{ _id: item._id }} className="px-3 py-1 text-white bg-blue-gray-800 hover:bg-blue-gray-600 rounded text-sm">Edit</Link>
+                <Link to={"/invoice/action/"} state={{ _id: item._id }} className="btn-sm">Edit</Link>
               </td>
               <td className="px-4 py-2 text-sm">
-                <Link to={"/invoice/action/"} state={{ _id: item._id }} className="px-3 py-1 text-white bg-red-800 hover:bg-red-600 rounded text-sm">Terminate</Link>
+                <Link to={"/invoice/action/"} state={{ _id: item._id }} className="delete-btn">Terminate</Link>
               </td>
             </tr>
           ))}
