@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { API_URL } from "../../../config";
+import { API_URL, LAB_V1 } from "../../../config";
 
 const Test = ({ test, statusUpdate, msgUpdate }) => {
   const [disabled, setDisabled] = useState(true);
@@ -15,7 +15,7 @@ const Test = ({ test, statusUpdate, msgUpdate }) => {
     try {
       statusUpdate("processing");
       msgUpdate("টেস্টের মূল্য আপডেট করা হচ্ছে...");
-      const response = await axios.put(API_URL + "/api/v1/user/test/update", {
+      const response = await axios.put(API_URL + LAB_V1 + "/test/update", {
         testId: testId,
         field: "price",
         value: price,

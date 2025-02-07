@@ -1,11 +1,11 @@
 const navList = [
   { label: "New Invoice", path: "/invoice/new" },
-  { label: "User Management", path: "/user-management" },
+  { label: "Staff Management", path: "/staff-management" },
   { label: "All Invoice", path: "/invoice/all" },
   { label: "Cash Memo", path: "/cashMemo" },
   { label: "Commission", path: "/commissionTracker" },
   { label: "Send SMS", path: "/send-sms" },
-  { label: "Referrer", path: "/referrer/all" },
+  { label: "Referrer", path: "/referrer" },
   { label: "Profile", path: "/profile" },
   { label: "Contact Us", path: "/contact" }
 ];

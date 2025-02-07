@@ -4,7 +4,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { API_URL } from "../../../config";
+import { API_URL, LAB_V1 } from "../../../config";
 import Modal from "../../components/modal";
 import CashMemo from "./CashMemo";
 import TimeFrame from "../../components/time-frame";
@@ -31,7 +31,7 @@ const index = () => {
     try {
       setStatus("processing");
       setMsg("ক্যাশমেমো লোড হচ্ছে...");
-      const response = await axios.get(API_URL + "/api/v1/user/cashmemo", {
+      const response = await axios.get(API_URL + LAB_V1 + "/cashmemo", {
         params: { startDate, endDate },
       });
       if (response.data.success === true) {

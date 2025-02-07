@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { API_URL } from "../../../config";
+import { API_URL, LAB_V1 } from "../../../config";
 import Modal from "../../components/modal";
 import axios from "axios";
 
@@ -36,7 +36,7 @@ const ReferrerCard = () => {
   const handleReferrer = (e) => {
     let { name, value } = e.target;
     if (name === "commission") {
-      value = parseFloat(value)
+      value = parseFloat(value);
     }
     setReferrer({ ...referrer, [name]: value });
   };
@@ -52,14 +52,14 @@ const ReferrerCard = () => {
     setStatus("processing");
     setMsg(startMsg);
     try {
-      const url = location?.state?.actionType === "edit" ? "/api/v1/user/referrer/edit" : "/api/v1/user/referrer/add";
+      const url = location?.state?.actionType === "edit" ? LAB_V1 + "/referrer/edit" : LAB_V1 + "/referrer/add";
       const method = location?.state?.actionType === "edit" ? axios.put : axios.post;
       const response = await method(API_URL + url, { ...referrer });
       const div = (
         <div className="flex flex-col justify-center items-center space-y-2">
           {" "}
           <p>{successMsg}</p>{" "}
-          <Link to="/referrer/all" className="px-4 py-2 bgColor text-white">
+          <Link to="/referrer" className="btn-sm">
             Go To referrer list
           </Link>{" "}
         </div>
@@ -134,7 +134,7 @@ const ReferrerCard = () => {
           />
         </div>
         <div className="w-full mx-auto text-center mt-6">
-          <button onClick={handleAction} className="px-4 py-2 bgColor rounded-md text-white font-semibold">
+          <button onClick={handleAction} className="btn-md !px-8">
             Save
           </button>
         </div>

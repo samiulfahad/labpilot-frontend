@@ -8,7 +8,7 @@ import TestList from "./TestList";
 import InvoiceData from "./InvoiceData";
 import PatientData from "./PatientData";
 import Modal from "../../../components/modal";
-import { API_URL } from "../../../../config";
+import { API_URL, LAB_V1 } from "../../../../config";
 
 const CreateInvoice = () => {
   const [testList, setTestList] = useState([]);
@@ -37,7 +37,7 @@ const CreateInvoice = () => {
       try {
         setStatus("processing");
         setMsg("Loading Data. Please wait...");
-        const response = await axios.get(API_URL + "/api/v1/user/dataForNewInvoice");
+        const response = await axios.get(API_URL + LAB_V1 + "/dataForNewInvoice");
         if (response.data.success) {
           setTestList(response.data.testList);
           setReferrerList(response.data.referrerList);
@@ -157,9 +157,9 @@ const CreateInvoice = () => {
       let discountAmount = 0;
       if (hasDiscount) {
         if (invoiceData.referrer.commissionType === "percentage") {
-          discountAmount = (invoiceData.total * discount)/100
+          discountAmount = (invoiceData.total * discount) / 100;
         } else {
-          discountAmount = invoiceData.discount
+          discountAmount = invoiceData.discount;
         }
       }
 

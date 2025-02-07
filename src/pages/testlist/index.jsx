@@ -6,7 +6,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Test from "./Test";
 import Modal from "../../components/modal";
-import { USER_ID, API_URL } from "../../../config";
+import { USER_ID, API_URL, LAB_V1 } from "../../../config";
 import FallbackUI from "../../components/fallback-ui";
 
 const TestList = () => {
@@ -19,7 +19,7 @@ const TestList = () => {
       setStatus("processing");
       setMsg("টেস্টলিস্ট লোড করা হচ্ছে");
       try {
-        const response = await axios.get(API_URL + "/api/v1/user/test/all", { params: { _id: USER_ID } });
+        const response = await axios.get(API_URL + LAB_V1 + "/test/all", { params: { _id: USER_ID } });
         if (response.data.success) {
           // console.log(response.data);
           setTestList(response.data.list);
@@ -44,7 +44,6 @@ const TestList = () => {
     setStatus(null);
     setMsg(null);
   };
-
 
   return (
     <section>

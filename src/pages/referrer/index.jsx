@@ -3,7 +3,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { API_URL } from "../../../config";
+import { API_URL, LAB_V1 } from "../../../config";
 import Modal from "../../components/modal";
 
 const ReferrerList = () => {
@@ -15,7 +15,7 @@ const ReferrerList = () => {
     const fetchData = async () => {
       try {
         setMsg("রেফারারদের তালিকা লোড হচ্ছে...");
-        const response = await axios.get(API_URL + "/api/v1/user/referrer/all");
+        const response = await axios.get(API_URL + LAB_V1 + "/referrer/all");
 
         if (response?.data.success) {
           setList(response.data.list);
@@ -36,9 +36,9 @@ const ReferrerList = () => {
   }, []);
 
   const closeModal = () => {
-    setStatus(null)
-    setMsg(null)
-  }
+    setStatus(null);
+    setMsg(null);
+  };
   return (
     <section>
       {status === "processing" && <Modal type="processing" title={msg} />}
@@ -48,16 +48,12 @@ const ReferrerList = () => {
         <div>
           <div className="flex justify-between items-center">
             <p className="text-left text-lg font-semibold">Referrer List</p>
-            <Link
-              state={{ actionType: "add", title: "Add New Referrer" }}
-              to="/referrer/add"
-              className="px-4 py-1 bgColor text-white text-semibold rounded-md"
-            >
+            <Link state={{ actionType: "add", title: "Add New Referrer" }} to="/referrer/add" className="btn-md">
               Add New
             </Link>
           </div>
         </div>
-        {/* List of available Referrers */}
+        {/* List of Referrers */}
         <div className="flex flex-col justify-start items-center">
           {list.map((item) => (
             <div
@@ -80,7 +76,7 @@ const ReferrerList = () => {
                   isDoctor: item.isDoctor,
                   description: item.description,
                 }}
-                className="text-left bg-blue-gray-800 px-2 rounded-lg py-1 text-white"
+                className="btn-sm"
               >
                 {" "}
                 Edit{" "}

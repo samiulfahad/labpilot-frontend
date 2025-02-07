@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Test from "./Test";
-import { API_URL } from "../../../config";
+import { API_URL, LAB_V1 } from "../../../config";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -15,7 +15,7 @@ const index = () => {
   const fetchData = async () => {
     setMsg("Loading Data....");
     try {
-      const response = await axios.get(API_URL + "/api/v1/user/test/all", {params: {uploadReport: 1}});
+      const response = await axios.get(API_URL + LAB_V1 + "/test/all", { params: { uploadReport: 1 } });
       if (response.data.success) {
         const onlineTests = response.data.list.filter((test) => test.type === 1);
         // console.log(onlineTests);

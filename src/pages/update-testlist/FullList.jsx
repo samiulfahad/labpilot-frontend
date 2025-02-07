@@ -15,9 +15,8 @@ const FullList = (props) => {
         {props.list?.map((test) => {
           if (test.type === 1) {
             return (
-              <label className="flex justify-start items-center">
+              <label key={test._id} className="flex justify-start items-center">
                 <input
-                  key={test._id}
                   className="w-6 h-6 mr-2"
                   type="checkbox"
                   value={test.name}
@@ -35,7 +34,7 @@ const FullList = (props) => {
         {props.list?.map((test) => {
           if (test.type === 2) {
             return (
-              <label>
+              <label key={test._id}>
                 <input
                   key={test._id}
                   value={test.name}

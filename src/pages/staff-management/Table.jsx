@@ -24,7 +24,7 @@ const Table = ({ list }) => {
               <td className="px-4 py-2 text-sm">{item.username}</td>
               <td className="px-4 py-2 text-sm">{item.accessControl.map(role=><p key={role}>{ACCESS_CONTROL[role] || "Something went wrong"}</p>)}</td>
               <td className="px-4 py-2 text-sm">
-                <Link to={"/invoice/action/"} state={{ _id: item._id }} className="btn-sm">Edit</Link>
+                <Link to="/staff-management/form" state={{ staff: item }} className="btn-sm">Edit</Link>
               </td>
               <td className="px-4 py-2 text-sm">
                 <Link to={"/invoice/action/"} state={{ _id: item._id }} className="delete-btn">Terminate</Link>

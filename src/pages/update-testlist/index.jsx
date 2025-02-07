@@ -3,7 +3,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { API_URL } from "../../../config";
+import { API_URL, LAB_V1 } from "../../../config";
 import Modal from "../../components/modal";
 import FullList from "./FullList";
 import MyList from "./MyList";
@@ -50,7 +50,7 @@ const UpdateTestList = () => {
       try {
         setStatus("processing");
         setMsg("আপনার ল্যাবের টেস্টলিস্ট লোড হচ্ছে...");
-        const { data } = await axios.get(API_URL + "/api/v1/user/test/all");
+        const { data } = await axios.get(API_URL + LAB_V1 + "/test/all");
         if (data?.success) {
           setMyList(data.list);
           setCachedData(data.list);
@@ -104,7 +104,7 @@ const UpdateTestList = () => {
       setStatus("processing");
       setMsg("টেস্টলিস্ট আপডেট হচ্ছে। অনুগ্রহ করে অপেক্ষা করুন....");
 
-      const response = await axios.put(API_URL + "/api/v1/user/testlist/update", {
+      const response = await axios.put(API_URL + LAB_V1 + "/testlist/update", {
         testList: updatedList, // Use the updated list for the request
       });
 

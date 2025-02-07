@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { API_URL } from "../../../config";
+import { API_URL, LAB_V1 } from "../../../config";
 import Modal from "../../components/modal";
 import TimeFrame from "../../components/time-frame";
 import CommissionTracker from "./CommissionTracker";
@@ -10,9 +10,9 @@ import CommissionTracker from "./CommissionTracker";
 const index = () => {
   const [status, setStatus] = useState("processing");
   const [msg, setMsg] = useState("");
-  const [startDate, setStartDate] = useState("today")
-  const [endDate, setEndDate] = useState("today")
-  const [formattedDate, setFormattedDate] = useState("Today")
+  const [startDate, setStartDate] = useState("today");
+  const [endDate, setEndDate] = useState("today");
+  const [formattedDate, setFormattedDate] = useState("Today");
 
   const [list, setList] = useState([]);
 
@@ -20,7 +20,7 @@ const index = () => {
     try {
       setStatus("processing");
       setMsg("Commission Tracker লোড হচ্ছে...");
-      const response = await axios.get(API_URL + "/api/v1/user/commission-tracker", {
+      const response = await axios.get(API_URL + LAB_V1 + "/commission-tracker", {
         params: { startDate, endDate },
       });
       if (response.data.success === true) {
@@ -44,11 +44,11 @@ const index = () => {
   }, []);
 
   const handleFetchData = (start, end, fDate) => {
-    setStartDate(start)
-    setEndDate(end)
-    setFormattedDate(fDate)
-    fetchData(start, end)
-  }
+    setStartDate(start);
+    setEndDate(end);
+    setFormattedDate(fDate);
+    fetchData(start, end);
+  };
 
   const closeModal = () => {
     setStatus("");

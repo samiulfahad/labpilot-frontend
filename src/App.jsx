@@ -11,7 +11,7 @@ import Action from "./pages/invoice/action";
 import Recharge from "./pages/recharge";
 import UpdateTestList from "./pages/update-testlist";
 import Profile from "./pages/profile";
-import ReferrerList from "./pages/referrer/ReferrerList";
+import Referrer from "./pages/referrer";
 import ReferrerCard from "./pages/referrer/ReferrerCard";
 import RenderList from "./pages/render-list";
 import TestingComponent from "./pages/test/TestingComponent";
@@ -19,11 +19,11 @@ import CashMemo from "./pages/cashmemo";
 import CommissionTracker from "./pages/commission-tracker";
 import InvoicesByReferrer from "./pages/commission-tracker/InvoicesByReferrer";
 import Login from "./pages/login";
-import UserManagement from "./pages/user-management";
+import StaffManagement from "./pages/staff-management";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider, useAuth } from "./context/auth";
 import LandingPage from "./pages/landing-page";
-import UserForm from "./pages/user-management/UserForm";
+import StaffForm from "./pages/staff-management/StaffForm";
 
 function App() {
   const { user } = useAuth();
@@ -31,18 +31,18 @@ function App() {
   // console.log(1111)
   // console.log(location.pathname);
 
-  if (!user && location.pathname === "/") {
-    return <LandingPage/>
-  } else if (!user && location.pathname !== "/") {
-    return <Navigate to="/" replace/>
-  }
+  // if (!user && location.pathname === "/") {
+  //   return <LandingPage/>
+  // } else if (!user && location.pathname !== "/") {
+  //   return <Navigate to="/" replace/>
+  // }
 
   return (
     <Layout>
       <Routes>
         <Route path="/test-feature" element={<TestingComponent />} />
-        <Route path="/user-management" element={<UserManagement />} />
-        <Route path="/user-management/user-form" element={<UserForm />} />
+        <Route path="/staff-management" element={<StaffManagement />} />
+        <Route path="/staff-management/form" element={<StaffForm />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cashMemo" element={<CashMemo />} />
         <Route path="/commissionTracker" element={<CommissionTracker />} />
@@ -51,7 +51,7 @@ function App() {
         <Route path="/invoice/action" element={<Action />} />
         <Route path="/invoice/referrer" element={<InvoicesByReferrer />} />
         <Route path="/invoice/all" element={<AllInvoices />} />
-        <Route path="/referrer/all" element={<ReferrerList />} />
+        <Route path="/referrer" element={<Referrer />} />
         <Route path="/referrer/add" element={<ReferrerCard />} />
         <Route path="/referrer/edit" element={<ReferrerCard />} />
         <Route path="/profile" element={<Profile />} />
