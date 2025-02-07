@@ -1,6 +1,6 @@
 /** @format */
 
-import { Card } from "@material-tailwind/react";
+// import { div } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 
 function Table(props) {
@@ -9,7 +9,7 @@ function Table(props) {
     "text-[11px] px-2 py-1 bgColor border-2 border-blue-gray-700 hover:text-blue-gray-500 rounded text-sm text-white hover:bg-white hover:text-blue-gray-500 duration-300";
 
   return (
-    <Card className="h-full w-full overflow-scroll">
+    <div className="h-full w-full overflow-scroll">
       <table className="w-full min-w-max table-auto text-left">
         <thead>
           <tr>
@@ -75,7 +75,7 @@ function Table(props) {
           })}
         </tbody>
       </table>
-    </Card>
+    </div>
   );
 }
 

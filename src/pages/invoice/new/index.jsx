@@ -135,16 +135,16 @@ const CreateInvoice = () => {
       setMsg("ল্যাব টেস্ট সিলেক্ট করুন");
       return;
     }
-    if (!invoiceData.referrer) {
-      setStatus("error");
-      setMsg("রেফারেন্সকারী সিলেক্ট করুন");
-      return;
-    }
-    if (!patientData.gender) {
-      setStatus("error");
-      setMsg("রোগীর Gender সিলেক্ট করুন");
-      return;
-    }
+    // if (!invoiceData.referrer) {
+    //   setStatus("error");
+    //   setMsg("রেফারেন্সকারী সিলেক্ট করুন");
+    //   return;
+    // }
+    // if (!patientData.gender) {
+    //   setStatus("error");
+    //   setMsg("রোগীর Gender সিলেক্ট করুন");
+    //   return;
+    // }
     try {
       const pData = {
         name: patientData.name,

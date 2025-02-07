@@ -5,10 +5,10 @@ const InvoiceData = (props) => {
   const due = netAmount - paid;
 
   return (
-    <div className="bg-blue-gray-700 w-auto text-white rounded-lg shadow-lg px-4 py-2">
+    <div className="bgColor w-auto text-white rounded-lg shadow-lg px-4 py-2">
       {/* <h2 className="text-2xl text-center font-semibold mb-4">Invoice Summary</h2> */}
       <div className="flex justify-between mb-2">
-        <p>মোট:</p>
+        <p>Total</p>
         <p>{total} টাকা</p>
       </div>
 
@@ -38,7 +38,8 @@ const InvoiceData = (props) => {
               <input
                 type="number"
                 id="discount"
-                className="p-1 w-20 text-right text-black outline-none border border-gray-300 rounded-md mr-2"
+                className="p-1 w-20 text-right outline-none border border-gray-300 rounded-md mr-2 pr-4 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none 
+             [-moz-appearance:textfield"
                 value={discount}
                 onChange={(e) => {
                   const value = parseFloat(e.target.value || 0);
@@ -64,11 +65,12 @@ const InvoiceData = (props) => {
       )}
 
       <div className="flex justify-between mb-2 text-sm items-center">
-        <label htmlFor="labAdjustment">ল্যাব প্রদত্ত ছাড়:</label>
+        <label htmlFor="labAdjustment">Lab Discount</label>
         <div className="flex items-center">
           <input
             type="number"
-            className="p-1 border w-20 outline-none text-black text-right border-gray-300 rounded-md mr-2"
+            className="p-1 border w-20 outline-none text-right border-gray-300 rounded-md mr-2 pr-4 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none 
+             [-moz-appearance:textfield"
             value={labAdjustment}
             onChange={(e) => {
               const value = parseFloat(e.target.value || 0);
@@ -98,7 +100,8 @@ const InvoiceData = (props) => {
         <div className="flex items-center">
           <input
             type="number"
-            className="p-1 border w-20 outline-none text-black text-right border-gray-300 rounded-md mr-2"
+            className="p-1 border w-20 outline-none text-right border-gray-300  rounded-md pr-4 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none 
+             [-moz-appearance:textfield]"
             value={paid}
             onChange={(e) => {
               const value = parseFloat(e.target.value || 0);

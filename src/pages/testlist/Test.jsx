@@ -54,12 +54,12 @@ const Test = ({ test, statusUpdate, msgUpdate }) => {
             type="number"
             disabled={disabled}
             onChange={handleChange} // Handle input changes
-            className="px-4 text-center w-40 rounded"
+            className={`px-4 text-center w-40 rounded ${!disabled ? "border border-gray-300" : "bg-gray-200 text-gray-500"}`}
           />
           <div>
             {disabled ? (
-              <button onClick={handleDisabled} className="px-4 py-1 bg-blue-gray-800 rounded-lg text-white">
-                Edit
+              <button onClick={handleDisabled} className="btn-sm">
+                Edit Price
               </button>
             ) : (
               <div className="flex space-x-4">

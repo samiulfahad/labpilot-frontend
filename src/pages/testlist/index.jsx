@@ -67,7 +67,7 @@ const TestList = () => {
             />
           ))}
           <div className="my-12 ml-8">
-            <Link to="/testlist/update" className="px-4 py-2 bg-blue-gray-800 text-white rounded-md mx-auto">
+            <Link to="/testlist/update" className="btn-sm">
               Add/Delete Test
             </Link>
           </div>

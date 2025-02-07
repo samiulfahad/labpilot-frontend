@@ -59,13 +59,13 @@ const UpdateTestList = () => {
           setMsg(null);
         } else {
           setMyList(null);
-          setCachedData([])
+          setCachedData([]);
           setStatus("error");
           setMsg("আপনার ল্যাবের টেস্টলিস্ট লোড করা যায়নি। অনুগ্রহ করে পেইজটি Refresh/Reload করে আবার চেষ্টা করুন।");
         }
       } catch (e) {
         setMyList(null);
-        setCachedData([])
+        setCachedData([]);
         setStatus("error");
         setMsg("আপনার ল্যাবের টেস্টলিস্ট লোড করা যায়নি। অনুগ্রহ করে পেইজটি Refresh/Reload করে আবার চেষ্টা করুন।");
         console.error("Error fetching my test list:", e);
@@ -100,21 +100,25 @@ const UpdateTestList = () => {
         const cachedItem = cachedData.find((cached) => cached._id === test._id);
         return cachedItem || test; // Replace with cachedItem if found, otherwise keep test
       });
-  
+
       setStatus("processing");
       setMsg("টেস্টলিস্ট আপডেট হচ্ছে। অনুগ্রহ করে অপেক্ষা করুন....");
-  
+
       const response = await axios.put(API_URL + "/api/v1/user/testlist/update", {
         testList: updatedList, // Use the updated list for the request
       });
-  
+
       if (response.data.success) {
         setStatus("success");
         setMsg(
-          <>
-            টেস্টলিস্ট আপডেট করা হয়েছে। <br className="p" />
-            <Link className="px-4 py-1 rounded bgColor text-white" to="/testlist">নতুন টেস্টলিস্ট দেখুন</Link>
-          </>
+          <div className="flex flex-col space-y-4">
+            <div>টেস্টলিস্ট আপডেট করা হয়েছে।</div>
+            <div>
+              <Link className="px-4 py-1 rounded bgColor text-white" to="/testlist">
+                নতুন টেস্টলিস্ট দেখুন
+              </Link>
+            </div>
+          </div>
         );
       } else {
         setStatus("error");
@@ -127,7 +131,6 @@ const UpdateTestList = () => {
       console.error(e);
     }
   };
-  
 
   return (
     <section>

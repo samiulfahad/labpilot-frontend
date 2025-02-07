@@ -27,7 +27,11 @@ const Profile = () => {
           </div>
           <div className="flex space-x-4 justify-start items-center">
             <p className="w-28 text-right">Name</p>
-            <input value="Azizul Haque Diagonostic Center" disabled={disabled} className="px-4 py-1 w-80 text-center" />
+            <input
+              value="Azizul Haque Diagonostic Center"
+              disabled={disabled}
+              className={`px-4 py-1 w-80 text-center ${!disabled ? "bg-white" : "bg-gray-300"}`}
+            />
           </div>
           <div className="flex space-x-4 justify-start items-center">
             <p className="w-28 text-right">Location</p>
@@ -57,25 +61,19 @@ const Profile = () => {
             </div>
           </div>
 
-          {/* Security and Password */}
-          <div className="flex justify-between items-center text-center w-full">
-            <p className="font-bold text-lg text-right w-28 py-4">Security</p>
-          </div>
-          <div className="flex space-x-4 justify-start items-center">
-            <p className="w-28 text-right">OTP</p>
-            <input value="01723939836" disabled={true} className="px-4 py-1 w-80 text-center" />
-          </div>
-          <div className="flex justify-start ml-32 items-center text-center w-full">
-            <button className="font-bold text-nowrap bg-blue-gray-400 text-white w-auto px-4 py-1 rounded-md text-left">
-              Change Password
-            </button>
-          </div>
-
           {/* Test List */}
           <div className="flex justify-start space-x-4 items-center text-center w-full">
             <p className="font-bold text-lg text-right w-28 py-4">Test List</p>
-            <Link to="/testlist" className="font-bold text-nowrap bg-blue-gray-400 text-white w-auto px-4 py-1 rounded-md text-right">
+            <Link to="/testlist" className="btn-sm">
               Manage Test and Price
+            </Link>
+          </div>
+
+          {/* Security and Password */}
+          <div className="flex justify-start space-x-4 items-center text-center w-full">
+            <p className="font-bold text-lg text-right w-28 py-4">Password</p>
+            <Link to="/testlist" className="btn-sm">
+              Change Password
             </Link>
           </div>
         </div>
@@ -83,4 +81,4 @@ const Profile = () => {
     </section>
   );
 };
-export default Profile
+export default Profile;
