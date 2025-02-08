@@ -7,6 +7,7 @@ const AuthContext = React.createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
+
   const login = (userData) => {
       setUser(userData); // Set the user data after login
     console.log(userData);

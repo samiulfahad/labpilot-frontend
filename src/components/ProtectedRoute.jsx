@@ -1,21 +1,28 @@
 /** @format */
 
-import React from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/auth";
-import LandingPage from "../pages/landing-page";
 
-const ProtectedRoute = ({ element }) => {
-    const { user } = useAuth();
-    const location = useLocation()
+const ProtectedRoute = ({ element, allowedRoles }) => {
+  const { user } = useAuth();
 
-  // If user is not logged in, redirect to the login page
   if (!user) {
-    return <LandingPage/>
+    return <LandingPage />;
   }
 
-  // Otherwise, render the passed component
-  return element;
+  // If the user is an admin, grant access to everything
+  if (user.roles.includes("admin")) {
+    return element;
+  }
+
+  // Check if user has at least one of the required roles
+  const hasAccess = allowedRoles.some((role) => user.roles.includes(role));
+
+  return hasAccess ? (
+    element
+  ) : (
+    <div className="flex justify-center items-center w-full h-screen text-2xl text-red-500">Sorry, you don't have access to this page</div>
+  );
 };
 
 export default ProtectedRoute;

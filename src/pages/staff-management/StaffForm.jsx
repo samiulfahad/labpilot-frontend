@@ -53,7 +53,7 @@ const StaffForm = () => {
 
     if (credentials.accessControl.length === 0) {
       setStatus("error");
-      setMsg("নতুন User কে অবশ্যই যেকোনো একটি Access দিতে হবে। যেমনঃ Invoice তৈরি, Cashmemo, Commission Tracker ইত্যাদি");
+      setMsg("Staff কে অবশ্যই যেকোনো একটি Access দিতে হবে। যেমনঃ Invoice তৈরি, Cashmemo, Commission Tracker ইত্যাদি");
       return;
     }
 
@@ -64,10 +64,10 @@ const StaffForm = () => {
       let response = null;
 
       if (page === "addStaff") {
-        response = await axios.post(`${API_URL}${LAB_V1}/staff-management`, credentials);
+        response = await axios.post(`${API_URL}${LAB_V1}/staff-management/add`, credentials);
       } else {
         const { password, ...updateData } = credentials; // Exclude password when updating
-        response = await axios.put(`${API_URL}${LAB_V1}/staff-management/${staff._id}`, updateData);
+        response = await axios.put(`${API_URL}${LAB_V1}/staff-management/edit`, { ...updateData, staffId: staff._id });
       }
 
       if (response.data.success) {
@@ -116,10 +116,13 @@ const StaffForm = () => {
         <div className="flex justify-between items-center">
           <p>Username</p>
           <input
+            disabled={page !== "addStaff" ? true : false}
             value={credentials.username}
             name="username"
             onChange={handleCredentials}
-            className="px-2 py-1 bg-white border-1 rounded focus:outline-none"
+            className={`px-2 py-1 border-1 rounded focus:outline-none ${
+              page !== "addStaff" ? "bg-gray-200" : "bg-white"
+            }`}
           />
         </div>
 
@@ -139,11 +142,14 @@ const StaffForm = () => {
         <div className="flex justify-between items-center">
           <p>Email</p>
           <input
+            disabled={page !== "addStaff" ? true : false}
             value={credentials.email}
             name="email"
             onChange={handleCredentials}
             type="email"
-            className="px-2 py-1 bg-white border-1 rounded focus:outline-none"
+            className={`px-2 py-1 border-1 rounded focus:outline-none ${
+              page !== "addStaff" ? "bg-gray-200" : "bg-white"
+            }`}
           />
         </div>
 

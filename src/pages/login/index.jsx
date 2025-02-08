@@ -8,11 +8,11 @@ const Login = () => {
  
   
   const adminLogin = () => {
-    login({userName: 'admin', role: ['admin']})
+    login({username: 'admin', role: ['admin']})
   }
 
   const userLogin = () => {
-    login({userName: 'other', role: ['invoice']})
+    login({username: 'other', role: ['getCashmemo']})
   }
 
   return (
