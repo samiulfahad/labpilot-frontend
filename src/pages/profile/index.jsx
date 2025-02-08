@@ -4,11 +4,13 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import StaffProfile from "./StaffProfile";
+import Modal from "../../components/modal";
 
 const Profile = () => {
   const [disabled, setDisabled] = useState(true);
   const [list, setList] = useState([]);
   const [status, setStatus] = useState("processing");
+  const [msg, setMsg] = useState("");
 
   const { user } = useAuth();
 
@@ -16,8 +18,18 @@ const Profile = () => {
     setDisabled(!disabled);
   };
 
+  const showModal = () => {
+    setStatus("changePassword");
+  };
+
+  const closeModal = () => {
+    setStatus("");
+    setMsg("");
+  };
+
   return (
     <section>
+      {status === "changePassword" && <Modal type="changePassword" onClosingModal={closeModal} />}
       {user?.roles?.includes("admin") ? (
         <div className="flex space-x-4">
           {/* Lab Info */}
@@ -80,9 +92,9 @@ const Profile = () => {
             {/* Security and Password */}
             <div className="flex justify-start space-x-4 items-center text-center w-full">
               <p className="font-bold text-lg text-right w-28 py-4">Password</p>
-              <Link to="/testlist" className="btn-sm">
+              <button onClick={showModal} to="/testlist" className="btn-sm">
                 Change Password
-              </Link>
+              </button>
             </div>
           </div>
         </div>
