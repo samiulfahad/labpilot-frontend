@@ -39,6 +39,7 @@ function App() {
   return (
     <Layout>
       <Routes>
+        <Route path="/profile" element={<Profile />} />
 
         {/* Protected Routes Based on Roles */}
         <Route path="/cashMemo" element={<ProtectedRoute element={<CashMemo />} allowedRoles={["getCashmemo"]} />} />
@@ -78,7 +79,6 @@ function App() {
           path="/referrer/edit"
           element={<ProtectedRoute element={<ReferrerCard />} allowedRoles={["admin"]} />}
         />
-        <Route path="/profile" element={<ProtectedRoute element={<Profile />} allowedRoles={["admin"]} />} />
         <Route path="/testlist" element={<ProtectedRoute element={<TestList />} allowedRoles={["admin"]} />} />
         <Route
           path="/testlist/update"

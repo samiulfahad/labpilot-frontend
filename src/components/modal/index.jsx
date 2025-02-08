@@ -146,6 +146,52 @@ const Modal = (props) => {
             </div>
           )}
 
+          {type === "terminate" && (
+            <div>
+              <div className="text-red-400">{title}</div>
+              <div>
+                <p>Username: {props.staff.username}</p>
+                <p>Email: {props.staff.email}</p>
+              </div>
+              <div className="flex justify-between items-center my-4">
+                <button onClick={() => props.onSubmit("deactivate")} className="delete-btn !bg-red-400">
+                  Deactivate
+                </button>
+                <button onClick={() => props.onSubmit("delete")} className="delete-btn">
+                  Delete
+                </button>
+                <button onClick={props.onClosingModal} className="btn-sm !bg-white !text-slate-700">
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
+
+          {type === "changePassword" && (
+            <div className="flex flex-col space-y-4" >
+              <div className="font-bold text-center">Change Password</div>
+              <div className="flex flex-col justify-between items-center space-y-2">
+                <div className="flex justify-between items-center space-x-2">
+                  <p className=" text-[15px] text-left">Old Password</p>
+                  <input className="bg-white w-40 border rounded focus:outline-none px-2 py-1" type="password" />
+                </div>
+                <div className="flex justify-between items-center space-x-2">
+                  <p className=" text-[15px] text-left ">New Password</p>
+                  <input className="bg-white w-40 border rounded focus:outline-none px-2 py-1" type="password" />
+                </div>
+              </div>
+              <div className="flex justify-between items-center my-4">
+                <button onClick={props.onSubmit} className="delete-btn !bg-red-400">
+                  Submit
+                </button>
+
+                <button onClick={props.onClosingModal} className="btn-sm !bg-white !text-slate-700">
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+
           <div className="flex space-x-8">
             {onClose && (
               <button

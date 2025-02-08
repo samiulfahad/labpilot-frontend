@@ -3,7 +3,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ACCESS_CONTROL } from "../../../config";
-const Table = ({ list }) => {
+const Table = ({ list, onShowTerminateModal, onReactivate }) => {
   
   return (
     <div className="overflow-x-auto w-4/5 mt-8 mx-auto">
@@ -27,7 +27,10 @@ const Table = ({ list }) => {
                 <Link to="/staff-management/form" state={{ staff: item }} className="btn-sm">Edit</Link>
               </td>
               <td className="px-4 py-2 text-sm">
-                <Link to={"/invoice/action/"} state={{ _id: item._id }} className="delete-btn">Terminate</Link>
+                {item.deactivated ? 
+                <button onClick={()=>onReactivate(item)} className="btn-sm">Reactivate</button>:
+                <button onClick={()=>onShowTerminateModal(item)} className="delete-btn">Terminate</button>
+                }
               </td>
             </tr>
           ))}

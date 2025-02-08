@@ -12,7 +12,7 @@ const Login = () => {
   }
 
   const userLogin = () => {
-    login({username: 'other', role: ['getCashmemo']})
+    login({username: 'other', role: ['admin']})
   }
 
   return (

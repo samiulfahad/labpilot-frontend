@@ -10,7 +10,7 @@ const PatientData = ({ invoice, onChange, onSave, disabled, onEdit }) => {
       <div className="flex justify-between items-center text-center w-full">
         <p className="font-bold text-lg text-left w-28 py-4">Patient Info</p>
         {disabled && (
-          <button onClick={onEdit} className="mr-20 px-4 bgColor text-center flex-shrink-0 w-16 h-8 text-white">
+          <button onClick={onEdit} className="btn-sm">
             Edit
           </button>
         )}

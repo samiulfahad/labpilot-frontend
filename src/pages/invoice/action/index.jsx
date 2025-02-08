@@ -234,11 +234,14 @@ const Action = () => {
       {status === "error" && <Modal type="error" title={msg} onClose={closeModal} />}
       <div className="mt-4">
         <div className="mb-8 w-full mx-auto text-center">
-          <button onClick={handlePrint} className="px-4 py-2 bg-white text-blue-gray-700 rounded-md font-bold">
+          <button onClick={handlePrint} className="btn-md">
             Print Invoice
           </button>
         </div>
 
+        <section className="bg-white px-8 font-semibold py-4 my-8 w-1/2 rounded-lg shadow-lg mx-auto ">
+          <TriggerAction invoice={invoice} onAction={handleActions} />
+        </section>
         <section className="flex justify-center space-x-8 items-start mx-auto">
           <div className="w-1/3 bg-white text-black shadow-lg rounded-lg px-8 py-4">
             <InvoiceSection invoice={invoice} />
@@ -256,9 +259,6 @@ const Action = () => {
           </div>
         </section>
 
-        <section className="bg-white px-8 font-semibold py-4 my-8 w-1/2 rounded-lg shadow-lg mx-auto ">
-          <TriggerAction invoice={invoice} onAction={handleActions} />
-        </section>
 
         <section>
           <LabReports invoice={invoice} />
