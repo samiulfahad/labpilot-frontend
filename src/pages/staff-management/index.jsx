@@ -1,3 +1,4 @@
+// StaffManagement.jsx
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { API_URL, LAB_V1 } from "../../../config";
@@ -20,7 +21,6 @@ const StaffManagement = () => {
         setStaffs(response.data.staffs);
         setStatus("");
         setMsg("");
-        // console.log(response.data.staffs)
       } else {
         setStaffs([]);
         setStatus("error");
@@ -51,7 +51,7 @@ const StaffManagement = () => {
     closeModal();
   };
 
-  const handleTerminate = async (action) => {
+  const handleTerminate = async (action, staffParam) => {
     setStatus("processing");
     if (action === "reactivate") {
       setMsg("Reactivating Staff... Please wait.");
@@ -59,8 +59,9 @@ const StaffManagement = () => {
       setMsg("Processing... Please wait.");
     }
     try {
+      const staffId = staffParam ? staffParam._id : staff._id;
       let response = await axios.patch(API_URL + LAB_V1 + "/staff-management/terminate", {
-        staffId: staff._id,
+        staffId,
         action,
       });
       if (response.data.success) {
@@ -85,13 +86,14 @@ const StaffManagement = () => {
   };
 
   const handleReactivate = (staff) => {
-    setStaff(staff); // Update the state first
-    setTimeout(() => handleTerminate("reactivate"), 100); // Ensure it runs after state update
+    handleTerminate("reactivate", staff);
   };
+
   const closeModal = () => {
     setMsg("");
     setStatus("");
   };
+
   return (
     <section>
       {status === "error" && <Modal type="error" title={msg} onClose={closeModal} />}
