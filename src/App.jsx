@@ -24,6 +24,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider, useAuth } from "./context/auth";
 import LandingPage from "./pages/landing-page";
 import StaffForm from "./pages/staff-management/StaffForm";
+import AA from "./components/AA";
 
 function App() {
   const { user } = useAuth();
@@ -39,6 +40,7 @@ function App() {
   return (
     <Layout>
       <Routes>
+      <Route path="/" element={<AA />} />
         <Route path="/profile" element={<Profile />} />
 
         {/* Protected Routes Based on Roles */}

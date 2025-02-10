@@ -68,4 +68,13 @@
   }
 }
 
+@font-face {
+  font-family: 'SutannyMJ';
+  src: url('C:\Users\samiu\Downloads\SutonnyMJ (1)\SUTOM.TTF') format('truetype');
+}
+
+.custom-font {
+  font-family: 'SutannyMJ', sans-serif;
+}
+
 
