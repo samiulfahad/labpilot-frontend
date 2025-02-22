@@ -31,11 +31,7 @@ const InvoicesByReferrerId = ({ list, referrerName, formattedDate }) => {
               <td className="px-4 py-2 text-sm">{item.commission}</td>
               <td className="px-4 py-2 text-sm">{item.netAmount - item.paid}</td>
               <td className="px-4 py-2 text-sm">
-                <Link
-                  to={"/invoice/action/"}
-                  state={{ _id: item._id }}
-                  className="px-3 py-1 text-white bg-blue-gray-800 hover:bg-blue-gray-600 rounded text-sm"
-                >
+                <Link to={"/invoice/action/"} state={{ _id: item._id }} className="btn-sm">
                   Action
                 </Link>
               </td>

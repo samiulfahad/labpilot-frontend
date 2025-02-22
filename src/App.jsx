@@ -40,7 +40,7 @@ function App() {
   return (
     <Layout>
       <Routes>
-      <Route path="/" element={<AA />} />
+      {/* <Route path="/" element={<AA />} /> */}
         <Route path="/profile" element={<Profile />} />
 
         {/* Protected Routes Based on Roles */}

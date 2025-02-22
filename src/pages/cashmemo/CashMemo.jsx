@@ -7,13 +7,13 @@ const CashMemo = ({ cashMemo, formattedDate }) => {
     <div>
       <div className="w-[500px] shadow-2xl rounded-xl bg-white overflow-hidden">
         {/* Header */}
-        <div className="bg-gradient-to-r from-blue-gray-300 to-blue-gray-700 text-white py-6 px-8">
+        <div className="bg-gradient-to-r from-blue-gray-300 to-blue-gray-700 text-slate-700 pt-4 px-8">
           <p className="text-center text-2xl font-bold">Cash Memo</p>
           <p className="text-center text-sm font-bold">{ formattedDate }</p>
         </div>
 
         {/* Content */}
-        <div className="p-8 space-y-2">
+        <div className="px-8 pb-4 space-y-2">
           {/* Invoice and Sales */}
           <div className="flex justify-between items-center">
             <p className="text-gray-700 font-medium">Today's Total Invoices</p>
