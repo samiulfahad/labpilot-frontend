@@ -5,15 +5,6 @@ const TestList = ({ list, onChange }) => {
     <>
       <h2 className="w-full text-left text-md">Test List</h2>
       <div className="flex flex-wrap justify-start items-center">
-        {/* {list.map((test) => (
-          <Checkbox
-            key={test._id}
-            label={`${test.name} [${test.price} tk]`}
-            value={test.name}
-            onChange={() => onChange(test)}
-          />
-        ))} */}
-
         {list.map((test) => (
           <div key={test._id}>
             <label className="cursor-pointer flex items-center">

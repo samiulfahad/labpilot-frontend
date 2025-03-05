@@ -6,7 +6,7 @@ const NavItem = ({ label, path, icon }) => {
     <NavLink
       to={path}
       className={({ isActive }) => 
-        `flex items-center space-x-3 px-4 py-1 rounded-xl transition-all duration-300
+        `flex items-center space-x-3 font-serif px-4 py-1 rounded-xl transition-all duration-300
          ${isActive 
            ? 'bg-sky-700/90 text-white shadow-lg shadow-sky-900/30' 
            : 'text-gray-300 hover:bg-gray-700/40 hover:text-white'}`

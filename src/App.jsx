@@ -6,7 +6,6 @@ import NewInvoice from "./pages/invoice/new";
 import AllInvoices from "./pages/invoice/all";
 import TestList from "./pages/testlist";
 import PrintReceipt from "./pages/invoice/print";
-import SendSMS from "./pages/send-sms";
 import Action from "./pages/invoice/action";
 import Recharge from "./pages/recharge";
 import UpdateTestList from "./pages/update-testlist";
@@ -80,7 +79,6 @@ function App() {
         />
         <Route path="/render-list" element={<RenderList />} />
         <Route path="/recharge" element={<Recharge />} />
-        <Route path="/send-sms" element={<ProtectedRoute element={<SendSMS />} allowedRoles={["postInvoice"]} />} />
         <Route
           path="/staff-management"
           element={<ProtectedRoute element={<StaffManagement />} allowedRoles={["admin"]} />}

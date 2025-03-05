@@ -3,7 +3,6 @@ const navList = [
   { label: "All Invoice", path: "/invoice/all" },
   { label: "Cash Memo", path: "/cashMemo" },
   { label: "Commission", path: "/commissionTracker" },
-  { label: "Send SMS", path: "/send-sms" },
   { label: "Referrer", path: "/referrer" },
   { label: "Staff", path: "/staff-management" },
   { label: "Profile", path: "/profile" },

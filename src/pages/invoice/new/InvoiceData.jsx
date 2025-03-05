@@ -5,11 +5,11 @@ const InvoiceData = (props) => {
   const due = netAmount - paid;
 
   return (
-    <div className="bgColor w-auto text-white rounded-lg shadow-lg px-4 py-2">
+    <div className="bgColor font-mono w-auto text-white rounded-lg shadow-lg px-4 py-2">
       {/* <h2 className="text-2xl text-center font-semibold mb-4">Invoice Summary</h2> */}
       <div className="flex justify-between mb-2">
         <p>Total</p>
-        <p>{total} টাকা</p>
+        <p>{total} Tk</p>
       </div>
 
       {referrer && referrer._id !== null && (
@@ -53,13 +53,13 @@ const InvoiceData = (props) => {
                   }
                 }}
               />
-              <span>{referrer.commissionType === "percentage" ?  "%" :"টাকা"}</span>
+              <span>{referrer.commissionType === "percentage" ?  "%" :"Tk"}</span>
             </div>
           </div>
 
           <div className="flex justify-between text-sm mb-2">
             <p>ডিস্কাউন্ট পরবর্তী মূল্য:</p>
-            <p className="">{afterDiscount} টাকা</p>
+            <p className="">{afterDiscount} Tk</p>
           </div>
         </>
       )}
@@ -87,12 +87,12 @@ const InvoiceData = (props) => {
             onFocus={(e) => e.target.addEventListener("wheel", (ev) => ev.preventDefault(), { passive: false })}
             onBlur={(e) => e.target.removeEventListener("wheel", (ev) => ev.preventDefault())}
           />
-          <span>টাকা</span>
+          <span>Tk</span>
         </div>
       </div>
       <div className="flex justify-between mb-2">
         <p className="text-md font-semibold">Net Amount:</p>
-        <p className="font-semibold text-md">{netAmount} টাকা</p>
+        <p className="font-semibold text-md">{netAmount} Tk</p>
       </div>
       <hr className="my-2 border-t border-gray-300" />
       <div className="flex justify-between mb-2 items-center">
@@ -118,13 +118,13 @@ const InvoiceData = (props) => {
             onFocus={(e) => e.target.addEventListener("wheel", (ev) => ev.preventDefault(), { passive: false })}
             onBlur={(e) => e.target.removeEventListener("wheel", (ev) => ev.preventDefault())}
           />
-          <span>টাকা</span>
+          <span>Tk</span>
         </div>
       </div>
 
       <div className="flex justify-between text-white mb-2">
         <p className="font-semibold">বাকি:</p>
-        <p className="font-semibold">{due} টাকা</p>
+        <p className="font-semibold">{due} Tk</p>
       </div>
     </div>
   );
