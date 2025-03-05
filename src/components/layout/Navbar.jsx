@@ -8,6 +8,7 @@ const Navbar = () => {
   
   return (
     <div className="flex-1 flex flex-col overflow-y-auto px-4 py-2">
+      
       {/* Stats Section */}
       <div className="mb-4 px-3 py-4 bg-gray-700/20 rounded-xl backdrop-blur-sm">
         <div className="text-center text-sm text-gray-300">
