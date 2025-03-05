@@ -4,7 +4,7 @@ const Payment = () => {
   return (
     <>
       {/* Focused Financial Section */}
-      <div className="bg-gradient-to-br from-gray-700/50 to-gray-800/60 transition-all duration-300 rounded-xl p-3 mt-2 shadow-xl hover:shadow-purple-500/20 group relative border border-gray-600/30">
+      <div className="font-mono bg-gradient-to-br from-gray-700/50 to-gray-800/60 transition-all duration-300 rounded-xl p-3 mt-2 shadow-xl hover:shadow-purple-500/20 group relative border border-gray-600/30">
         {/* Payable Highlight */}
         <div className="mb-2 space-y-1 bg-gradient-to-r from-teal-600/30 to-emerald-600/20 rounded-lg p-2 border border-teal-500/20 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-teal-500/10 to-transparent w-1/3" />

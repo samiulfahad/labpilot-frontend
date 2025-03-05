@@ -5,9 +5,9 @@ import React from "react";
 const CashMemo = ({ cashMemo, formattedDate }) => {
   return (
     <div>
-      <div className="w-[500px] shadow-2xl rounded-xl bg-white overflow-hidden">
+      <div className="w-[500px] shadow-2xl rounded-xl mt-8 bg-white font-mono overflow-hidden">
         {/* Header */}
-        <div className="bg-gradient-to-r from-blue-gray-300 to-blue-gray-700 text-slate-700 pt-4 px-8">
+        <div className="bg-gradient-to-r from-blue-gray-300 to-blue-gray-700 text-slate-700 pt-6 px-8">
           <p className="text-center text-2xl font-bold">Cash Memo</p>
           <p className="text-center text-sm font-bold">{ formattedDate }</p>
         </div>

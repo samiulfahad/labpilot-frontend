@@ -24,7 +24,7 @@ const Navbar = () => {
       <div className="pt-3 mt-auto border-t border-gray-700/30">
         <button
           onClick={logout}
-          className="w-full px-3 py-2 bg-gradient-to-br from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 transition-all duration-300 rounded-lg text-gray-300 text-xs font-semibold flex items-center justify-center gap-1.5 shadow-md hover:shadow-gray-600/20"
+          className="font-mono w-full px-3 py-2 bg-gradient-to-br from-red-700 to-red-800 hover:from-red-600 hover:to-red-700 transition-all duration-300 rounded-lg text-gray-300 text-xs font-semibold flex items-center justify-center gap-1.5 shadow-md hover:shadow-gray-600/20"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -48,35 +48,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-// const Navbar = () => {
-//   const { logout } = useAuth();
-//   const handleLogout = () => {
-//     logout();
-//   };
-//   return (
-//     <>
-// <div className="bg-sky-700 text-gray-200 text-sm mt-4 font-bold rounded-full mx-auto flex justify-center items-center h-24 w-24">
-//   <Link to={"/recharge"} className="mx-auto text-center">
-//     <p>৳5000</p>
-//     <p className="">Recharge</p>
-//   </Link>
-//       </div>
-//       <div className="text-center text-[12px] text-gray-200">
-//         <p>Total Invoice (November): 125</p>
-//         <p>FREE after 100 More</p>
-//       </div>
-//       <div className="flex flex-col justify-center items-center my-1">
-//         {navList.map((item, index) => (
-//           <NavItem key={index} label={item.label} path={item.path} />
-//         ))}
-//       </div>
-
-//       <button onClick={handleLogout} className="text-white cursor-pointer font-bold text-md w-full">
-//         Logout
-//       </button>
-//     </>
-//   );
-// };
-
-// export default Navbar;
