@@ -29,35 +29,38 @@ const LoginForm = () => {
       if (!formData.labId || !formData.username || !formData.password) {
         throw new Error("Please fill in all fields");
       }
-      // Simulate API call
-      // const response = await axios.post(API_URL + "/api/v1/lab/login", {
-      //   ...formData,
-      //   isAdmin,
-      // });
+     // Simulate API call
+      const response = await axios.post(API_URL + "/api/v1/lab/login", {
+        labId: formData.labId,
+        username: formData.username,
+        password: formData.password,
+        isAdmin,
+      });
 
-      // if (response.data.success) {
-      //   user = {
-      //     username: response.data.username,
-      //     roles: response.data.userRole,
-      //     token: response.data.token,
-      //   };
-      // }
+      if (response.data.success) {
+        user = {
+          username: response.data.username,
+          roles: response.data.userRole,
+          token: response.data.token,
+        };
+      }
       // login({
       //   username: 'hamim',
       //   roles: ["admin"]
       // });
     } catch (err) {
-      if (err.response.status) {
+      console.log(err.response)
+      if (err.response.status === 401 ) {
         setError("Invalid Username or Password");
       } else {
         setError(err.message);
       }
     } finally {
       setIsSubmitting(false);
-      login({
-        username: 'hamim',
-        roles: ["admin"]
-      });
+      // login({
+      //   username: 'hamim',
+      //   roles: ["admin"]
+      // });
     }
   };
 
