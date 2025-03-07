@@ -12,7 +12,7 @@ import { API_URL, LAB_V1 } from "../../../../config";
 
 const CreateInvoice = () => {
   const [testList, setTestList] = useState([]);
-  const [referrerList, setReferrerList] = useState([]);
+  const [referrers, setReferrers] = useState([]);
   const [checkedTest, setCheckedTest] = useState([]);
   const [invoiceData, setInvoiceData] = useState({
     total: 0,
@@ -40,7 +40,7 @@ const CreateInvoice = () => {
         const response = await axios.get(API_URL + LAB_V1 + "/dataForNewInvoice");
         if (response.data.success) {
           setTestList(response.data.testList);
-          setReferrerList(response.data.referrerList);
+          setReferrers(response.data.referrers);
           setStatus(null);
           setMsg(null);
         } else {
@@ -216,7 +216,7 @@ const CreateInvoice = () => {
         <div className="w-full pl-20">
           <PatientData
             data={patientData}
-            referrerList={referrerList}
+            referrers={referrers}
             onChange={handlePatientData}
             onAddingReferrer={handleReferrer}
           />

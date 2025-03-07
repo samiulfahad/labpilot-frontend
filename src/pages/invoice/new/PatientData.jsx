@@ -82,7 +82,7 @@ const PatientData = (props) => {
           <option value="" disabled selected hidden>
             Select Referrer
           </option>
-          {props.referrerList.map((item, index) => (
+          {props.referrers.map((item, index) => (
             <option key={index} value={JSON.stringify(item)}>
               {item.name}
             </option>

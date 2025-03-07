@@ -37,6 +37,7 @@ const LoginForm = () => {
         isAdmin,
       });
 
+      let user
       if (response.data.success) {
         user = {
           username: response.data.username,
@@ -49,18 +50,18 @@ const LoginForm = () => {
       //   roles: ["admin"]
       // });
     } catch (err) {
-      console.log(err.response)
-      if (err.response.status === 401 ) {
+      console.log(err)
+      if (err?.response?.status === 401 ) {
         setError("Invalid Username or Password");
       } else {
         setError(err.message);
       }
     } finally {
       setIsSubmitting(false);
-      // login({
-      //   username: 'hamim',
-      //   roles: ["admin"]
-      // });
+      login({
+        username: 'hamim',
+        roles: ["admin"]
+      });
     }
   };
 
