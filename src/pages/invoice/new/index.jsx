@@ -39,7 +39,7 @@ const CreateInvoice = () => {
         setMsg("Loading Data. Please wait...");
         const response = await axios.get(API_URL + LAB_V1 + "/dataForNewInvoice");
         if (response.data.success) {
-          setTestList(response.data.testList);
+          setTestList(response.data.tests);
           setReferrers(response.data.referrers);
           setStatus(null);
           setMsg(null);
@@ -135,16 +135,16 @@ const CreateInvoice = () => {
       setMsg("ল্যাব টেস্ট সিলেক্ট করুন");
       return;
     }
-    // if (!invoiceData.referrer) {
-    //   setStatus("error");
-    //   setMsg("রেফারেন্সকারী সিলেক্ট করুন");
-    //   return;
-    // }
-    // if (!patientData.gender) {
-    //   setStatus("error");
-    //   setMsg("রোগীর Gender সিলেক্ট করুন");
-    //   return;
-    // }
+    if (!invoiceData.referrer) {
+      setStatus("error");
+      setMsg("রেফারেন্সকারী সিলেক্ট করুন");
+      return;
+    }
+    if (!patientData.gender) {
+      setStatus("error");
+      setMsg("রোগীর Gender সিলেক্ট করুন");
+      return;
+    }
     try {
       const pData = {
         name: patientData.name,
