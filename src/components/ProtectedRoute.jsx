@@ -11,12 +11,12 @@ const ProtectedRoute = ({ element, allowedRoles }) => {
   }
 
   // If the user is an admin, grant access to everything
-  if (user.roles.includes("admin")) {
+  if (user.accessControl.includes("admin")) {
     return element;
   }
 
   // Check if user has at least one of the required roles
-  const hasAccess = allowedRoles.some((role) => user.roles.includes(role));
+  const hasAccess = allowedRoles.some((role) => user.accessControl.includes(role));
 
   return hasAccess ? (
     element
