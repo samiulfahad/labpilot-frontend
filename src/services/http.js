@@ -2,13 +2,12 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: "http://localhost:3000/api",
-  withCredentials: true,
 });
 
 // Axios interceptor to include token in every request
 api.interceptors.request.use(
   (config) => {
-    console.log(222);
+    // console.log(222);
     const token = localStorage.getItem("token");
     if (token) {
       config.headers["authorization"] = `Bearer ${token}`;
@@ -22,7 +21,9 @@ api.interceptors.request.use(
 const refreshAccessToken = async () => {
   try {
     console.log("calling refreshToken renewal");
-    const response = await api.post("/v1/lab/refresh-token");
+    const response = await api.post( "/v1/lab/auth/refresh-token", 
+      { withCredentials: true } // ← ONLY HERE
+    );
     const newAccessToken = response.data.accessToken;
     if (newAccessToken) {
       localStorage.setItem("token", newAccessToken);
@@ -43,7 +44,7 @@ api.interceptors.response.use(
       originalRequest._retry = true;
       const newAccessToken = await refreshAccessToken();
       if (newAccessToken) {
-        originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
+        originalRequest.headers["authorization"] = `Bearer ${newAccessToken}`;
         return api(originalRequest);
       }
     }
