@@ -16,9 +16,7 @@ const LoginForm = () => {
     e.preventDefault();
     setError("");
     setIsSubmitting(true);
-
     const response = await login({ ...formData, isAdmin });
-
     if (!response.success) {
       setError(response.message);
     }

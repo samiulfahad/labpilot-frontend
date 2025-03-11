@@ -6,6 +6,7 @@ import axios from "axios";
 import Modal from "../../../components/modal";
 import { API_URL } from "../../../../config";
 import FallbackUI from "../../../components/fallback-ui";
+import api from "../../../services/http";
 
 const AllInvoices = () => {
   const [invoices, setInvoices] = useState([]);
@@ -19,7 +20,7 @@ const AllInvoices = () => {
     try {
       // Fetch new data if no cache or forced
       setStatus("processing");
-      const response = await axios.get(API_URL + "/api/v1/invoice/all");
+      const response = await api.get("/v1/invoice/all");
       if (response.data.success) {
         setInvoices(response.data.invoices);
         setStatus(null);
@@ -31,7 +32,7 @@ const AllInvoices = () => {
       }
     } catch (error) {
       setInvoices(null);
-      console.log("Error fetching invoices:", error);
+      console.log("Error fetching invoices:", error?.response?.data);
       setStatus("error");
       setMsg("ইনভয়েসের লিস্ট আনা সম্ভব হয়নি। পেইজটি রিফ্রেশ করে পুনরায় চেষ্টা করুন");
     }
