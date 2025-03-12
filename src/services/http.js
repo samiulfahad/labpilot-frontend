@@ -21,7 +21,7 @@ api.interceptors.request.use(
 const refreshAccessToken = async () => {
   try {
     console.log("calling refreshToken renewal");
-    const response = await api.post( "/v1/lab/auth/refresh-token", 
+    const response = await api.post( "/v1/lab/auth/refresh-token", {},
       { withCredentials: true } // ← ONLY HERE
     );
     const newAccessToken = response.data.accessToken;

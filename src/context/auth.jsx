@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     try {
-      const response = await api.post(`/v1/lab/login`, credentials);
+      const response = await api.post(`/v1/lab/login`, credentials, { withCredentials: true });
       if (response.data.success) {
         const user = {
           username: response.data.user.username,
@@ -27,6 +27,8 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("token", accessToken);
 
         return { success: true };
+      } else {
+        return { success: false, message: err?.response?.data?.msg || "Login failed" };
       }
     } catch (err) {
       console.error("Login error:", err);
