@@ -2,7 +2,6 @@
 import { useAuth } from "../../context/auth";
 import NavItem from "./NavItem";
 import navList from "./navList";
-import { Link } from "react-router-dom";
 import Payment from "./Payment";
 
 const Navbar = () => {

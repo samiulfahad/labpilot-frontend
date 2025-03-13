@@ -1,107 +1,194 @@
-/** @format */
-
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useAuth } from "../../context/auth";
-import StaffProfile from "./StaffProfile";
-import Modal from "../../components/modal";
 
 const Profile = () => {
-  const [disabled, setDisabled] = useState(true);
-  const [list, setList] = useState([]);
-  const [status, setStatus] = useState("processing");
-  const [msg, setMsg] = useState("");
+  // State for edit mode and form values
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [labName, setLabName] = useState("My Lab");
+  const [location, setLocation] = useState("New York, USA");
+  const [address, setAddress] = useState("123 Science Street");
+  const [primaryPhoneNumber, setPrimaryPhoneNumber] = useState("+1 123 456 7890");
+  const [secondaryPhoneNumber, setSecondaryPhoneNumber] = useState("+1 987 654 3210");
+  const [emailAddress, setEmailAddress] = useState("info@mylab.com");
 
-  const { user } = useAuth();
-
-  const handleEdit = () => {
-    setDisabled(!disabled);
+  // Toggle edit mode
+  const toggleEditMode = () => {
+    setIsEditMode(!isEditMode);
   };
 
-  const showModal = () => {
-    setStatus("changePassword");
-  };
-
-  const closeModal = () => {
-    setStatus("");
-    setMsg("");
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsEditMode(false); // Exit edit mode after saving
+    // Add your logic to save the data (e.g., API call)
+    console.log("Profile updated:", {
+      labName,
+      location,
+      address,
+      primaryPhoneNumber,
+      secondaryPhoneNumber,
+      emailAddress,
+    });
   };
 
   return (
-    <section>
-      {status === "changePassword" && <Modal type="changePassword" onClosingModal={closeModal} />}
-      {user?.roles?.includes("admin") ? (
-        <div className="flex space-x-4">
-          {/* Lab Info */}
-          <div className="flex flex-col justify-between items-start space-y-2 ">
-            <div className="flex justify-between items-center text-center w-full">
-              <p className="font-bold text-lg text-right w-28 py-4">Lab Info</p>
-              {disabled && (
-                <button
-                  onClick={handleEdit}
-                  className="mr-20 px-4 bgColor text-center flex-shrink-0 w-16 h-8 text-white"
-                >
-                  Edit
-                </button>
-              )}
-            </div>
-            <div className="flex space-x-4 justify-start items-center">
-              <p className="w-28 text-right">Name</p>
-              <input
-                value="Azizul Haque Diagonostic Center"
-                disabled={disabled}
-                className={`px-4 py-1 w-80 text-center ${!disabled ? "bg-white" : "bg-gray-300"}`}
-              />
-            </div>
-            <div className="flex space-x-4 justify-start items-center">
-              <p className="w-28 text-right">Location</p>
-              <input value="Bhaluka, Mymensingh" disabled={disabled} className="px-4 py-1 w-80 text-center" />
-            </div>
-            <div className="flex space-x-4 justify-start items-center">
-              <p className="w-28 text-right">Contact</p>
-              <input value="01712121212" disabled={disabled} className="px-4 py-1 w-80 text-center" />
-            </div>
-            <div className="flex space-x-4 justify-start items-center">
-              <p className="w-28 text-right">Email</p>
-              <input value="labxxxxx@gmail.com" disabled={disabled} className="px-4 py-1 w-80 text-center" />
-            </div>
-            {!disabled && (
-              <div className="flex justify-end items-center space-x-4 w-4/5">
-                <button className="px-2 py-1 bgColor text-white rounded">Save</button>
-                <button onClick={handleEdit} className="px-2 py-1 bg-red-400 text-white rounded">
-                  Cancel
-                </button>
-              </div>
-            )}
-            <div className="flex justify-between items-center text-center w-2/3">
-              <p className="font-bold text-lg text-right w-28 py-4">Package</p>
-              <div className="text-left mt-6">
-                <p>5tk per Invoice</p>
-                <p>Max - 2000tk a month</p>
-              </div>
-            </div>
+    <div className="max-w-2xl mx-auto mt-10 p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
+      <h2 className="text-2xl font-semibold text-gray-800 mb-6">Lab Profile</h2>
 
-            {/* Test List */}
-            <div className="flex justify-start space-x-4 items-center text-center w-full">
-              <p className="font-bold text-lg text-right w-28 py-4">Test List</p>
-              <Link to="/testlist" className="btn-sm">
-                Manage Test and Price
-              </Link>
-            </div>
-
-            {/* Security and Password */}
-            <div className="flex justify-start space-x-4 items-center text-center w-full">
-              <p className="font-bold text-lg text-right w-28 py-4">Password</p>
-              <button onClick={showModal} to="/testlist" className="btn-sm">
-                Change Password
-              </button>
+      {isEditMode ? (
+        // Edit Form (unchanged)
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Lab Information Section */}
+          <div>
+            <h3 className="text-lg font-semibold text-gray-700 mb-4">Lab Information</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm text-gray-600 mb-1">Lab Name</label>
+                <input
+                  type="text"
+                  value={labName}
+                  onChange={(e) => setLabName(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-gray-600 mb-1">Location</label>
+                <input
+                  type="text"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  required
+                />
+              </div>
+              <div className="md:col-span-2">
+                <label className="block text-sm text-gray-600 mb-1">Address</label>
+                <input
+                  type="text"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  required
+                />
+              </div>
             </div>
           </div>
-        </div>
+
+          {/* Contact Details Section */}
+          <div>
+            <h3 className="text-lg font-semibold text-gray-700 mb-4">Contact Details</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm text-gray-600 mb-1">Primary Phone Number</label>
+                <input
+                  type="tel"
+                  value={primaryPhoneNumber}
+                  onChange={(e) => setPrimaryPhoneNumber(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-gray-600 mb-1">Secondary Phone Number</label>
+                <input
+                  type="tel"
+                  value={secondaryPhoneNumber}
+                  onChange={(e) => setSecondaryPhoneNumber(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+              </div>
+              <div className="md:col-span-2">
+                <label className="block text-sm text-gray-600 mb-1">Email Address</label>
+                <input
+                  type="email"
+                  value={emailAddress}
+                  onChange={(e) => setEmailAddress(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Form Actions */}
+          <div className="flex justify-end space-x-4">
+            <button
+              type="button"
+              onClick={toggleEditMode}
+              className="px-4 py-2 text-sm text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 text-sm text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              Save
+            </button>
+          </div>
+        </form>
       ) : (
-        <StaffProfile />
+        // Read-Only View (Improved)
+        <div className="space-y-6">
+          {/* Lab Information Card */}
+          <div className="p-6 bg-gray-50 border border-gray-200 rounded-lg">
+            <h3 className="text-lg font-semibold text-gray-700 mb-4 flex items-center">
+              <span role="img" aria-label="lab" className="mr-2">
+                🧪
+              </span>
+              Lab Information
+            </h3>
+            <div className="space-y-3">
+              <div>
+                <label className="block text-sm text-gray-500 mb-1">Lab Name</label>
+                <p className="text-gray-800 font-medium">{labName}</p>
+              </div>
+              <div>
+                <label className="block text-sm text-gray-500 mb-1">Location</label>
+                <p className="text-gray-800 font-medium">{location}</p>
+              </div>
+              <div>
+                <label className="block text-sm text-gray-500 mb-1">Address</label>
+                <p className="text-gray-800 font-medium">{address}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Contact Details Card */}
+          <div className="p-6 bg-gray-50 border border-gray-200 rounded-lg">
+            <h3 className="text-lg font-semibold text-gray-700 mb-4 flex items-center">
+              <span role="img" aria-label="contact" className="mr-2">
+                📞
+              </span>
+              Contact Details
+            </h3>
+            <div className="space-y-3">
+              <div>
+                <label className="block text-sm text-gray-500 mb-1">Primary Phone Number</label>
+                <p className="text-gray-800 font-medium">{primaryPhoneNumber}</p>
+              </div>
+              <div>
+                <label className="block text-sm text-gray-500 mb-1">Secondary Phone Number</label>
+                <p className="text-gray-800 font-medium">{secondaryPhoneNumber}</p>
+              </div>
+              <div>
+                <label className="block text-sm text-gray-500 mb-1">Email Address</label>
+                <p className="text-gray-800 font-medium">{emailAddress}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Edit Button */}
+          <button
+            onClick={toggleEditMode}
+            className="w-full px-4 py-2 text-sm text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+          >
+            Edit Profile
+          </button>
+        </div>
       )}
-    </section>
+    </div>
   );
 };
-export default Profile;
+
+export default Profile

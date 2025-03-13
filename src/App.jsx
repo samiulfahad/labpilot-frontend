@@ -10,6 +10,7 @@ import Action from "./pages/invoice/action";
 import Recharge from "./pages/recharge";
 import UpdateTestList from "./pages/update-testlist";
 import Profile from "./pages/profile";
+import Security from "./pages/security"
 import Referrer from "./pages/referrer";
 import ReferrerCard from "./pages/referrer/ReferrerCard";
 import RenderList from "./pages/render-list";
@@ -27,6 +28,7 @@ function App() {
   const location = useLocation();
   if (!user && location.pathname === "/") {
     return <LandingPage />;
+    // return <Security />
   } else if (!user && location.pathname !== "/") {
     return <Navigate to="/" replace />;
   }
